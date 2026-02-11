@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://y2eeor084b7o"]
+
+[ext_resource type="Script" uid="uid://7km3lpjfm0qh" path="res://hub_world/scenes/hub_world_hud.gd" id="1_svgmi"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_svgmi")
+
+[node name="XP" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 63.0
+offset_bottom = 25.0
+text = "XP:"
+
+[node name="XPCount" type="Label" parent="."]
+offset_left = 41.0
+offset_top = 1.0
+offset_right = 57.0
+offset_bottom = 25.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Money" type="Label" parent="."]
+offset_left = 7.0
+offset_top = 25.0
+offset_right = 64.0
+offset_bottom = 49.0
+text = "Money:"
+
+[node name="MoneyCount" type="Label" parent="."]
+offset_left = 74.0
+offset_top = 25.0
+offset_right = 122.0
+offset_bottom = 49.0
+text = "0"

@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://brhyiqsjujpa3"]
+
+[ext_resource type="Script" uid="uid://bnbwnipmbkv0v" path="res://hub_world/scripts/player.gd" id="1_ygoj8"]
+[ext_resource type="Texture2D" uid="uid://paypbfuqkroy" path="res://hub_world/assets/textures/smile.png" id="2_8p3bf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvwnw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ad62x"]
+render_priority = 1
+next_pass = SubResource("StandardMaterial3D_kvwnw")
+transparency = 1
+albedo_texture = ExtResource("2_8p3bf")
+uv1_scale = Vector3(3.005, 3.005, 3.005)
+uv1_offset = Vector3(-1.03, -0.77, 0)
+texture_repeat = false
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2cnr3"]
+material = SubResource("StandardMaterial3D_ad62x")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ivps1"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_urp6f"]
+emission_shape = 2
+emission_sphere_radius = 10.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = 5.0
+scale_min = 0.5
+scale_max = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vw27"]
+transparency = 1
+cull_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bwjto"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_5vw27")
+orientation = 2
+
+[node name="Player" type="CharacterBody3D" unique_id=739031588]
+script = ExtResource("1_ygoj8")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1619440151]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1126794780]
+spring_length = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1631363331]
+transform = Transform3D(0.99999845, 0, 0.0017453283, 0, 1, 0, -0.0017453283, 0, 0.99999845, 0, 0, 0)
+current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1487800408]
+mesh = SubResource("CapsuleMesh_2cnr3")
+
+[node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D" unique_id=1261666120]
+target_position = Vector3(0, 0, 1.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=809913197]
+shape = SubResource("CapsuleShape3D_ivps1")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=2056478722]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+emitting = false
+amount = 150
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_urp6f")
+draw_pass_1 = SubResource("PlaneMesh_bwjto")
