@@ -37,6 +37,9 @@ lightmap_size_hint = Vector2i(7, 7)
 material = SubResource("StandardMaterial3D_5vw27")
 orientation = 2
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8p3bf"]
+radius = 3.0
+
 [node name="Player" type="CharacterBody3D" unique_id=739031588]
 script = ExtResource("1_ygoj8")
 
@@ -65,3 +68,9 @@ amount = 150
 lifetime = 5.0
 process_material = SubResource("ParticleProcessMaterial_urp6f")
 draw_pass_1 = SubResource("PlaneMesh_bwjto")
+
+[node name="DetectInteractable" type="Area3D" parent="." unique_id=665755416]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectInteractable" unique_id=1010861355]
+shape = SubResource("CylinderShape3D_8p3bf")

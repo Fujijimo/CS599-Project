@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://by36uvqi0qmkb"]
+
+[ext_resource type="Script" uid="uid://bxvk1fmbnlako" path="res://inventory/item_slot.gd" id="1_8kgv2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v7wgj"]
+font_size = 36
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8kgv2"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
+[node name="ItemSlot" type="Button" unique_id=167349292]
+custom_minimum_size = Vector2(400, 100)
+offset_right = 400.0
+offset_bottom = 100.0
+script = ExtResource("1_8kgv2")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=999257741]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=105492429]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=2103915616]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1790129352]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=102400046]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=417731017]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+label_settings = SubResource("LabelSettings_v7wgj")
+
+[node name="BasicDescription" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1936440112]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_settings = SubResource("LabelSettings_8kgv2")

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bdvqvrea20hi8"]
+
+[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://item/item_data.gd" id="1_c2ypf"]
+[ext_resource type="Texture2D" uid="uid://g1jl00bgwmss" path="res://icon.svg" id="1_nqu1l"]
+[ext_resource type="Texture2D" uid="uid://5b63rkcj4om" path="res://item/assets/godot.png" id="3_b7aao"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nqu1l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xhm43"]
+albedo_texture = ExtResource("1_nqu1l")
+uv1_scale = Vector3(6.025, 4, 6.025)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tquij"]
+material = SubResource("StandardMaterial3D_xhm43")
+
+[resource]
+script = ExtResource("1_c2ypf")
+name = "Robo Box"
+basic_description = "This is a robo box."
+description = "It is a robot on a box.
+Good for kicking."
+texture = ExtResource("3_b7aao")
+mesh = SubResource("BoxMesh_tquij")
+collision = SubResource("BoxShape3D_nqu1l")
+marker_height = 1.33
+metadata/_custom_type_script = "uid://82tjs34yoggp"

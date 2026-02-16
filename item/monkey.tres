@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://djoctxh16apay"]
+
+[ext_resource type="Texture2D" uid="uid://7acex57cqppl" path="res://item/assets/monkey.png" id="1_6o4qe"]
+[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://item/item_data.gd" id="2_hv7df"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6o4qe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ml2mi"]
+albedo_texture = ExtResource("1_6o4qe")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ml2mi"]
+material = SubResource("StandardMaterial3D_ml2mi")
+
+[resource]
+script = ExtResource("2_hv7df")
+name = "Monkey Ball"
+basic_description = "This is a monkey ball."
+description = "This guy LOVES bananas."
+stackable = true
+texture = ExtResource("1_6o4qe")
+mesh = SubResource("SphereMesh_ml2mi")
+collision = SubResource("SphereShape3D_6o4qe")
+metadata/_custom_type_script = "uid://82tjs34yoggp"

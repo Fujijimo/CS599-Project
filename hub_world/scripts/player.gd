@@ -1,11 +1,16 @@
 extends CharacterBody3D
 
-@export_range(0.0, 1.0) var mouse_sensitivity = 0.01
-@export var tilt_limit = deg_to_rad(75)
-@onready var camera = $CameraPivot/SpringArm3D/Camera3D
-const SPEED = 5.0
-const SPRINT_SPEED = 15.0
-const JUMP_VELOCITY = 4.5*2
+@export_range(0.0, 1.0) var mouse_sensitivity: float = 0.01
+@export var tilt_limit: float = deg_to_rad(75)
+@onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
+const SPEED: float = 5.0
+const SPRINT_SPEED: float = 15.0
+const JUMP_VELOCITY: float = 4.5*2
+
+const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
+var interact_marker_instance: MeshInstance3D = INTERACT_MARKER.instantiate()
+var interactable: Node3D
+var last_interactable: Node3D
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -17,8 +22,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	
-	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
+	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction: Vector3 = Vector3(input_dir.x, 0, input_dir.y).normalized()
 	
 	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
 	
@@ -39,13 +44,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if Input.is_joy_known(0) == true:
-		var cam_input_dir = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
-		var cam_sensitivity = 0.075
+		var cam_input_dir: Vector2 = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
+		var cam_sensitivity: float = 0.075
 	
 		$CameraPivot.rotation.x -= cam_input_dir.y * cam_sensitivity
 		$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
 		$CameraPivot.rotation.y -= cam_input_dir.x * cam_sensitivity
 	
+	enable_interaction()
+
 func _unhandled_input(event: InputEvent) -> void:
 	capture_mouse(event)
 	hub_camera(event)
@@ -57,7 +64,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func hub_camera(event):
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		$CameraPivot.rotation.x -= event.relative.y * mouse_sensitivity
-		# Prevent the camera from rotating too far up or down.
 		$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
 		$CameraPivot.rotation.y -= event.relative.x * mouse_sensitivity
 
@@ -75,3 +81,40 @@ func save_game() -> void:
 func load_game() -> void:
 	saveload.load_savegame()
 	global_position = saveload.data.global_position
+
+func enable_interaction():
+	if $DetectInteractable.has_overlapping_bodies():
+		var new_array: Array[float]
+		var new_index: int
+		
+		if $DetectInteractable.get_overlapping_bodies().size() > 1:
+			for i in $DetectInteractable.get_overlapping_bodies():
+				new_array.append(position.distance_to(i.position))
+				new_index = new_array.find(new_array.min())
+				interactable = $DetectInteractable.get_overlapping_bodies().get(new_index)
+		else:
+			interactable = $DetectInteractable.get_overlapping_bodies().get(0)
+			
+		if last_interactable != interactable:
+			if is_instance_valid(interact_marker_instance):
+				interact_marker_instance.queue_free()
+			
+		if interactable.is_in_group("interactable") and is_instance_valid(interact_marker_instance) == false:
+			interact_marker_instance = INTERACT_MARKER.instantiate()
+			interactable.get_parent().add_child(interact_marker_instance)
+			interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.item.marker_height, 0) 
+			last_interactable = interactable
+		
+		if interactable.is_in_group("pickup"):
+			enable_pickup()
+	
+	elif last_interactable != null:
+		if is_instance_valid(interact_marker_instance):
+				interact_marker_instance.queue_free()
+
+func enable_pickup():
+	if $DetectInteractable.overlaps_body(interactable) and Input.is_action_just_pressed("interact"):
+		inventory.items.append(interactable.duplicate())
+		if is_instance_valid(interact_marker_instance):
+			interact_marker_instance.queue_free()
+		interactable.queue_free()

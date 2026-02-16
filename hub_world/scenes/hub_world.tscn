@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://cj2rjtbp8t5d7" path="res://hub_world/scripts/hub_world.gd" id="1_gwv1m"]
 [ext_resource type="PackedScene" uid="uid://brhyiqsjujpa3" path="res://hub_world/scenes/player.tscn" id="2_861hj"]
 [ext_resource type="Texture2D" uid="uid://dbg6gihi1mp70" path="res://hub_world/assets/textures/checker-bw.png" id="3_dl1n6"]
+[ext_resource type="PackedScene" uid="uid://cxyqa58b5toaf" path="res://item/item.tscn" id="5_gwv1m"]
+[ext_resource type="Resource" uid="uid://djoctxh16apay" path="res://item/monkey.tres" id="6_861hj"]
+[ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://item/box.tres" id="6_gwv1m"]
 [ext_resource type="PackedScene" uid="uid://y2eeor084b7o" path="res://hub_world/scenes/hub_world_hud.tscn" id="7_861hj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
@@ -26,11 +29,11 @@ material = SubResource("StandardMaterial3D_0xm2m")
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
-sky_top_color = Color(0.647059, 0.00392157, 0.843137, 1)
-sky_horizon_color = Color(0.921569, 0.921569, 0.921569, 1)
+sky_top_color = Color(0.14642623, 0.3786908, 0.92475754, 1)
+sky_horizon_color = Color(0.99993736, 0.9034649, 0.8131092, 1)
 sky_curve = 0.03
-ground_bottom_color = Color(3.1285e-06, 0.510207, 0.547774, 1)
-ground_horizon_color = Color(0.921569, 0.921569, 0.921569, 1)
+ground_bottom_color = Color(0.2200079, 0.4542334, 0.736138, 1)
+ground_horizon_color = Color(0.99771076, 0.90251917, 0.82146275, 1)
 ground_curve = 0.03
 
 [sub_resource type="Sky" id="Sky_h2yge"]
@@ -94,3 +97,15 @@ environment = SubResource("Environment_0xm2m")
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 10, 0)
 
 [node name="HUD" parent="." unique_id=1086578613 instance=ExtResource("7_861hj")]
+
+[node name="MonkeyBall" parent="." unique_id=1830735107 instance=ExtResource("5_gwv1m")]
+transform = Transform3D(0.5, 0.4999999, -0.7071068, -0.70710665, 0.7071067, 5.598901e-08, 0.5000002, 0.5, 0.7071067, 2.1631365, 0.5, 18.078575)
+item = ExtResource("6_861hj")
+
+[node name="MonkeyBall2" parent="." unique_id=313141586 instance=ExtResource("5_gwv1m")]
+transform = Transform3D(-0.5000002, -0.5, -0.7071067, -0.70710665, 0.7071067, 3.853122e-08, 0.49999994, 0.4999999, -0.7071069, -1.8368635, 0.5, 18.078575)
+item = ExtResource("6_861hj")
+
+[node name="RoboBox" parent="." unique_id=377876702 instance=ExtResource("5_gwv1m")]
+transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 0.07841754, 0.84881973, 20.495558)
+item = ExtResource("6_gwv1m")

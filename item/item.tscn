@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cxyqa58b5toaf"]
+
+[ext_resource type="Texture2D" uid="uid://g1jl00bgwmss" path="res://icon.svg" id="1_4ojsc"]
+[ext_resource type="Script" uid="uid://vaon03ucsu8i" path="res://item/item.gd" id="1_6t40p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gwv1m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_861hj"]
+albedo_texture = ExtResource("1_4ojsc")
+uv1_scale = Vector3(6, 4, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dl1n6"]
+material = SubResource("StandardMaterial3D_861hj")
+
+[node name="Item" type="StaticBody3D" unique_id=126654515 groups=["interactable", "pickup"]]
+collision_layer = 3
+script = ExtResource("1_6t40p")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1822881273]
+shape = SubResource("BoxShape3D_gwv1m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1830735107]
+mesh = SubResource("BoxMesh_dl1n6")

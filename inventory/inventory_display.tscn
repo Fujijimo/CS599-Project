@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://kb5e6e8xm0qx"]
+
+[ext_resource type="PackedScene" uid="uid://by36uvqi0qmkb" path="res://inventory/item_slot.tscn" id="1_62wf1"]
+[ext_resource type="Script" uid="uid://cyoph0jf2h1om" path="res://inventory/inventory_display.gd" id="1_qse2j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ikjar"]
+font_size = 48
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vf5lj"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[node name="Inventory" type="Control" unique_id=1548465235]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qse2j")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=465975119]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer" unique_id=497331670]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="InventoryVBox" type="VBoxContainer" parent="HBoxContainer/ScrollContainer" unique_id=497283901]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemSlot" parent="HBoxContainer/ScrollContainer/InventoryVBox" unique_id=1723600819 instance=ExtResource("1_62wf1")]
+layout_mode = 2
+
+[node name="DetailsScreen" type="ColorRect" parent="HBoxContainer" unique_id=1791592878]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/DetailsScreen" unique_id=1547932805]
+layout_mode = 0
+offset_left = 4.0
+offset_right = 748.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/DetailsScreen/MarginContainer" unique_id=1019371226]
+layout_mode = 2
+
+[node name="DetailsName" type="Label" parent="HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer" unique_id=1582508200]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
+label_settings = SubResource("LabelSettings_ikjar")
+autowrap_mode = 3
+
+[node name="DetailsDescription" type="Label" parent="HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer" unique_id=1671625292]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_vertical = 6
+label_settings = SubResource("LabelSettings_vf5lj")
+autowrap_mode = 3
