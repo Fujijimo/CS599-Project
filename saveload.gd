@@ -38,3 +38,7 @@ func load_savegame() -> void:
 		data.player.level = save_data.player.level
 		data.player.xp = save_data.player.xp
 		data.player.money = save_data.player.money
+
+func add_xp_money(xp_amount, money_amount) -> void:
+	data.player.xp += xp_amount
+	data.player.money += money_amount

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://br1jvn40si4y1"]
+
+[ext_resource type="Script" uid="uid://j18vrwq1w14p" path="res://golf/scripts/origin.gd" id="1_1mjwu"]
+
+[node name="Origin" type="Node3D"]
+script = ExtResource("1_1mjwu")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.00522393)
+spring_length = 3.0
+margin = 1.0
+
+[node name="PlayerCam" type="Camera3D" parent="SpringArm3D"]
+physics_interpolation_mode = 1
+cull_mask = 1048573
+doppler_tracking = 2
+current = true

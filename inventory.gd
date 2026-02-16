@@ -1,6 +1,6 @@
 extends Node
 
-var items: Array[ItemData] = []
+var items: Array[Item] = []
 
 func add_item(item: ItemData):
 	items.append(item)

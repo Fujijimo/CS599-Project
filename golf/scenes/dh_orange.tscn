@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkn1wf8fcmvrd"]
+
+[ext_resource type="PackedScene" uid="uid://cwn2174eoq8l5" path="res://glb/dh_orange.glb" id="1_jf4wk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8wfhp"]
+albedo_color = Color(1.5720325, 0.95514816, 0, 1)
+metallic = 0.1
+roughness = 0.0
+
+[node name="dh_orange" instance=ExtResource("1_jf4wk")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/position = Vector3(4.735731e-08, 6.2800503, -0.2432232)
+bones/1/rotation = Quaternion(0.27063695, -0.2401828, 0.110870585, 0.9256218)
+bones/2/rotation = Quaternion(0.104403205, -0.046171848, -0.6506383, 0.75075823)
+bones/3/rotation = Quaternion(-0.111332655, 0.9260307, -0.27044725, -0.23860124)
+bones/4/rotation = Quaternion(0.10757854, 0.04507134, 0.65012085, 0.7508251)
+
+[node name="Body" parent="Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_8wfhp")

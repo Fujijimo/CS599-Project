@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1fm1c84fy0al"]
+
+[ext_resource type="Script" uid="uid://bljaewnq7a3ld" path="res://golf/scripts/hole.gd" id="1_ln22a"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ln22a"]
+height = 0.48853683
+radius = 1.25
+
+[node name="Hole" type="Node3D"]
+script = ExtResource("1_ln22a")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0009406358, 0.008562326, -0.00094524026)
+shape = SubResource("CylinderShape3D_ln22a")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

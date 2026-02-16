@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://c4d5f84bisx5e"]
+
+[ext_resource type="Script" uid="uid://ckamou6gtgvyq" path="res://golf/scripts/enemy.gd" id="1_sohjh"]
+[ext_resource type="PackedScene" uid="uid://dkn1wf8fcmvrd" path="res://golf/scenes/dh_orange.tscn" id="2_udsgq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sohjh"]
+height = 5.9999657
+radius = 3.0595703
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sohjh"]
+radius = 3.9224086
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1835598495]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+collision_layer = 2
+script = ExtResource("1_sohjh")
+
+[node name="dh_orange" parent="." unique_id=1526144035 instance=ExtResource("2_udsgq")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=718766619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.065, 0)
+shape = SubResource("CylinderShape3D_sohjh")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=693578640]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=251981046]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.065, 0)
+shape = SubResource("SphereShape3D_sohjh")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -3,10 +3,15 @@
 [ext_resource type="Script" uid="uid://cj2rjtbp8t5d7" path="res://hub_world/scripts/hub_world.gd" id="1_gwv1m"]
 [ext_resource type="PackedScene" uid="uid://brhyiqsjujpa3" path="res://hub_world/scenes/player.tscn" id="2_861hj"]
 [ext_resource type="Texture2D" uid="uid://dbg6gihi1mp70" path="res://hub_world/assets/textures/checker-bw.png" id="3_dl1n6"]
-[ext_resource type="PackedScene" uid="uid://cxyqa58b5toaf" path="res://item/item.tscn" id="5_gwv1m"]
-[ext_resource type="Resource" uid="uid://djoctxh16apay" path="res://item/monkey.tres" id="6_861hj"]
-[ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://item/box.tres" id="6_gwv1m"]
+[ext_resource type="Script" uid="uid://b431rxgefdq7l" path="res://hub_world/scripts/scroller.gd" id="4_g28ha"]
+[ext_resource type="PackedScene" uid="uid://8putfa6crndu" path="res://golf/scenes/course_standard.tscn" id="5_xpjs0"]
+[ext_resource type="PackedScene" uid="uid://d3kympyos0kcx" path="res://golf/scenes/course_clover.tscn" id="6_aetr0"]
 [ext_resource type="PackedScene" uid="uid://y2eeor084b7o" path="res://hub_world/scenes/hub_world_hud.tscn" id="7_861hj"]
+[ext_resource type="AudioStream" uid="uid://7gypjyqlw7fw" path="res://golf/sounds/snap.ogg" id="7_dl1n6"]
+[ext_resource type="PackedScene" uid="uid://3isnb61mvmh6" path="res://glb/course_watchman.glb" id="7_g28ha"]
+[ext_resource type="PackedScene" uid="uid://cxyqa58b5toaf" path="res://item/item.tscn" id="10_wke1o"]
+[ext_resource type="Resource" uid="uid://djoctxh16apay" path="res://item/resources/monkey.tres" id="11_c31ob"]
+[ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://item/resources/box.tres" id="12_psx4n"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
 albedo_texture = ExtResource("3_dl1n6")
@@ -29,11 +34,11 @@ material = SubResource("StandardMaterial3D_0xm2m")
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
-sky_top_color = Color(0.14642623, 0.3786908, 0.92475754, 1)
-sky_horizon_color = Color(0.99993736, 0.9034649, 0.8131092, 1)
+sky_top_color = Color(0.647059, 0.00392157, 0.843137, 1)
+sky_horizon_color = Color(0.921569, 0.921569, 0.921569, 1)
 sky_curve = 0.03
-ground_bottom_color = Color(0.2200079, 0.4542334, 0.736138, 1)
-ground_horizon_color = Color(0.99771076, 0.90251917, 0.82146275, 1)
+ground_bottom_color = Color(3.1285e-06, 0.510207, 0.547774, 1)
+ground_horizon_color = Color(0.921569, 0.921569, 0.921569, 1)
 ground_curve = 0.03
 
 [sub_resource type="Sky" id="Sky_h2yge"]
@@ -43,69 +48,137 @@ sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
 background_mode = 2
 sky = SubResource("Sky_h2yge")
 
-[node name="HubWorld" type="Node3D" unique_id=828772515]
+[sub_resource type="BoxMesh" id="BoxMesh_t1r5v"]
+size = Vector3(3, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_271a7"]
+size = Vector3(3, 1, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_wscvt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_twbvx"]
+font = SubResource("SystemFont_wscvt")
+font_size = 24
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_g28ha"]
+streams_count = 1
+stream_0/stream = ExtResource("7_dl1n6")
+
+[node name="HubWorld" type="Node3D" unique_id=824557295]
 script = ExtResource("1_gwv1m")
 
-[node name="Player" parent="." unique_id=308122571 instance=ExtResource("2_861hj")]
+[node name="Player" parent="." unique_id=1418242600 instance=ExtResource("2_861hj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0236101, 0)
 
-[node name="Ground" type="StaticBody3D" parent="." unique_id=260680880]
+[node name="Ground" type="StaticBody3D" parent="." unique_id=970435706]
 transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, 0, 0)
 
-[node name="Ground" type="MeshInstance3D" parent="Ground" unique_id=1082492503]
+[node name="Ground" type="MeshInstance3D" parent="Ground" unique_id=1539469011]
 transform = Transform3D(0.55, 0, 0, 0, 0.05, 0, 0, 0, 0.55, 0, 0, 0)
 mesh = SubResource("PlaneMesh_272bh")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1760433007]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1382057714]
 transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_5vw27")
 
-[node name="FloatingCubes" type="Node3D" parent="." unique_id=32142154]
+[node name="FloatingCubes" type="Node3D" parent="." unique_id=2066792403]
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="FloatingCubes" unique_id=1319542757]
+[node name="StaticBody3D2" type="StaticBody3D" parent="FloatingCubes" unique_id=418418178]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -5, 1.547, -10)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingCubes/StaticBody3D2" unique_id=717588519]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingCubes/StaticBody3D2" unique_id=1399138989]
 mesh = SubResource("BoxMesh_h2yge")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingCubes/StaticBody3D2" unique_id=13540595]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingCubes/StaticBody3D2" unique_id=48975203]
 shape = SubResource("ConcavePolygonShape3D_0xm2m")
 
-[node name="StaticBody3D3" type="StaticBody3D" parent="FloatingCubes" unique_id=586148816]
+[node name="StaticBody3D3" type="StaticBody3D" parent="FloatingCubes" unique_id=1798668891]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 1, 4.547, -10)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingCubes/StaticBody3D3" unique_id=185408329]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingCubes/StaticBody3D3" unique_id=1465904330]
 mesh = SubResource("BoxMesh_h2yge")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingCubes/StaticBody3D3" unique_id=588494437]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingCubes/StaticBody3D3" unique_id=1548949277]
 shape = SubResource("ConcavePolygonShape3D_0xm2m")
 
-[node name="StaticBody3D4" type="StaticBody3D" parent="FloatingCubes" unique_id=1386287668]
+[node name="StaticBody3D4" type="StaticBody3D" parent="FloatingCubes" unique_id=1833147850]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 7, 7.547, -10)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingCubes/StaticBody3D4" unique_id=363848632]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FloatingCubes/StaticBody3D4" unique_id=266799538]
 mesh = SubResource("BoxMesh_h2yge")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingCubes/StaticBody3D4" unique_id=10973366]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloatingCubes/StaticBody3D4" unique_id=138791748]
 shape = SubResource("ConcavePolygonShape3D_0xm2m")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=374421189]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=585311327]
 environment = SubResource("Environment_0xm2m")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1795343865]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=252753954]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 10, 0)
 
-[node name="HUD" parent="." unique_id=1086578613 instance=ExtResource("7_861hj")]
+[node name="LevelSelectActivate" type="StaticBody3D" parent="." unique_id=963115453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5222399, 20.720459)
+metadata/_edit_group_ = true
 
-[node name="MonkeyBall" parent="." unique_id=1830735107 instance=ExtResource("5_gwv1m")]
-transform = Transform3D(0.5, 0.4999999, -0.7071068, -0.70710665, 0.7071067, 5.598901e-08, 0.5000002, 0.5, 0.7071067, 2.1631365, 0.5, 18.078575)
-item = ExtResource("6_861hj")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LevelSelectActivate" unique_id=1053643234]
+mesh = SubResource("BoxMesh_t1r5v")
 
-[node name="MonkeyBall2" parent="." unique_id=313141586 instance=ExtResource("5_gwv1m")]
-transform = Transform3D(-0.5000002, -0.5, -0.7071067, -0.70710665, 0.7071067, 3.853122e-08, 0.49999994, 0.4999999, -0.7071069, -1.8368635, 0.5, 18.078575)
-item = ExtResource("6_861hj")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelSelectActivate" unique_id=1741242652]
+shape = SubResource("BoxShape3D_271a7")
 
-[node name="RoboBox" parent="." unique_id=377876702 instance=ExtResource("5_gwv1m")]
-transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 0.07841754, 0.84881973, 20.495558)
-item = ExtResource("6_gwv1m")
+[node name="LevelSelectCam" type="Camera3D" parent="." unique_id=469125134]
+transform = Transform3D(-1, -2.262668e-08, 8.444392e-08, 0, 0.9659258, 0.25881904, -8.742278e-08, 0.25881904, -0.9659258, 0, 5, 16)
+current = true
+
+[node name="Scroller" type="Node3D" parent="LevelSelectCam" unique_id=314511225]
+transform = Transform3D(1, -8.2904514e-16, 7.1054274e-15, 0, 0.9659258, -0.25881904, 0, 0.25881904, 0.9659259, -1.1368684e-13, -1.3349991, -5.936001)
+visible = false
+script = ExtResource("4_g28ha")
+
+[node name="Course1" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=1571440382]
+
+[node name="course_deformed" parent="LevelSelectCam/Scroller/Course1" unique_id=691276522 instance=ExtResource("5_xpjs0")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -3.0000002, 0, 2)
+
+[node name="Course2" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=2073377596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="course_cube" parent="LevelSelectCam/Scroller/Course2" unique_id=286241665 instance=ExtResource("6_aetr0")]
+transform = Transform3D(-0.005, 9.473119e-18, -7.5497897e-10, -1.30270086e-17, 0.005, 1.4901161e-10, 7.5497897e-10, 1.4901161e-10, -0.005, -1.9736538, 0, 1.0758057)
+
+[node name="Course3" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=2094795323]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+
+[node name="course_watchman" parent="LevelSelectCam/Scroller/Course3" unique_id=1953256170 instance=ExtResource("7_g28ha")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+
+[node name="Label" type="Label" parent="LevelSelectCam/Scroller" unique_id=1446220964]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.5
+offset_top = 70.0
+offset_right = 96.5
+offset_bottom = 104.0
+grow_horizontal = 2
+text = "Standard Course"
+label_settings = SubResource("LabelSettings_twbvx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="LevelSelectCam/Scroller" unique_id=1613295475]
+stream = SubResource("AudioStreamRandomizer_g28ha")
+bus = &"SFX"
+
+[node name="HUD" parent="." unique_id=153076404 instance=ExtResource("7_861hj")]
+
+[node name="MonkeyBall" parent="." unique_id=126654515 instance=ExtResource("10_wke1o")]
+transform = Transform3D(0.5, 0.4999999, -0.7071068, -0.70710665, 0.7071067, 5.598901e-08, 0.5000002, 0.5, 0.7071067, 14.199122, 0.5, 18.078575)
+item = ExtResource("11_c31ob")
+
+[node name="MonkeyBall2" parent="." unique_id=540427969 instance=ExtResource("10_wke1o")]
+transform = Transform3D(-0.5000002, -0.5, -0.7071067, -0.70710665, 0.7071067, 3.853122e-08, 0.49999994, 0.4999999, -0.7071069, 10.199122, 0.5, 18.078575)
+item = ExtResource("11_c31ob")
+
+[node name="RoboBox" parent="." unique_id=950086696 instance=ExtResource("10_wke1o")]
+transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 12.114404, 0.84881973, 20.495558)
+item = ExtResource("12_psx4n")

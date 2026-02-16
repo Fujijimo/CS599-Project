@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://bvdedbke5l35v"]
+
+[ext_resource type="Script" uid="uid://dtvlivr4xdtem" path="res://golf/scripts/golf.gd" id="1_44vgo"]
+[ext_resource type="PackedScene" uid="uid://dlpkv1yk2343g" path="res://golf/scenes/golf_hud.tscn" id="2_co361"]
+[ext_resource type="PackedScene" uid="uid://br1jvn40si4y1" path="res://golf/scenes/origin.tscn" id="3_e58nf"]
+[ext_resource type="PackedScene" uid="uid://baoif25v7iunw" path="res://golf/scenes/ball_tracker.tscn" id="4_lxckr"]
+[ext_resource type="PackedScene" uid="uid://bo6hs7jjqpamb" path="res://golf/scenes/ball.tscn" id="5_umdcr"]
+[ext_resource type="PackedScene" uid="uid://8putfa6crndu" path="res://golf/scenes/course_standard.tscn" id="6_qypte"]
+[ext_resource type="PackedScene" uid="uid://c1fm1c84fy0al" path="res://golf/scenes/hole.tscn" id="7_eawim"]
+[ext_resource type="PackedScene" uid="uid://ytpui2cbpthj" path="res://golf/scenes/jump_pad.tscn" id="8_3h2ww"]
+[ext_resource type="PackedScene" uid="uid://c0m0jt4qmmvrw" path="res://golf/scenes/speed_pad.tscn" id="9_diy1n"]
+[ext_resource type="PackedScene" uid="uid://c1o66i73ywl3v" path="res://golf/scenes/speed_ring.tscn" id="10_1bmjc"]
+[ext_resource type="PackedScene" uid="uid://b24ac6bvg64kw" path="res://golf/scenes/teleport_ring.tscn" id="11_hrdih"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2yge"]
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_h2yge")
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkv2x"]
+albedo_color = Color(0.31294692, 0.6782138, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_jkv2x"]
+material = SubResource("StandardMaterial3D_jkv2x")
+inner_radius = 1.1
+
+[node name="CourseStandardPlay" type="Node3D" unique_id=1206447059]
+script = ExtResource("1_44vgo")
+
+[node name="HUD" parent="." unique_id=1144179842 instance=ExtResource("2_co361")]
+
+[node name="Origin" parent="." unique_id=817062301 instance=ExtResource("3_e58nf")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0.25, 0)
+
+[node name="BallTracker" parent="." unique_id=78365510 instance=ExtResource("4_lxckr")]
+transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 0, 0.25, 0)
+
+[node name="Ball" parent="." unique_id=678850632 instance=ExtResource("5_umdcr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+visible = false
+sleeping = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=384863367]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 35.42518, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1128467127]
+environment = SubResource("Environment_lquwl")
+
+[node name="course_standard" parent="." unique_id=508815380 instance=ExtResource("6_qypte")]
+transform = Transform3D(0.87630665, 0, 0.4817537, 0, 1, 0, -0.4817537, 0, 0.87630665, -43.84288, 0, -7.4584427)
+
+[node name="Hole" parent="." unique_id=710665000 instance=ExtResource("7_eawim")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 290.79678, -0.8725147, -550.4359)
+
+[node name="JumpPad" parent="." unique_id=630755837 instance=ExtResource("8_3h2ww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 199.71268, 0.09543586, -521.24506)
+
+[node name="JumpPad2" parent="." unique_id=1998516020 instance=ExtResource("8_3h2ww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.489304, 0.014374971, -11.514929)
+
+[node name="SpeedPad" parent="." unique_id=1727040779 instance=ExtResource("9_diy1n")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.093485, -0.0013717413, -11.585244)
+
+[node name="SpeedRing" parent="." unique_id=1791886052 instance=ExtResource("10_1bmjc")]
+transform = Transform3D(-0.9806146, 0, 0.19594619, 0, 1, 0, -0.19594619, 0, -0.9806146, 2.047121, 15.791275, -35.004364)
+
+[node name="TeleportRing2" parent="." unique_id=1324667060 node_paths=PackedStringArray("exit_teleport") instance=ExtResource("11_hrdih")]
+transform = Transform3D(-0.8660254, 0, 0.50000006, 0, 1, 0, -0.50000006, 0, -0.8660254, -34.784782, 3.050589, -32.49969)
+exit_teleport = NodePath("TeleportExit2")
+
+[node name="TeleportExit2" type="MeshInstance3D" parent="TeleportRing2" unique_id=24115916]
+transform = Transform3D(4.5899334, 0, 7.1054274e-15, 0, -4.371138e-08, 4.5899334, -1.1920929e-07, -0.9999998, -2.0063237e-07, -7.6293945e-06, 0.0006432533, 501.17303)
+mesh = SubResource("TorusMesh_jkv2x")
+
+[connection signal="body_exited" from="Ball" to="Ball" method="_on_body_exited"]
+
+[editable path="Ball"]
+[editable path="Hole"]

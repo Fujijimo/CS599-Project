@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://baoif25v7iunw"]
+
+[ext_resource type="Texture2D" uid="uid://c0o5bpcnvbp1j" path="res://golf/assets/smile.png" id="2_1l6jv"]
+[ext_resource type="AudioStream" uid="uid://dhl2regqr5ghp" path="res://golf/sounds/boing.ogg" id="3_1l6jv"]
+[ext_resource type="AudioStream" uid="uid://b2slbfb6uh130" path="res://golf/sounds/punch.ogg" id="4_1l6jv"]
+[ext_resource type="Texture2D" uid="uid://b2vegtnoh4xq" path="res://golf/assets/oo.png" id="4_8rsqo"]
+[ext_resource type="AudioStream" uid="uid://bj2ct1xbjx3iv" path="res://golf/sounds/jump.ogg" id="4_uxttq"]
+[ext_resource type="Texture2D" uid="uid://blltg254b5kyn" path="res://golf/assets/angry.png" id="6_uxttq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dg77c"]
+render_priority = 1
+transparency = 1
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_1l6jv")
+uv1_scale = Vector3(3.025, 3.025, 3.025)
+uv1_offset = Vector3(-1.05, -0.65, 0)
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4c57u"]
+next_pass = SubResource("StandardMaterial3D_dg77c")
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.87058824, 0.6627451, 0.49411765, 1)
+roughness = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_w48qg"]
+material = SubResource("StandardMaterial3D_4c57u")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hvv2x"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("4_1l6jv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uxttq"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("3_1l6jv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vafs6"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("4_uxttq")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ooayy"]
+random_pitch = 1.5
+
+[sub_resource type="Animation" id="Animation_f37ug"]
+resource_name = "Attack"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BallModel:mesh:material:next_pass:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10000001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("6_uxttq"), ExtResource("2_1l6jv")]
+}
+
+[sub_resource type="Animation" id="Animation_vafs6"]
+resource_name = "Jump"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BallModel:mesh:material:next_pass:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_8rsqo"), ExtResource("2_1l6jv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXJump:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ooayy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BallModel:mesh:material:next_pass:albedo_texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_1l6jv")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SFXJump:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f37ug"]
+_data = {
+&"Attack": SubResource("Animation_f37ug"),
+&"Jump": SubResource("Animation_vafs6"),
+&"RESET": SubResource("Animation_ooayy")
+}
+
+[node name="BallTracker" type="Node3D" unique_id=777180075]
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1503298356]
+
+[node name="BallModel" type="MeshInstance3D" parent="." unique_id=559431973]
+transform = Transform3D(0.9999993, 0, 0, 0, 1, 0, 0, 0, 0.9999993, 0, 0, 0)
+mesh = SubResource("SphereMesh_w48qg")
+
+[node name="SFXHit" type="AudioStreamPlayer3D" parent="." unique_id=2000659810]
+stream = SubResource("AudioStreamRandomizer_hvv2x")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SFXBounce" type="AudioStreamPlayer3D" parent="." unique_id=1151154944]
+stream = SubResource("AudioStreamRandomizer_uxttq")
+max_db = 0.0
+bus = &"SFX"
+
+[node name="SFXJump" type="AudioStreamPlayer3D" parent="." unique_id=46586578]
+stream = SubResource("AudioStreamRandomizer_vafs6")
+bus = &"SFX"
+
+[node name="SFXDrop" type="AudioStreamPlayer3D" parent="." unique_id=2026775727]
+stream = SubResource("AudioStreamRandomizer_ooayy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=733945739]
+libraries/ = SubResource("AnimationLibrary_f37ug")

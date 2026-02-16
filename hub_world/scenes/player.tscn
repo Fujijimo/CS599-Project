@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://brhyiqsjujpa3"]
 
 [ext_resource type="Script" uid="uid://bnbwnipmbkv0v" path="res://hub_world/scripts/player.gd" id="1_ygoj8"]
-[ext_resource type="Texture2D" uid="uid://paypbfuqkroy" path="res://hub_world/assets/textures/smile.png" id="2_8p3bf"]
+[ext_resource type="Texture2D" uid="uid://c0o5bpcnvbp1j" path="res://golf/assets/smile.png" id="2_3edd5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvwnw"]
 
@@ -9,7 +9,7 @@
 render_priority = 1
 next_pass = SubResource("StandardMaterial3D_kvwnw")
 transparency = 1
-albedo_texture = ExtResource("2_8p3bf")
+albedo_texture = ExtResource("2_3edd5")
 uv1_scale = Vector3(3.005, 3.005, 3.005)
 uv1_offset = Vector3(-1.03, -0.77, 0)
 texture_repeat = false
@@ -40,28 +40,28 @@ orientation = 2
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8p3bf"]
 radius = 3.0
 
-[node name="Player" type="CharacterBody3D" unique_id=739031588]
+[node name="Player" type="CharacterBody3D" unique_id=941874062]
 script = ExtResource("1_ygoj8")
 
-[node name="CameraPivot" type="Node3D" parent="." unique_id=1619440151]
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1753263206]
 
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1126794780]
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1959778583]
 spring_length = 3.0
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1631363331]
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1854590192]
 transform = Transform3D(0.99999845, 0, 0.0017453283, 0, 1, 0, -0.0017453283, 0, 0.99999845, 0, 0, 0)
 current = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1487800408]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=31695684]
 mesh = SubResource("CapsuleMesh_2cnr3")
 
-[node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D" unique_id=1261666120]
+[node name="RayCast3D" type="RayCast3D" parent="MeshInstance3D" unique_id=1235006961]
 target_position = Vector3(0, 0, 1.5)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=809913197]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1644152171]
 shape = SubResource("CapsuleShape3D_ivps1")
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=2056478722]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=535691323]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 emitting = false
 amount = 150
@@ -69,8 +69,8 @@ lifetime = 5.0
 process_material = SubResource("ParticleProcessMaterial_urp6f")
 draw_pass_1 = SubResource("PlaneMesh_bwjto")
 
-[node name="DetectInteractable" type="Area3D" parent="." unique_id=665755416]
+[node name="DetectInteractable" type="Area3D" parent="." unique_id=1785299323]
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectInteractable" unique_id=1010861355]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectInteractable" unique_id=127286202]
 shape = SubResource("CylinderShape3D_8p3bf")

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://ytpui2cbpthj"]
+
+[ext_resource type="Script" uid="uid://c5hm04toq3hsd" path="res://golf/scripts/jump_pad.gd" id="1_526ql"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4metj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_526ql"]
+size = Vector3(10, 0.10172119, 10)
+
+[node name="JumpPad" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_526ql")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 0.05, 0, 0, 0, 10, 0, 0.00062155724, 0)
+mesh = SubResource("BoxMesh_4metj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009521485, 0)
+shape = SubResource("BoxShape3D_526ql")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02309196, 0)
+shape = SubResource("BoxShape3D_526ql")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -1,0 +1,332 @@
+[gd_scene format=3 uid="uid://dlpkv1yk2343g"]
+
+[ext_resource type="Script" uid="uid://k6md8k7hsj3w" path="res://golf/scripts/golf_hud.gd" id="1_37p78"]
+
+[sub_resource type="Animation" id="Animation_a2258"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_640wx"]
+resource_name = "strength_meter"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 100.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1xsix"]
+_data = {
+&"RESET": SubResource("Animation_a2258"),
+&"strength_meter": SubResource("Animation_640wx")
+}
+
+[sub_resource type="Animation" id="Animation_37p78"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OldProgressBar/ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OldProgressBar/ProgressBar2:value")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8sq4i"]
+resource_name = "curve_meter"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OldProgressBar/ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OldProgressBar/ProgressBar2:value")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 10.0]
+}
+
+[sub_resource type="Animation" id="Animation_64ctp"]
+resource_name = "strength_meter"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OldProgressBar/ProgressBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 100.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8sq4i"]
+_data = {
+&"RESET": SubResource("Animation_37p78"),
+&"curve_meter": SubResource("Animation_8sq4i"),
+&"strength_meter": SubResource("Animation_64ctp")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_hylw1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_37p78"]
+font_size = 100
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1mjwu"]
+shading_mode = 0
+albedo_color = Color(0.98487467, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_kefrh"]
+material = SubResource("StandardMaterial3D_1mjwu")
+size = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cjtcp"]
+shading_mode = 0
+albedo_color = Color(0.965548, 0.965548, 0.965548, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_hylw1"]
+material = SubResource("StandardMaterial3D_cjtcp")
+size = Vector3(0.5, 0.75, 0.75)
+
+[node name="HUD" type="CanvasLayer" unique_id=1669095881]
+script = ExtResource("1_37p78")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1328056876]
+libraries/ = SubResource("AnimationLibrary_1xsix")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1121266874]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -54.0
+offset_right = 640.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+step = 1.0
+fill_mode = 1
+show_percentage = false
+
+[node name="OldProgressBar" type="Control" parent="." unique_id=750968772]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="OldProgressBar" unique_id=1195986675]
+layout_mode = 0
+offset_top = 666.0
+offset_right = 1160.0
+offset_bottom = 720.0
+step = 1.0
+fill_mode = 1
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="OldProgressBar" unique_id=676641076]
+layout_mode = 0
+offset_left = 1160.0
+offset_top = 666.0
+offset_right = 1280.0
+offset_bottom = 720.0
+max_value = 10.0
+step = 1.0
+show_percentage = false
+
+[node name="ColorRect" type="ColorRect" parent="OldProgressBar" unique_id=1153596647]
+layout_mode = 0
+offset_left = 1156.0
+offset_top = 666.0
+offset_right = 1164.0
+offset_bottom = 720.0
+color = Color(1, 0.34509805, 0, 0.5882353)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="OldProgressBar" unique_id=535134392]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_8sq4i")
+
+[node name="Stroke" type="Label" parent="." unique_id=71049354]
+offset_left = 8.0
+offset_right = 63.0
+offset_bottom = 24.0
+text = "Stroke:"
+label_settings = SubResource("LabelSettings_hylw1")
+
+[node name="Club" type="Label" parent="." unique_id=1190927503]
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 48.0
+offset_bottom = 48.0
+text = "Club:"
+
+[node name="Result" type="Label" parent="." unique_id=230342584]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = -91.5
+offset_right = 172.0
+offset_bottom = 91.5
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_37p78")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XP" type="Label" parent="." unique_id=2033433602]
+offset_left = 9.0
+offset_top = 46.0
+offset_right = 64.0
+offset_bottom = 70.0
+text = "XP:"
+
+[node name="Money" type="Label" parent="." unique_id=1491622679]
+offset_left = 8.0
+offset_top = 70.0
+offset_right = 65.0
+offset_bottom = 94.0
+text = "Money:"
+
+[node name="WindSpeed" type="Label" parent="." unique_id=970570842]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -215.0
+offset_top = -2.0
+offset_right = -115.0
+offset_bottom = 21.0
+grow_horizontal = 0
+text = "Wind Speed: "
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1067187758]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -512.0
+offset_bottom = 512.0
+grow_horizontal = 0
+metadata/_edit_lock_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=488779577]
+transparent_bg = true
+handle_input_locally = false
+canvas_cull_mask = 4294967294
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="UICam" type="Camera3D" parent="SubViewportContainer/SubViewport" unique_id=67285799]
+physics_interpolation_mode = 1
+cull_mask = 1048574
+doppler_tracking = 2
+current = true
+
+[node name="Arrow" type="Node3D" parent="SubViewportContainer/SubViewport/UICam" unique_id=1117395104]
+transform = Transform3D(0.10000001, 0, 0, 0, 0.1, 0, 0, 0, 0.10000001, 0.675, 0.3894589, -0.675)
+
+[node name="ArrowMesh" type="Node3D" parent="SubViewportContainer/SubViewport/UICam/Arrow" unique_id=996513292]
+transform = Transform3D(0.70228624, -0.14752902, -0.6964402, -0.18293718, 0.90804, -0.37682548, 0.6879883, 0.39204437, 0.61071527, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/UICam/Arrow/ArrowMesh" unique_id=1552258495]
+transform = Transform3D(1, 0, -2.1175824e-22, 0, -4.371139e-08, 0.64000005, 0, -1, -2.7975286e-08, 0, 0, -0.45404625)
+layers = 2
+mesh = SubResource("PrismMesh_kefrh")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/UICam/Arrow/ArrowMesh" unique_id=1543060461]
+transform = Transform3D(0.95, 1.4210855e-14, -1.0587912e-22, 0, -8.2395964e-08, 0.45500004, 0, -1.885, -1.988868e-08, 0, 0, 0)
+layers = 2
+mesh = SubResource("PrismMesh_hylw1")
+skeleton = NodePath("../..")
+
+[node name="AirControl" type="Label" parent="." unique_id=1664102320]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -140.0
+offset_right = 97.0
+offset_bottom = -116.0
+grow_vertical = 0
+text = "Air Control:"
+
+[node name="Jump" type="Label" parent="." unique_id=1238784163]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -116.0
+offset_right = 63.0
+offset_bottom = -92.0
+grow_vertical = 0
+text = "Jump:"
+
+[node name="Drop" type="Label" parent="." unique_id=1507703089]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -92.0
+offset_right = 63.0
+offset_bottom = -68.0
+grow_vertical = 0
+text = "Drop:"

@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://stloqdh0an84"]
+
+[ext_resource type="Script" uid="uid://dtvlivr4xdtem" path="res://golf/scripts/golf.gd" id="1_48h08"]
+[ext_resource type="PackedScene" uid="uid://d3kympyos0kcx" path="res://golf/scenes/course_clover.tscn" id="1_ippiv"]
+[ext_resource type="PackedScene" uid="uid://bo6hs7jjqpamb" path="res://golf/scenes/ball.tscn" id="2_df1fa"]
+[ext_resource type="PackedScene" uid="uid://baoif25v7iunw" path="res://golf/scenes/ball_tracker.tscn" id="3_eksdn"]
+[ext_resource type="PackedScene" uid="uid://dlpkv1yk2343g" path="res://golf/scenes/golf_hud.tscn" id="4_08y07"]
+[ext_resource type="PackedScene" uid="uid://br1jvn40si4y1" path="res://golf/scenes/origin.tscn" id="5_poin7"]
+[ext_resource type="PackedScene" uid="uid://c1fm1c84fy0al" path="res://golf/scenes/hole.tscn" id="7_p77c2"]
+[ext_resource type="PackedScene" uid="uid://c1o66i73ywl3v" path="res://golf/scenes/speed_ring.tscn" id="10_ydje5"]
+[ext_resource type="PackedScene" uid="uid://b24ac6bvg64kw" path="res://golf/scenes/teleport_ring.tscn" id="11_ar0so"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2yge"]
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_h2yge")
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jkv2x"]
+albedo_color = Color(0.31294692, 0.6782138, 0, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_jkv2x"]
+material = SubResource("StandardMaterial3D_jkv2x")
+inner_radius = 1.1
+
+[node name="CourseCloverPlay" type="Node3D" unique_id=1446718311]
+script = ExtResource("1_48h08")
+
+[node name="HUD" parent="." unique_id=946475884 instance=ExtResource("4_08y07")]
+
+[node name="Origin" parent="." unique_id=413410387 instance=ExtResource("5_poin7")]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, -0.233, 0)
+
+[node name="BallTracker" parent="." unique_id=1861153176 instance=ExtResource("3_eksdn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.233, 0)
+
+[node name="Ball" parent="." unique_id=1963418127 instance=ExtResource("2_df1fa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.233, 0)
+visible = false
+sleeping = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1520021617]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 35.42518, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1193175891]
+environment = SubResource("Environment_lquwl")
+
+[node name="Hole" parent="." unique_id=2135558723 instance=ExtResource("7_p77c2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -475.013, -1.353996, -875.0139)
+
+[node name="SpeedRing" parent="." unique_id=1307331819 instance=ExtResource("10_ydje5")]
+transform = Transform3D(-0.70710677, 0.3174298, -0.63185304, 0, 0.8935752, 0.44891354, 0.70710677, 0.3174298, -0.63185304, -132.30264, 2.57624, -119.75047)
+
+[node name="SpeedRing2" parent="." unique_id=1268650371 instance=ExtResource("10_ydje5")]
+transform = Transform3D(-0.70710677, 0.3174298, -0.63185304, 0, 0.8935752, 0.44891354, 0.70710677, 0.3174298, -0.63185304, -122.51353, 2.57624, -129.5396)
+
+[node name="TeleportRing" parent="." unique_id=1160013892 node_paths=PackedStringArray("exit_teleport") instance=ExtResource("11_ar0so")]
+transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, -137.24643, 2.57624, -135.26642)
+exit_teleport = NodePath("TeleportExit")
+
+[node name="TeleportExit" type="MeshInstance3D" parent="TeleportRing" unique_id=1594375055]
+transform = Transform3D(4.5899334, 0, 7.1054274e-15, 0, -4.371138e-08, 4.5899334, -1.1920929e-07, -0.9999998, -2.0063237e-07, -7.6293945e-06, 0.0006380718, 382.6338)
+mesh = SubResource("TorusMesh_jkv2x")
+
+[node name="course_cube" parent="." unique_id=1448145388 instance=ExtResource("1_ippiv")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -75, -200, -75)
+
+[editable path="Ball"]
+[editable path="Hole"]

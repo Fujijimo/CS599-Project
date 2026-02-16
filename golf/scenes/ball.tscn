@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo6hs7jjqpamb"]
+
+[ext_resource type="Script" uid="uid://ccf356a87sknp" path="res://golf/scripts/ball.gd" id="1_x8fbi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x8fbi"]
+bounce = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_41u45"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ktgx5"]
+radius = 0.25
+
+[node name="Ball" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_x8fbi")
+gravity_scale = 5.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 20
+script = ExtResource("1_x8fbi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_41u45")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ktgx5")
+
+[node name="AirControlTimer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="HitBuffer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="AirControlTimer" to="." method="_on_air_control_timer_timeout"]
+[connection signal="timeout" from="HitBuffer" to="." method="_on_hit_buffer_timeout"]

@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://c1o66i73ywl3v"]
+
+[ext_resource type="Script" uid="uid://ce2oualek4ejj" path="res://golf/scripts/speed_ring.gd" id="1_7bkqp"]
+[ext_resource type="AudioStream" uid="uid://bw0eulxhtupel" path="res://golf/sounds/teleport.ogg" id="2_0dv8s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bkqp"]
+albedo_color = Color(0, 0, 1, 1)
+emission = Color(0, 0, 1, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_033fe"]
+material = SubResource("StandardMaterial3D_7bkqp")
+inner_radius = 1.1
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fuqs7"]
+height = 1.0
+radius = 4.575
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k2c3"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_rn43w"]
+material = SubResource("StandardMaterial3D_6k2c3")
+size = Vector3(2, 2, 1)
+
+[node name="SpeedRing" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_7bkqp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.5899334, 0, 0, 0, -4.371138e-08, 4.5899334, 0, -0.9999998, -2.0063236e-07, 0, 0.00062155724, 0)
+mesh = SubResource("TorusMesh_033fe")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06541252, 0)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_fuqs7")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.313, 4)
+mesh = SubResource("PrismMesh_rn43w")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_0dv8s")
+bus = &"SFX"
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

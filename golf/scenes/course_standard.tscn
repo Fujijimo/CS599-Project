@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://8putfa6crndu"]
+
+[ext_resource type="PackedScene" uid="uid://bnb0kjnry4cyu" path="res://golf/assets/course_deformed.glb" id="1_cuven"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cuven"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.78431374)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m0ijl"]
+material = SubResource("StandardMaterial3D_cuven")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 12.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kv5ru"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 0, 0, 0.78431374)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_81vt1"]
+material = SubResource("StandardMaterial3D_kv5ru")
+size = Vector2(1.5, 1)
+
+[node name="course_deformed" instance=ExtResource("1_cuven")]
+
+[node name="Flag" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(0.3230586, 0, -0.94637895, 0, 1, 0, 0.94637895, 0, 0.3230586, 554.83484, 3.343041, -314.61636)
+mesh = SubResource("CylinderMesh_m0ijl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Flag" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.84095263, 5.4429636, 0)
+mesh = SubResource("PlaneMesh_81vt1")

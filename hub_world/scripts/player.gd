@@ -3,9 +3,12 @@ extends CharacterBody3D
 @export_range(0.0, 1.0) var mouse_sensitivity: float = 0.01
 @export var tilt_limit: float = deg_to_rad(75)
 @onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
+@onready var scroller = $"../LevelSelectCam/Scroller"
+@onready var scroller_label = $"../LevelSelectCam/Scroller/Label"
 const SPEED: float = 5.0
 const SPRINT_SPEED: float = 15.0
 const JUMP_VELOCITY: float = 4.5*2
+var mode = "mode_hub"
 
 const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
 var interact_marker_instance: MeshInstance3D = INTERACT_MARKER.instantiate()
@@ -14,16 +17,73 @@ var last_interactable: Node3D
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	scroller.process_mode = Node.PROCESS_MODE_DISABLED
 	
 func _physics_process(delta: float) -> void:
+	if Input.is_joy_known(0) == true:
+		var cam_input_dir: Vector2 = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
+		var cam_sensitivity: float = 0.05
+
+		$CameraPivot.rotation.x -= cam_input_dir.y * cam_sensitivity
+		$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
+		$CameraPivot.rotation.y -= cam_input_dir.x * cam_sensitivity
+	
+	mode_setup(delta)
+	interact_setup()
+	enable_interaction()
+
+func _unhandled_input(event: InputEvent) -> void:
+	capture_mouse(event)
+	hub_camera(event)
+	if Input.is_action_pressed("save"):
+		save_game()
+	if Input.is_action_pressed("load"):
+		load_game()
+
+func hub_camera(event):
+	if mode == "mode_hub":
+		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			$CameraPivot.rotation.x -= event.relative.y * mouse_sensitivity
+			# Prevent the camera from rotating too far up or down.
+			$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
+			$CameraPivot.rotation.y -= event.relative.x * mouse_sensitivity
+
+func capture_mouse(event):
+	if event.is_action_pressed("toggle_mouse_capture"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func mode_setup(delta):
+	if mode == "mode_hub":
+		mode_hub(delta)
+	if mode == "mode_level_select":
+		mode_level_select(delta)
+	else:
+		$"../LevelSelectCam".current = false
+		scroller.visible = false
+		scroller_label.visible = false
+
+func mode_hub(delta):
+	$CameraPivot/SpringArm3D/Camera3D.current = true
 	if is_on_floor() == false:
 		velocity += get_gravity() * delta
 		
 	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 	
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var direction: Vector3 = Vector3(input_dir.x, 0, input_dir.y).normalized()
+	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
+	
+	
+	if Input.is_joy_known(0) == true:
+		var cam_input_dir = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
+		var camera_sensitivity = 0.065
+	
+		$CameraPivot.rotation.x -= cam_input_dir.y * camera_sensitivity
+		$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
+		$CameraPivot.rotation.y -= cam_input_dir.x * camera_sensitivity
 	
 	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
 	
@@ -42,37 +102,20 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	move_and_slide()
-	
-	if Input.is_joy_known(0) == true:
-		var cam_input_dir: Vector2 = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
-		var cam_sensitivity: float = 0.075
-	
-		$CameraPivot.rotation.x -= cam_input_dir.y * cam_sensitivity
-		$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
-		$CameraPivot.rotation.y -= cam_input_dir.x * cam_sensitivity
-	
-	enable_interaction()
 
-func _unhandled_input(event: InputEvent) -> void:
-	capture_mouse(event)
-	hub_camera(event)
-	if Input.is_action_pressed("save"):
-		save_game()
-	if Input.is_action_pressed("load"):
-		load_game()
+func mode_level_select(delta):
+	$"../LevelSelectCam".current = true
+	scroller.visible = true
+	scroller_label.visible = true
+	
+	scroller.level_select_input(delta)
+	if Input.is_action_just_pressed("cancel"):
+		mode = "mode_hub"
 
-func hub_camera(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		$CameraPivot.rotation.x -= event.relative.y * mouse_sensitivity
-		$CameraPivot.rotation.x = clampf($CameraPivot.rotation.x, deg_to_rad(-89), deg_to_rad(45))
-		$CameraPivot.rotation.y -= event.relative.x * mouse_sensitivity
-
-func capture_mouse(event):
-	if event.is_action_pressed("toggle_mouse_capture"):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+func interact_setup():
+	if $MeshInstance3D/RayCast3D.get_collider() == $"../LevelSelectActivate":
+		if Input.is_action_just_pressed("interact"):
+			mode = "mode_level_select"
 
 func save_game() -> void:
 	saveload.data.global_position = global_position

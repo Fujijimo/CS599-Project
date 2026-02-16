@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://c0m0jt4qmmvrw"]
+
+[ext_resource type="Script" uid="uid://drkpv81tjlrxd" path="res://golf/scripts/speed_pad.gd" id="1_rn43w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rn43w"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4metj"]
+material = SubResource("StandardMaterial3D_rn43w")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_526ql"]
+size = Vector3(10, 0.10172119, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6k2c3"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_rn43w"]
+material = SubResource("StandardMaterial3D_6k2c3")
+size = Vector3(2, 2, 1)
+
+[node name="SpeedPad" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_rn43w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 0.05, 0, 0, 0, 10, 0, 0.00062155724, 0)
+mesh = SubResource("BoxMesh_4metj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009521485, 0)
+shape = SubResource("BoxShape3D_526ql")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06541252, 0)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02309196, 0)
+shape = SubResource("BoxShape3D_526ql")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, -0.313, 4)
+mesh = SubResource("PrismMesh_rn43w")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
