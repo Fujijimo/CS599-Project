@@ -1,6 +1,6 @@
 extends Control
 
-const ITEM_SLOT = preload("res://inventory/item_slot.tscn")
+const ITEM_SLOT = preload("res://hub_world/inventory/item_slot.tscn")
 @onready var inventory_v_box: VBoxContainer = $HBoxContainer/ScrollContainer/InventoryVBox
 
 @onready var details_name: Label = $HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer/DetailsName

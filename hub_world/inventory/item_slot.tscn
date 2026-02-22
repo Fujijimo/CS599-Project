@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://by36uvqi0qmkb"]
 
-[ext_resource type="Script" uid="uid://bxvk1fmbnlako" path="res://inventory/item_slot.gd" id="1_8kgv2"]
+[ext_resource type="Script" uid="uid://bxvk1fmbnlako" path="res://hub_world/inventory/item_slot.gd" id="1_8kgv2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_v7wgj"]
 font_size = 36

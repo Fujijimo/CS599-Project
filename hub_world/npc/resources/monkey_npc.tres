@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://d2a6i2d1v3r6t"]
+
+[ext_resource type="Texture2D" uid="uid://i6dbbmor2gg6" path="res://hub_world/npc/assets/monkey.png" id="1_0x03m"]
+[ext_resource type="Script" uid="uid://dknwjt683p4dx" path="res://hub_world/npc/npc_data.gd" id="1_6fkkd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6fkkd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fax7a"]
+transparency = 1
+albedo_texture = ExtResource("1_0x03m")
+uv1_scale = Vector3(1.77, 1.77, 1.77)
+uv1_offset = Vector3(-0.545, -0.3, 0)
+texture_repeat = false
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0x03m"]
+material = SubResource("StandardMaterial3D_fax7a")
+
+[resource]
+script = ExtResource("1_6fkkd")
+name = "Monkey"
+dialogue_id = "test1"
+mesh = SubResource("CapsuleMesh_0x03m")
+collision = SubResource("CapsuleShape3D_6fkkd")
+marker_height = 1.5
+metadata/_custom_type_script = "uid://dknwjt683p4dx"

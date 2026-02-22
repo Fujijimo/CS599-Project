@@ -9,9 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://y2eeor084b7o" path="res://hub_world/scenes/hub_world_hud.tscn" id="7_861hj"]
 [ext_resource type="AudioStream" uid="uid://7gypjyqlw7fw" path="res://golf/sounds/snap.ogg" id="7_dl1n6"]
 [ext_resource type="PackedScene" uid="uid://3isnb61mvmh6" path="res://glb/course_watchman.glb" id="7_g28ha"]
-[ext_resource type="PackedScene" uid="uid://cxyqa58b5toaf" path="res://item/item.tscn" id="10_wke1o"]
-[ext_resource type="Resource" uid="uid://djoctxh16apay" path="res://item/resources/monkey.tres" id="11_c31ob"]
-[ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://item/resources/box.tres" id="12_psx4n"]
+[ext_resource type="PackedScene" uid="uid://gh2wj5k21me5" path="res://hub_world/scenes/dialogue_ui.tscn" id="9_c31ob"]
+[ext_resource type="PackedScene" uid="uid://cxyqa58b5toaf" path="res://hub_world/item/item.tscn" id="10_wke1o"]
+[ext_resource type="Resource" uid="uid://djoctxh16apay" path="res://hub_world/item/resources/monkey.tres" id="11_c31ob"]
+[ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://hub_world/item/resources/box.tres" id="12_psx4n"]
+[ext_resource type="PackedScene" uid="uid://cysusii05wlen" path="res://hub_world/npc/npc.tscn" id="14_p66a0"]
+[ext_resource type="Resource" uid="uid://d2a6i2d1v3r6t" path="res://hub_world/npc/resources/monkey_npc.tres" id="15_jsk6p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
 albedo_texture = ExtResource("3_dl1n6")
@@ -169,6 +172,8 @@ label_settings = SubResource("LabelSettings_twbvx")
 stream = SubResource("AudioStreamRandomizer_g28ha")
 bus = &"SFX"
 
+[node name="DialogueUI" parent="." unique_id=1721514724 instance=ExtResource("9_c31ob")]
+
 [node name="HUD" parent="." unique_id=153076404 instance=ExtResource("7_861hj")]
 
 [node name="MonkeyBall" parent="." unique_id=126654515 instance=ExtResource("10_wke1o")]
@@ -182,3 +187,7 @@ item = ExtResource("11_c31ob")
 [node name="RoboBox" parent="." unique_id=950086696 instance=ExtResource("10_wke1o")]
 transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 12.114404, 0.84881973, 20.495558)
 item = ExtResource("12_psx4n")
+
+[node name="MonkeyNPC" parent="." unique_id=1088753126 instance=ExtResource("14_p66a0")]
+transform = Transform3D(-0.49999994, 0, 0.86602557, 0, 1, 0, -0.86602557, 0, -0.49999994, -11.521514, 1.0000005, 18.85918)
+npc = ExtResource("15_jsk6p")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://kb5e6e8xm0qx"]
 
-[ext_resource type="PackedScene" uid="uid://by36uvqi0qmkb" path="res://inventory/item_slot.tscn" id="1_62wf1"]
-[ext_resource type="Script" uid="uid://cyoph0jf2h1om" path="res://inventory/inventory_display.gd" id="1_qse2j"]
+[ext_resource type="PackedScene" uid="uid://by36uvqi0qmkb" path="res://hub_world/inventory/item_slot.tscn" id="1_62wf1"]
+[ext_resource type="Script" uid="uid://cyoph0jf2h1om" path="res://hub_world/inventory/inventory_display.gd" id="1_qse2j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ikjar"]
 font_size = 48

@@ -1,0 +1,16 @@
+{
+	"test1": {
+		"speaker": "Monkey",
+		"text": "I am a monkey.",
+		"next_id": "test2"
+	},
+	"test2": {
+		"speaker": "Monkey",
+		"text": "I like bananas.",
+		"next_id": "test3"
+	},
+	"test3": {
+		"speaker": "Monkey",
+		"text": "I like YOUR bananas."
+	}
+}

@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bdvqvrea20hi8"]
 
-[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://item/item_data.gd" id="1_c2ypf"]
+[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://hub_world/item/item_data.gd" id="1_c2ypf"]
 [ext_resource type="Texture2D" uid="uid://dhdeld2fuf22q" path="res://icon.svg" id="1_nqu1l"]
-[ext_resource type="Texture2D" uid="uid://5b63rkcj4om" path="res://item/assets/godot.png" id="3_b7aao"]
+[ext_resource type="Texture2D" uid="uid://5b63rkcj4om" path="res://hub_world/item/assets/godot.png" id="3_b7aao"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nqu1l"]
 

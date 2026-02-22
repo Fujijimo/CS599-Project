@@ -22,7 +22,6 @@ config/run_on_separate_thread=false
 
 [autoload]
 
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 saveload="*res://saveload.gd"
 inventory="*uid://m7hjwa1tbtpl"
 
@@ -38,9 +37,11 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/borderless=true
 
-[editor_plugins]
+[global_group]
 
-enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+pickup=""
+interactable=""
+dialogue=""
 
 [input]
 

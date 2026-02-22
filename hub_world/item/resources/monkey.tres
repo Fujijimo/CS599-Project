@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://djoctxh16apay"]
 
-[ext_resource type="Texture2D" uid="uid://7acex57cqppl" path="res://item/assets/monkey.png" id="1_6o4qe"]
-[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://item/item_data.gd" id="2_hv7df"]
+[ext_resource type="Texture2D" uid="uid://7acex57cqppl" path="res://hub_world/item/assets/monkey.png" id="1_6o4qe"]
+[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://hub_world/item/item_data.gd" id="2_hv7df"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_6o4qe"]
 

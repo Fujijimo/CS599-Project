@@ -3,12 +3,16 @@ extends CharacterBody3D
 @export_range(0.0, 1.0) var mouse_sensitivity: float = 0.01
 @export var tilt_limit: float = deg_to_rad(75)
 @onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
+@onready var dialogue_ui: CanvasLayer = $"../DialogueUI"
 @onready var scroller = $"../LevelSelectCam/Scroller"
 @onready var scroller_label = $"../LevelSelectCam/Scroller/Label"
 const SPEED: float = 5.0
 const SPRINT_SPEED: float = 15.0
 const JUMP_VELOCITY: float = 4.5*2
-var mode = "mode_hub"
+var mode: String = "mode_hub"
+var dialogue_data: Dictionary
+var end_dialogue_timer: Timer = Timer.new()
+var timeout: bool = false
 
 const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
 var interact_marker_instance: MeshInstance3D = INTERACT_MARKER.instantiate()
@@ -16,6 +20,15 @@ var interactable: Node3D
 var last_interactable: Node3D
 
 func _ready() -> void:
+	var file = FileAccess.open("res://hub_world/dialogue.json", FileAccess.READ)
+	if file == null:
+		push_error("Failed to open dialogue file")
+		return
+	var content = file.get_as_text()
+	dialogue_data = JSON.parse_string(content)
+	dialogue_ui.dialogue_finished.connect(_on_dialogue_finished)
+	end_dialogue_timer.timeout.connect(_on_end_dialogue_timer_timeout)
+	add_child(end_dialogue_timer)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	scroller.process_mode = Node.PROCESS_MODE_DISABLED
 	
@@ -145,11 +158,17 @@ func enable_interaction():
 		if interactable.is_in_group("interactable") and is_instance_valid(interact_marker_instance) == false:
 			interact_marker_instance = INTERACT_MARKER.instantiate()
 			interactable.get_parent().add_child(interact_marker_instance)
-			interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.item.marker_height, 0) 
+			if interactable.is_in_group("pickup"):
+				interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.item.marker_height, 0)
+			if interactable.is_in_group("dialogue"):
+				interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.npc.marker_height, 0) 
 			last_interactable = interactable
 		
 		if interactable.is_in_group("pickup"):
 			enable_pickup()
+			
+		if interactable.is_in_group("dialogue"):
+			enable_dialogue()
 	
 	elif last_interactable != null:
 		if is_instance_valid(interact_marker_instance):
@@ -161,3 +180,20 @@ func enable_pickup():
 		if is_instance_valid(interact_marker_instance):
 			interact_marker_instance.queue_free()
 		interactable.queue_free()
+		
+func enable_dialogue():
+	if $DetectInteractable.overlaps_body(interactable) and Input.is_action_just_pressed("interact"):
+		self.set_process_unhandled_input(false)
+		self.set_physics_process(false)
+		dialogue_ui.start(dialogue_data, interactable.npc.dialogue_id)
+
+func _on_dialogue_finished():
+	timeout = true
+	end_dialogue_timer.start(0.1)
+
+func _on_end_dialogue_timer_timeout():
+	if timeout == true:
+		self.set_process_unhandled_input(true)
+		self.set_physics_process(true)
+		timeout = false
+	

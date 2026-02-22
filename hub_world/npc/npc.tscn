@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cysusii05wlen"]
+
+[ext_resource type="Script" uid="uid://bx5jjbv5kfie6" path="res://hub_world/npc/npc.gd" id="1_mnp0c"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ngavm"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v7lw1"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=1088753126 groups=["dialogue", "interactable"]]
+collision_layer = 3
+script = ExtResource("1_mnp0c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1994858934]
+shape = SubResource("CapsuleShape3D_ngavm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1487300320]
+mesh = SubResource("CapsuleMesh_v7lw1")
