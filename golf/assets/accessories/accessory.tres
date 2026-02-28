@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="AccessoryData" format=3 uid="uid://bqhe03qntdyup"]
+
+[ext_resource type="Script" uid="uid://dfymkm1j7dest" path="res://golf/assets/accessories/accessory_data.gd" id="1_jlkgb"]
+
+[resource]
+script = ExtResource("1_jlkgb")

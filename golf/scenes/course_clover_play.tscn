@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dtvlivr4xdtem" path="res://golf/scripts/golf.gd" id="1_48h08"]
 [ext_resource type="PackedScene" uid="uid://d3kympyos0kcx" path="res://golf/scenes/course_clover.tscn" id="1_ippiv"]
 [ext_resource type="PackedScene" uid="uid://bo6hs7jjqpamb" path="res://golf/scenes/ball.tscn" id="2_df1fa"]
-[ext_resource type="PackedScene" uid="uid://baoif25v7iunw" path="res://golf/scenes/ball_tracker.tscn" id="3_eksdn"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="3_eksdn"]
 [ext_resource type="PackedScene" uid="uid://dlpkv1yk2343g" path="res://golf/scenes/golf_hud.tscn" id="4_08y07"]
 [ext_resource type="PackedScene" uid="uid://br1jvn40si4y1" path="res://golf/scenes/origin.tscn" id="5_poin7"]
 [ext_resource type="PackedScene" uid="uid://c1fm1c84fy0al" path="res://golf/scenes/hole.tscn" id="7_p77c2"]
@@ -59,11 +59,12 @@ transform = Transform3D(-0.70710677, 0.3174298, -0.63185304, 0, 0.8935752, 0.448
 
 [node name="TeleportRing" parent="." unique_id=1160013892 node_paths=PackedStringArray("exit_teleport") instance=ExtResource("11_ar0so")]
 transform = Transform3D(-0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.70710677, -137.24643, 2.57624, -135.26642)
-exit_teleport = NodePath("TeleportExit")
+exit_teleport = NodePath("../TeleportExit")
 
-[node name="TeleportExit" type="MeshInstance3D" parent="TeleportRing" unique_id=1594375055]
-transform = Transform3D(4.5899334, 0, 7.1054274e-15, 0, -4.371138e-08, 4.5899334, -1.1920929e-07, -0.9999998, -2.0063237e-07, -7.6293945e-06, 0.0006380718, 382.6338)
+[node name="TeleportExit" type="MeshInstance3D" parent="." unique_id=1594375055]
+transform = Transform3D(-3.245573, 0.70710665, 1.4186851e-07, 0, -4.371138e-08, 4.5899334, 3.245573, 0.70710665, 1.4186851e-07, -407.80936, 2.576878, -405.82935)
 mesh = SubResource("TorusMesh_jkv2x")
+skeleton = NodePath("../TeleportRing")
 
 [node name="course_cube" parent="." unique_id=1448145388 instance=ExtResource("1_ippiv")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -75, -200, -75)

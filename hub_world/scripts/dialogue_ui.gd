@@ -51,7 +51,6 @@ func _on_typing_timer_timeout():
 		# Consider adding a "wait_for_input": true option
 		# to data and checking here if needed
 		if wait_for_input == true:
-			print("poop")
 			await dialogue_advance
 			if entry.has("next_id"):
 				_show_dialogue(entry["next_id"])
@@ -65,9 +64,12 @@ func end_dialogue():
 func _unhandled_input(event: InputEvent):
 	if not is_visible():
 		return
-
-	if event.is_action_pressed("interact"):
+		
+	if event.is_action_pressed("interact") and text_label.visible_characters < current_text.length():
+		text_label.visible_characters = current_text.length()
+	elif event.is_action_pressed("interact"):
 		dialogue_advance.emit()
+		
 		"""if typing_timer.is_stopped():
 			var entry = dialogue_data[current_dialogue_id]
 			if not entry.has("next_id"):

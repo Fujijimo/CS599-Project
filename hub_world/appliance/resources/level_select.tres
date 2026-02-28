@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ApplianceData" format=3 uid="uid://0p5h41hknog2"]
+
+[ext_resource type="Script" uid="uid://cldckolp05usn" path="res://hub_world/appliance/appliance_data.gd" id="2_4m4r0"]
+
+[resource]
+script = ExtResource("2_4m4r0")
+name = "Gorf Cube"
+marker_height = 1.33
+mode = "level_select"
+metadata/_custom_type_script = "uid://82tjs34yoggp"

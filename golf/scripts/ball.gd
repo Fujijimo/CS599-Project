@@ -121,30 +121,24 @@ func ability_drop():
 func ability_jump():
 	var jump_height: float = 50.0
 	if ability_used.jump != 0:
-		if Input.is_action_just_pressed("ability2") and dropping == false:
+		if Input.is_action_just_pressed("ability2") and hit_buffer_timeout == false and dropping == false:
 			apply_central_impulse(Vector3(0,-linear_velocity.y + jump_height,0))
 			animation.stop()
 			animation.play("Jump")
 			ability_used.jump -= 1
 
 func ability_air_control(delta):
-	var air_speed: float = 30.0
-	var controlling: bool = false
+	var air_drag: float = 0.5
+	var controllable: bool = false
+	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
+	direction = direction.rotated(Vector3.UP, $"../Origin".global_rotation.y)
+	
 	if touched == false and ability_used.air_control >= 0.01 and dropping == false:
-		if Input.is_action_pressed("move_up"):
-			apply_central_impulse(Vector3(-origin.basis.z.x * air_speed, 0, -origin.basis.z.z * air_speed) * delta)
-			controlling = true
-		if Input.is_action_pressed("move_down"):
-			apply_central_impulse(Vector3(origin.basis.z.x * air_speed, 0, origin.basis.z.z * air_speed) * delta)
-			controlling = true
-		if Input.is_action_pressed("move_left"):
-			apply_central_impulse(Vector3(-origin.basis.x.x * air_speed, 0, -origin.basis.x.z * air_speed) * delta)
-			controlling = true
-		if Input.is_action_pressed("move_right"):
-			apply_central_impulse(Vector3(origin.basis.x.x * air_speed, 0, origin.basis.x.z * air_speed) * delta)
-			controlling = true
+		apply_central_impulse(direction * air_drag)
+		controllable = true
 			
-	if controlling == true:
+	if input_dir != Vector2(0,0) and controllable == true:
 		ability_used.air_control -= delta
 
 func decelerate_ball_and_end_stroke():

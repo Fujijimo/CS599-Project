@@ -1,14 +1,11 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://yfy8rofv4meu"]
 
-[ext_resource type="Texture2D" path="res://golf/assets/smile.png" id="1_uxttq"]
-[ext_resource type="Texture2D" path="res://hub_world/assets/textures/gc.png" id="2_ooayy"]
-[ext_resource type="AudioStream" path="res://golf/sounds/punch.ogg" id="2_vafs6"]
-[ext_resource type="ArrayMesh" path="res://golf/assets/accessories/gc_hat.obj" id="3_f37ug"]
-[ext_resource type="AudioStream" path="res://golf/sounds/boing.ogg" id="3_ooayy"]
-[ext_resource type="AudioStream" path="res://golf/sounds/jump.ogg" id="4_f37ug"]
-[ext_resource type="Script" path="res://golf/assets/accessories/accessory.gd" id="4_l5wpw"]
-[ext_resource type="Texture2D" path="res://golf/assets/angry.png" id="5_l5wpw"]
-[ext_resource type="Texture2D" path="res://golf/assets/oo.png" id="6_mjaof"]
+[ext_resource type="Texture2D" uid="uid://c0o5bpcnvbp1j" path="res://golf/assets/smile.png" id="1_uxttq"]
+[ext_resource type="AudioStream" uid="uid://b2slbfb6uh130" path="res://golf/sounds/punch.ogg" id="2_vafs6"]
+[ext_resource type="AudioStream" uid="uid://dhl2regqr5ghp" path="res://golf/sounds/boing.ogg" id="3_ooayy"]
+[ext_resource type="AudioStream" uid="uid://bj2ct1xbjx3iv" path="res://golf/sounds/jump.ogg" id="4_f37ug"]
+[ext_resource type="Texture2D" uid="uid://blltg254b5kyn" path="res://golf/assets/angry.png" id="5_l5wpw"]
+[ext_resource type="Texture2D" uid="uid://b2vegtnoh4xq" path="res://golf/assets/oo.png" id="6_mjaof"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dg77c"]
 render_priority = 1
@@ -31,9 +28,6 @@ roughness = 0.5
 material = SubResource("StandardMaterial3D_4c57u")
 radius = 0.25
 height = 0.5
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilqt5"]
-albedo_texture = ExtResource("2_ooayy")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hvv2x"]
 random_pitch = 1.25
@@ -139,13 +133,6 @@ transform = Transform3D(-1, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -1, -8.7
 [node name="BallModel" type="MeshInstance3D" parent="." unique_id=559431973]
 transform = Transform3D(0.9999993, 0, 0, 0, 1, 0, 0, 0, 0.9999993, 0, 0, 0)
 mesh = SubResource("SphereMesh_w48qg")
-
-[node name="@Node3D@21" type="Node3D" parent="BallModel" unique_id=1693200829]
-script = ExtResource("4_l5wpw")
-
-[node name="GorfCube" type="MeshInstance3D" parent="BallModel" unique_id=1793721882]
-material_override = SubResource("StandardMaterial3D_ilqt5")
-mesh = ExtResource("3_f37ug")
 
 [node name="SFXHit" type="AudioStreamPlayer3D" parent="." unique_id=2000659810]
 stream = SubResource("AudioStreamRandomizer_hvv2x")

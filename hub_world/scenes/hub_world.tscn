@@ -3,11 +3,16 @@
 [ext_resource type="Script" uid="uid://cj2rjtbp8t5d7" path="res://hub_world/scripts/hub_world.gd" id="1_gwv1m"]
 [ext_resource type="PackedScene" uid="uid://brhyiqsjujpa3" path="res://hub_world/scenes/player.tscn" id="2_861hj"]
 [ext_resource type="Texture2D" uid="uid://dbg6gihi1mp70" path="res://hub_world/assets/textures/checker-bw.png" id="3_dl1n6"]
+[ext_resource type="Script" uid="uid://83xukgf2tvgx" path="res://hub_world/appliance/level_select.gd" id="4_erkkd"]
 [ext_resource type="Script" uid="uid://b431rxgefdq7l" path="res://hub_world/scripts/scroller.gd" id="4_g28ha"]
+[ext_resource type="Script" uid="uid://jbopc6uqx0vo" path="res://hub_world/appliance/customize.gd" id="4_jsk6p"]
+[ext_resource type="Resource" uid="uid://0p5h41hknog2" path="res://hub_world/appliance/resources/level_select.tres" id="5_2bxs1"]
 [ext_resource type="PackedScene" uid="uid://8putfa6crndu" path="res://golf/scenes/course_standard.tscn" id="5_xpjs0"]
 [ext_resource type="PackedScene" uid="uid://d3kympyos0kcx" path="res://golf/scenes/course_clover.tscn" id="6_aetr0"]
+[ext_resource type="Texture2D" uid="uid://cvjbno3csamh" path="res://hub_world/assets/textures/gc.png" id="6_f7tvn"]
 [ext_resource type="PackedScene" uid="uid://y2eeor084b7o" path="res://hub_world/scenes/hub_world_hud.tscn" id="7_861hj"]
 [ext_resource type="AudioStream" uid="uid://7gypjyqlw7fw" path="res://golf/sounds/snap.ogg" id="7_dl1n6"]
+[ext_resource type="ArrayMesh" uid="uid://c06hibaeom8m2" path="res://hub_world/assets/models/gc.obj" id="7_fkdly"]
 [ext_resource type="PackedScene" uid="uid://3isnb61mvmh6" path="res://glb/course_watchman.glb" id="7_g28ha"]
 [ext_resource type="PackedScene" uid="uid://gh2wj5k21me5" path="res://hub_world/scenes/dialogue_ui.tscn" id="9_c31ob"]
 [ext_resource type="PackedScene" uid="uid://cxyqa58b5toaf" path="res://hub_world/item/item.tscn" id="10_wke1o"]
@@ -15,6 +20,12 @@
 [ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://hub_world/item/resources/box.tres" id="12_psx4n"]
 [ext_resource type="PackedScene" uid="uid://cysusii05wlen" path="res://hub_world/npc/npc.tscn" id="14_p66a0"]
 [ext_resource type="Resource" uid="uid://d2a6i2d1v3r6t" path="res://hub_world/npc/resources/monkey_npc.tres" id="15_jsk6p"]
+[ext_resource type="Texture2D" uid="uid://svj1h5qwna4a" path="res://hub_world/assets/textures/sign-customize.png" id="20_fkdly"]
+[ext_resource type="Resource" uid="uid://dknep4r8udqm6" path="res://hub_world/appliance/resources/customize.tres" id="20_g4o6j"]
+[ext_resource type="Script" uid="uid://b4eets3y821dr" path="res://hub_world/appliance/customize_ui.gd" id="23_omtcm"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
+[ext_resource type="PackedScene" uid="uid://cxrgmlmly7d25" path="res://golf/assets/accessories/accessories.tscn" id="25_sphqa"]
+[ext_resource type="PackedScene" uid="uid://kb5e6e8xm0qx" path="res://hub_world/inventory/inventory_display.tscn" id="26_2nbh0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
 albedo_texture = ExtResource("3_dl1n6")
@@ -51,13 +62,14 @@ sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
 background_mode = 2
 sky = SubResource("Sky_h2yge")
 
-[sub_resource type="BoxMesh" id="BoxMesh_t1r5v"]
-size = Vector3(3, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4o6j"]
+albedo_texture = ExtResource("6_f7tvn")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_271a7"]
-size = Vector3(3, 1, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_omtcm"]
+size = Vector3(0.7735596, 0.711853, 1.2265625)
 
 [sub_resource type="SystemFont" id="SystemFont_wscvt"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_twbvx"]
 font = SubResource("SystemFont_wscvt")
@@ -66,6 +78,8 @@ font_size = 24
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_g28ha"]
 streams_count = 1
 stream_0/stream = ExtResource("7_dl1n6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4o6j"]
 
 [node name="HubWorld" type="Node3D" unique_id=824557295]
 script = ExtResource("1_gwv1m")
@@ -120,15 +134,21 @@ environment = SubResource("Environment_0xm2m")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=252753954]
 transform = Transform3D(1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 10, 0)
 
-[node name="LevelSelectActivate" type="StaticBody3D" parent="." unique_id=963115453]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5222399, 20.720459)
+[node name="LevelSelectActivate" type="StaticBody3D" parent="." unique_id=963115453 groups=["appliance", "interactable"]]
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0.019285321, 20.720459)
+collision_layer = 3
+script = ExtResource("4_erkkd")
+appliance = ExtResource("5_2bxs1")
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LevelSelectActivate" unique_id=1053643234]
-mesh = SubResource("BoxMesh_t1r5v")
+transform = Transform3D(0.055, 0, 0, 0, 0.055, 0, 0, 0, 0.055, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_g4o6j")
+mesh = ExtResource("7_fkdly")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelSelectActivate" unique_id=1741242652]
-shape = SubResource("BoxShape3D_271a7")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LevelSelectActivate" unique_id=1253231790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0003051759, 0.35849, -0.11328125)
+shape = SubResource("BoxShape3D_omtcm")
 
 [node name="LevelSelectCam" type="Camera3D" parent="." unique_id=469125134]
 transform = Transform3D(-1, -2.262668e-08, 8.444392e-08, 0, 0.9659258, 0.25881904, -8.742278e-08, 0.25881904, -0.9659258, 0, 5, 16)
@@ -157,6 +177,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 
 [node name="Label" type="Label" parent="LevelSelectCam/Scroller" unique_id=1446220964]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -177,17 +198,466 @@ bus = &"SFX"
 [node name="HUD" parent="." unique_id=153076404 instance=ExtResource("7_861hj")]
 
 [node name="MonkeyBall" parent="." unique_id=126654515 instance=ExtResource("10_wke1o")]
-transform = Transform3D(0.5, 0.4999999, -0.7071068, -0.70710665, 0.7071067, 5.598901e-08, 0.5000002, 0.5, 0.7071067, 14.199122, 0.5, 18.078575)
+transform = Transform3D(0.5, 0.4999999, -0.7071068, -0.70710665, 0.7071067, 5.598901e-08, 0.5000002, 0.5, 0.7071067, 8.199122, 0.5, 18.078575)
 item = ExtResource("11_c31ob")
 
 [node name="MonkeyBall2" parent="." unique_id=540427969 instance=ExtResource("10_wke1o")]
-transform = Transform3D(-0.5000002, -0.5, -0.7071067, -0.70710665, 0.7071067, 3.853122e-08, 0.49999994, 0.4999999, -0.7071069, 10.199122, 0.5, 18.078575)
+transform = Transform3D(-0.5000002, -0.5, -0.7071067, -0.70710665, 0.7071067, 3.853122e-08, 0.49999994, 0.4999999, -0.7071069, 4.1991224, 0.5, 18.078575)
 item = ExtResource("11_c31ob")
 
 [node name="RoboBox" parent="." unique_id=950086696 instance=ExtResource("10_wke1o")]
-transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 12.114404, 0.84881973, 20.495558)
+transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 6.1144037, 0.84881973, 20.495558)
 item = ExtResource("12_psx4n")
 
 [node name="MonkeyNPC" parent="." unique_id=1088753126 instance=ExtResource("14_p66a0")]
-transform = Transform3D(-0.49999994, 0, 0.86602557, 0, 1, 0, -0.86602557, 0, -0.49999994, -11.521514, 1.0000005, 18.85918)
+transform = Transform3D(-0.49999994, 0, 0.86602557, 0, 1, 0, -0.86602557, 0, -0.49999994, -5.521514, 1.0000005, 18.85918)
 npc = ExtResource("15_jsk6p")
+
+[node name="CustomizeActivate" type="StaticBody3D" parent="." unique_id=12279327 groups=["appliance", "interactable"]]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.497513, 1.1937032, 0)
+collision_layer = 2
+script = ExtResource("4_jsk6p")
+appliance = ExtResource("20_g4o6j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CustomizeActivate" unique_id=1932320299]
+shape = SubResource("BoxShape3D_g4o6j")
+
+[node name="Sprite3D" type="Sprite3D" parent="CustomizeActivate" unique_id=994108162]
+texture_filter = 0
+texture = ExtResource("20_fkdly")
+
+[node name="CustomizeCam" type="Camera3D" parent="." unique_id=323847061]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 21.497513, 4.9997034, 0)
+current = true
+
+[node name="CustomizeUI" type="Control" parent="CustomizeCam" unique_id=403921103]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("23_omtcm")
+
+[node name="Categories" type="TabBar" parent="CustomizeCam/CustomizeUI" unique_id=383459902]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -86.0
+offset_right = 86.0
+offset_bottom = 40.0
+grow_horizontal = 2
+current_tab = 0
+clip_tabs = false
+tab_count = 2
+tab_0/title = "Color"
+tab_1/title = "Accessories"
+
+[node name="ColorProperties" type="GridContainer" parent="CustomizeCam/CustomizeUI" unique_id=1714676517]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -196.0
+offset_top = 49.0
+offset_right = 196.0
+offset_bottom = 126.0
+grow_horizontal = 2
+columns = 5
+
+[node name="RedColorLabel" type="Label" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=900654641]
+layout_mode = 2
+text = "Red"
+horizontal_alignment = 2
+
+[node name="VSeparator" type="VSeparator" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=914299117]
+layout_mode = 2
+
+[node name="RedSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=281584773]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator2" type="VSeparator" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1990145322]
+layout_mode = 2
+
+[node name="RedValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1181025342]
+layout_mode = 2
+text = "1.00"
+
+[node name="GreenColorLabel" type="Label" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1853952906]
+layout_mode = 2
+text = "Green"
+horizontal_alignment = 2
+
+[node name="VSeparator3" type="VSeparator" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1550823054]
+layout_mode = 2
+
+[node name="GreenSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=694624536]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator4" type="VSeparator" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1355512145]
+layout_mode = 2
+
+[node name="GreenValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1591860375]
+layout_mode = 2
+text = "1.00"
+
+[node name="BlueColorLabel" type="Label" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=449676965]
+layout_mode = 2
+text = "Blue"
+horizontal_alignment = 2
+
+[node name="VSeparator5" type="VSeparator" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=1251479538]
+layout_mode = 2
+
+[node name="BlueSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=742560681]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator6" type="VSeparator" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=638675201]
+layout_mode = 2
+
+[node name="BlueValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/ColorProperties" unique_id=740201318]
+layout_mode = 2
+text = "1.00"
+
+[node name="AccessoryProperties" type="VBoxContainer" parent="CustomizeCam/CustomizeUI" unique_id=929513557]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -196.0
+offset_top = 47.0
+offset_right = 196.0
+offset_bottom = 391.0
+grow_horizontal = 2
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=97673317]
+visible = false
+layout_mode = 2
+
+[node name="AccessorySelector" type="OptionButton" parent="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer" unique_id=1632805422]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+selected = 0
+allow_reselect = true
+item_count = 1
+popup/item_0/text = "None"
+popup/item_0/id = 0
+
+[node name="Add" type="Button" parent="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer" unique_id=454804262]
+layout_mode = 2
+text = "+"
+
+[node name="Remove" type="Button" parent="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer" unique_id=1666888493]
+layout_mode = 2
+text = "-"
+
+[node name="MeshSelector" type="OptionButton" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=1289936360]
+layout_mode = 2
+alignment = 1
+selected = 0
+allow_reselect = true
+item_count = 1
+popup/item_0/text = "None"
+popup/item_0/id = 0
+
+[node name="PositionLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=902912176]
+layout_mode = 2
+text = "Position"
+horizontal_alignment = 1
+
+[node name="AccessoryPosition" type="GridContainer" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=645948073]
+layout_mode = 2
+columns = 5
+metadata/_edit_group_ = true
+
+[node name="XLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1520833754]
+layout_mode = 2
+text = "X"
+horizontal_alignment = 2
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="VSeparator" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=948993755]
+layout_mode = 2
+
+[node name="XSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=749834338]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="VSeparator2" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1926269906]
+layout_mode = 2
+
+[node name="XValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=297797381]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="YLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1108099708]
+layout_mode = 2
+text = "Y"
+horizontal_alignment = 2
+
+[node name="VSeparator3" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1136132535]
+layout_mode = 2
+
+[node name="YSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=901090044]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="VSeparator4" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1760927653]
+layout_mode = 2
+
+[node name="YValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=505700811]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="ZLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=795178410]
+layout_mode = 2
+text = "Z"
+horizontal_alignment = 2
+
+[node name="VSeparator5" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1430136819]
+layout_mode = 2
+
+[node name="ZSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=741643151]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -1.0
+max_value = 1.0
+step = 0.01
+
+[node name="VSeparator6" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=887813814]
+layout_mode = 2
+
+[node name="ZValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=553087702]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="RotationLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=950171967]
+layout_mode = 2
+text = "Rotation"
+horizontal_alignment = 1
+
+[node name="AccessoryRotation" type="GridContainer" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=1597242202]
+layout_mode = 2
+columns = 5
+metadata/_edit_group_ = true
+
+[node name="XLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1509093628]
+layout_mode = 2
+text = "X"
+horizontal_alignment = 2
+
+[node name="VSeparator" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1242085606]
+layout_mode = 2
+
+[node name="XSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1839336998]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -3.14
+max_value = 3.14
+step = 0.01
+value = -0.14000000000000012
+
+[node name="VSeparator2" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=590601888]
+layout_mode = 2
+
+[node name="XValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1073414863]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="YLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1529774918]
+layout_mode = 2
+text = "Y"
+horizontal_alignment = 2
+
+[node name="VSeparator3" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=2121392130]
+layout_mode = 2
+
+[node name="YSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1005154637]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -3.14
+max_value = 3.14
+step = 0.01
+value = -0.14000000000000012
+
+[node name="VSeparator4" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=266956856]
+layout_mode = 2
+
+[node name="YValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=69585237]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="ZLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1954158049]
+layout_mode = 2
+text = "Z"
+horizontal_alignment = 2
+
+[node name="VSeparator5" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=645319918]
+layout_mode = 2
+
+[node name="ZSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1582727402]
+layout_mode = 2
+min_value = -3.14
+max_value = 3.14
+step = 0.01
+value = -0.14000000000000012
+allow_greater = true
+allow_lesser = true
+
+[node name="VSeparator6" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=816298548]
+layout_mode = 2
+
+[node name="ZValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1648676634]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="ScaleLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=907050702]
+layout_mode = 2
+text = "Scale"
+horizontal_alignment = 1
+
+[node name="AccessoryScale" type="GridContainer" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=1676888461]
+layout_mode = 2
+columns = 5
+metadata/_edit_group_ = true
+
+[node name="XLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=1938363098]
+layout_mode = 2
+text = "X"
+horizontal_alignment = 2
+
+[node name="VSeparator" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=235310649]
+layout_mode = 2
+
+[node name="XSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=36059416]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator2" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=260196435]
+layout_mode = 2
+
+[node name="XValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=494879186]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="YLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=1493594520]
+layout_mode = 2
+text = "Y"
+horizontal_alignment = 2
+
+[node name="VSeparator3" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=411398555]
+layout_mode = 2
+
+[node name="YSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=668464374]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator4" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=178723526]
+layout_mode = 2
+
+[node name="YValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=393786177]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="ZLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=2115188585]
+layout_mode = 2
+text = "Z"
+horizontal_alignment = 2
+
+[node name="VSeparator5" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=454791425]
+layout_mode = 2
+
+[node name="ZSlider" type="HSlider" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=1739352779]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator6" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=810616587]
+layout_mode = 2
+
+[node name="ZValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryScale" unique_id=1307616487]
+layout_mode = 2
+size_flags_horizontal = 5
+text = "1.00"
+autowrap_mode = 2
+
+[node name="SaveButton" type="Button" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=1127749382]
+layout_mode = 2
+text = "Save"
+
+[node name="BallTracker" parent="CustomizeCam" unique_id=777180075 instance=ExtResource("24_2nbh0")]
+visible = false
+
+[node name="Accessories" parent="CustomizeCam" unique_id=1322636663 instance=ExtResource("25_sphqa")]
+unique_name_in_owner = true
+
+[node name="Inventory" parent="." unique_id=1548465235 instance=ExtResource("26_2nbh0")]
+
+[connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/Add" to="CustomizeCam/CustomizeUI" method="_on_add_pressed"]
+[connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/Remove" to="CustomizeCam/CustomizeUI" method="_on_remove_pressed"]
+[connection signal="focus_entered" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_focus_entered"]
+[connection signal="item_selected" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_item_selected"]
+[connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_pressed"]
+[connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/SaveButton" to="CustomizeCam/CustomizeUI" method="_on_save_button_pressed"]

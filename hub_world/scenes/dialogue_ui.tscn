@@ -6,10 +6,17 @@
 script = ExtResource("1_lv1qe")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=2239408]
-offset_left = 162.0
-offset_top = 560.0
-offset_right = 1139.0
-offset_bottom = 675.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -488.0
+offset_top = -130.0
+offset_right = 489.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=581086143]
 layout_mode = 2

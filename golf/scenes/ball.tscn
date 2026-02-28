@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bo6hs7jjqpamb"]
+[gd_scene format=3 uid="uid://bo6hs7jjqpamb"]
 
 [ext_resource type="Script" uid="uid://ccf356a87sknp" path="res://golf/scripts/ball.gd" id="1_x8fbi"]
 
@@ -12,7 +12,7 @@ height = 0.5
 [sub_resource type="SphereShape3D" id="SphereShape3D_ktgx5"]
 radius = 0.25
 
-[node name="Ball" type="RigidBody3D"]
+[node name="Ball" type="RigidBody3D" unique_id=813449701]
 collision_layer = 2
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_x8fbi")
@@ -22,17 +22,18 @@ contact_monitor = true
 max_contacts_reported = 20
 script = ExtResource("1_x8fbi")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1517714288]
+visible = false
 mesh = SubResource("SphereMesh_41u45")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1921804651]
 shape = SubResource("SphereShape3D_ktgx5")
 
-[node name="AirControlTimer" type="Timer" parent="."]
+[node name="AirControlTimer" type="Timer" parent="." unique_id=2028711269]
 process_callback = 0
 one_shot = true
 
-[node name="HitBuffer" type="Timer" parent="."]
+[node name="HitBuffer" type="Timer" parent="." unique_id=585135966]
 wait_time = 0.05
 one_shot = true
 
