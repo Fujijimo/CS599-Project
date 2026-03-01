@@ -4,11 +4,9 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_v7wgj"]
 font_size = 36
-font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_8kgv2"]
 font_size = 24
-font_color = Color(0, 0, 0, 1)
 
 [node name="ItemSlot" type="Button" unique_id=167349292]
 custom_minimum_size = Vector2(400, 100)
@@ -28,6 +26,7 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(0, 0, 0, 0.6862745)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=105492429]
 layout_mode = 1

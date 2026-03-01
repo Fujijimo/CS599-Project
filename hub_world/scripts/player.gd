@@ -3,9 +3,8 @@ extends CharacterBody3D
 @export_range(0.0, 1.0) var mouse_sensitivity: float = 0.01
 @onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
 @onready var dialogue_ui: CanvasLayer = $"../DialogueUI"
-@onready var scroller: Node3D = $"../LevelSelectCam/Scroller"
-@onready var scroller_label: Label = $"../LevelSelectCam/Scroller/Label"
-@onready var inventory_ui: Control = $"../Inventory"
+@onready var scroller = $"../LevelSelectCam/Scroller"
+@onready var scroller_label = $"../LevelSelectCam/Scroller/Label"
 const SPEED: float = 5.0
 const SPRINT_SPEED: float = 15.0
 const JUMP_VELOCITY: float = 4.5*2
@@ -13,7 +12,6 @@ var mode: String = "hub"
 var dialogue_data: Dictionary
 var end_dialogue_timer: Timer = Timer.new()
 var timeout: bool = false
-var inventory_open: bool = false
 
 const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
 var interact_marker_instance: MeshInstance3D = INTERACT_MARKER.instantiate()
@@ -21,6 +19,10 @@ var interactable: Node3D
 var last_interactable: Node3D
 
 var customize_focused: bool = false
+var inventory_open = true
+
+signal toggle_inventory()
+signal pickup()
 
 func _ready() -> void:
 	var file = FileAccess.open("res://hub_world/dialogue.json", FileAccess.READ)
@@ -34,11 +36,16 @@ func _ready() -> void:
 	add_child(end_dialogue_timer)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	scroller.process_mode = Node.PROCESS_MODE_DISABLED
-	inventory_ui.hide()
 	
 func _physics_process(delta: float) -> void:
 	mode_setup(delta)
 	enable_interaction()
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("toggle_inventory") and (mode == "hub" or mode == "inventory"):
+		toggle_inventory.emit()
+	elif Input.is_action_just_pressed("ui_cancel") and mode == "inventory":
+		toggle_inventory.emit()
 
 func _unhandled_input(event: InputEvent) -> void:
 	capture_mouse(event)
@@ -71,6 +78,8 @@ func mode_setup(delta) -> void:
 			mode_level_select(delta)
 		"customize":
 			mode_customize()
+		"inventory":
+			pass
 
 func mode_hub(delta) -> void:
 	$CameraPivot/SpringArm3D/Camera3D.current = true
@@ -107,14 +116,6 @@ func mode_hub(delta) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-		
-	if Input.is_action_just_pressed("inventory") and inventory_open == false:
-		inventory_ui.show()
-		inventory_open = true
-		
-	elif Input.is_action_just_pressed("inventory") and inventory_open == true:
-		inventory_ui.hide()
-		inventory_open = false
 	
 	move_and_slide()
 
@@ -124,7 +125,7 @@ func mode_level_select(delta) -> void:
 	scroller_label.visible = true
 	
 	scroller.level_select_input(delta)
-	if Input.is_action_just_pressed("cancel"):
+	if Input.is_action_just_pressed("ui_cancel"):
 		$"../LevelSelectCam".current = false
 		scroller.visible = false
 		scroller_label.visible = false
@@ -139,7 +140,7 @@ func mode_customize() -> void:
 	%CustomizeCam/BallTracker.show()
 	%CustomizeCam/CustomizeUI.show()
 	%CustomizeCam/CustomizeUI.customize()
-	if Input.is_action_just_pressed("cancel"):
+	if Input.is_action_just_pressed("ui_cancel"):
 		customize_focused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		%CustomizeCam.current = false
@@ -156,7 +157,7 @@ func load_game() -> void:
 	global_position = saveload.data.global_position
 
 func enable_interaction() -> void:
-	if $DetectInteractable.has_overlapping_bodies():
+	if $DetectInteractable.has_overlapping_bodies() and $"../Inventory".visible == false:
 		var new_array: Array[float]
 		var new_index: int
 		
@@ -198,13 +199,12 @@ func enable_interaction() -> void:
 
 func enable_pickup() -> void:
 	if $DetectInteractable.overlaps_body(interactable) and Input.is_action_just_pressed("interact"):
-		inventory.add_item(interactable.duplicate())
-		inventory.item_pick_up.emit()
-		print(inventory.items)
+		inventory.items.append(interactable.duplicate())
 		if is_instance_valid(interact_marker_instance):
 			interact_marker_instance.queue_free()
 		interactable.queue_free()
-		
+		pickup.emit()
+
 func enable_dialogue() -> void:
 	if $DetectInteractable.overlaps_body(interactable) and Input.is_action_just_pressed("interact"):
 		self.set_process_unhandled_input(false)
@@ -226,3 +226,11 @@ func _on_end_dialogue_timer_timeout():
 		self.set_physics_process(true)
 		timeout = false
 	
+
+func _on_inventory_inventory_open() -> void:
+	if mode == "hub":
+		mode = "inventory"
+
+func _on_inventory_inventory_closed() -> void:
+	if mode == "inventory":
+		mode = "hub"

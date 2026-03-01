@@ -13,7 +13,7 @@ func _input(event):
 	else:
 		ball_model.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var cam_input_dir = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
 	var move_input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var camera_sensitivity = 0.065

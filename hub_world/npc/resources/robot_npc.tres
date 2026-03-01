@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://i0jn6w4tn473"]
+
+[ext_resource type="Script" uid="uid://dknwjt683p4dx" path="res://hub_world/npc/npc_data.gd" id="1_f5hl1"]
+[ext_resource type="Texture2D" uid="uid://1w37p5ejys04" path="res://hub_world/npc/assets/godot.png" id="1_tx00w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f5hl1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_38v1m"]
+transparency = 1
+albedo_texture = ExtResource("1_tx00w")
+uv1_scale = Vector3(2.04, 2.04, 2.04)
+uv1_offset = Vector3(-0.705, -0.2, 0)
+texture_repeat = false
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tx00w"]
+material = SubResource("StandardMaterial3D_38v1m")
+
+[resource]
+script = ExtResource("1_f5hl1")
+name = "Robot"
+dialogue_id = "robot"
+mesh = SubResource("CapsuleMesh_tx00w")
+collision = SubResource("CapsuleShape3D_f5hl1")
+marker_height = 1.5
+metadata/_custom_type_script = "uid://dknwjt683p4dx"

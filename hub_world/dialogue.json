@@ -12,5 +12,14 @@
 	"test3": {
 		"speaker": "Monkey",
 		"text": "I like YOUR bananas."
+	},
+	"robot": {
+		"speaker": "Robot",
+		"text": "I am a robot.",
+		"next_id": "robot2"
+	},
+	"robot2": {
+		"speaker": "Robot",
+		"text": "AI killed my family.",
 	}
 }
