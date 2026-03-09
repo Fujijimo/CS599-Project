@@ -1,7 +1,7 @@
 extends Node
 class_name SaveGame
 
-const SAVE_GAME_PATH := "user://save.json"
+const SAVE_GAME_PATH = "user://save.json"
 
 var character = Character.new()
 var global_position : Vector3

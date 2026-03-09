@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="NPCData" format=3 uid="uid://i0jn6w4tn473"]
 
 [ext_resource type="Script" uid="uid://dknwjt683p4dx" path="res://hub_world/npc/npc_data.gd" id="1_f5hl1"]
-[ext_resource type="Texture2D" uid="uid://1w37p5ejys04" path="res://hub_world/npc/assets/godot.png" id="1_tx00w"]
+[ext_resource type="Texture2D" uid="uid://bk1evhqdq5mqk" path="res://hub_world/npc/assets/godot.png" id="1_tx00w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f5hl1"]
 

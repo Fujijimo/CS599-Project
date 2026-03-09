@@ -13,7 +13,6 @@ visible = false
 [node name="None" type="MeshInstance3D" parent="." unique_id=823938496]
 
 [node name="Monkey" type="MeshInstance3D" parent="." unique_id=887390148]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)
 mesh = ExtResource("1_jxr4n")
 
 [node name="GorfCube" type="MeshInstance3D" parent="." unique_id=1327627770]

@@ -24,7 +24,7 @@
 [ext_resource type="Resource" uid="uid://dknep4r8udqm6" path="res://hub_world/appliance/resources/customize.tres" id="20_g4o6j"]
 [ext_resource type="Resource" uid="uid://i0jn6w4tn473" path="res://hub_world/npc/resources/robot_npc.tres" id="20_sphqa"]
 [ext_resource type="Script" uid="uid://b4eets3y821dr" path="res://hub_world/appliance/customize_ui.gd" id="23_omtcm"]
-[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
+[ext_resource type="PackedScene" uid="uid://dh0k7amttkswn" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
 [ext_resource type="PackedScene" uid="uid://cxrgmlmly7d25" path="res://golf/assets/accessories/accessories.tscn" id="25_sphqa"]
 [ext_resource type="PackedScene" uid="uid://kb5e6e8xm0qx" path="res://hub_world/inventory/inventory_display.tscn" id="26_2nbh0"]
 
@@ -225,8 +225,8 @@ item = ExtResource("12_psx4n")
 transform = Transform3D(-0.49999994, 0, 0.86602557, 0, 1, 0, -0.86602557, 0, -0.49999994, -5.521514, 1.0000005, 18.85918)
 npc = ExtResource("15_jsk6p")
 
-[node name="RobotNPC" parent="." unique_id=1092937516 instance=ExtResource("14_p66a0")]
-transform = Transform3D(-0.6502838, 0, 0.7596914, 0, 1, 0, -0.7596914, 0, -0.6502838, -8.1846895, 1, 18.212194)
+[node name="RobotNPC" parent="." unique_id=1629753246 instance=ExtResource("14_p66a0")]
+transform = Transform3D(-0.49999994, 0, 0.86602557, 0, 1, 0, -0.86602557, 0, -0.49999994, -7.868184, 1.0000005, 18.85918)
 npc = ExtResource("20_sphqa")
 
 [node name="CustomizeActivate" type="StaticBody3D" parent="." unique_id=12279327 groups=["appliance", "interactable"]]
@@ -275,6 +275,7 @@ tab_0/title = "Color"
 tab_1/title = "Accessories"
 
 [node name="ColorProperties" type="GridContainer" parent="CustomizeCam/CustomizeUI" unique_id=1714676517]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -356,7 +357,6 @@ layout_mode = 2
 text = "1.00"
 
 [node name="AccessoryProperties" type="VBoxContainer" parent="CustomizeCam/CustomizeUI" unique_id=929513557]
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -369,7 +369,6 @@ grow_horizontal = 2
 metadata/_edit_group_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=97673317]
-visible = false
 layout_mode = 2
 
 [node name="AccessorySelector" type="OptionButton" parent="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer" unique_id=1632805422]
@@ -379,7 +378,7 @@ alignment = 1
 selected = 0
 allow_reselect = true
 item_count = 1
-popup/item_0/text = "None"
+popup/item_0/text = "Accessory 0"
 popup/item_0/id = 0
 
 [node name="Add" type="Button" parent="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer" unique_id=454804262]
@@ -433,7 +432,7 @@ layout_mode = 2
 [node name="XValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=297797381]
 layout_mode = 2
 size_flags_horizontal = 5
-text = "1.00"
+text = "0.00"
 autowrap_mode = 2
 
 [node name="YLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=1108099708]
@@ -458,7 +457,7 @@ layout_mode = 2
 [node name="YValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=505700811]
 layout_mode = 2
 size_flags_horizontal = 5
-text = "1.00"
+text = "0.00"
 autowrap_mode = 2
 
 [node name="ZLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=795178410]
@@ -483,7 +482,7 @@ layout_mode = 2
 [node name="ZValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryPosition" unique_id=553087702]
 layout_mode = 2
 size_flags_horizontal = 5
-text = "1.00"
+text = "0.00"
 autowrap_mode = 2
 
 [node name="RotationLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=950171967]
@@ -511,7 +510,7 @@ size_flags_vertical = 4
 min_value = -3.14
 max_value = 3.14
 step = 0.01
-value = -0.14000000000000012
+value = -0.4700000000000002
 
 [node name="VSeparator2" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=590601888]
 layout_mode = 2
@@ -519,7 +518,7 @@ layout_mode = 2
 [node name="XValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1073414863]
 layout_mode = 2
 size_flags_horizontal = 5
-text = "1.00"
+text = "0"
 autowrap_mode = 2
 
 [node name="YLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1529774918]
@@ -537,7 +536,7 @@ size_flags_vertical = 4
 min_value = -3.14
 max_value = 3.14
 step = 0.01
-value = -0.14000000000000012
+value = -0.6400000000000001
 
 [node name="VSeparator4" type="VSeparator" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=266956856]
 layout_mode = 2
@@ -545,7 +544,7 @@ layout_mode = 2
 [node name="YValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=69585237]
 layout_mode = 2
 size_flags_horizontal = 5
-text = "1.00"
+text = "0"
 autowrap_mode = 2
 
 [node name="ZLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1954158049]
@@ -561,7 +560,7 @@ layout_mode = 2
 min_value = -3.14
 max_value = 3.14
 step = 0.01
-value = -0.14000000000000012
+value = 1.0100000000000002
 allow_greater = true
 allow_lesser = true
 
@@ -571,7 +570,7 @@ layout_mode = 2
 [node name="ZValueLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties/AccessoryRotation" unique_id=1648676634]
 layout_mode = 2
 size_flags_horizontal = 5
-text = "1.00"
+text = "0"
 autowrap_mode = 2
 
 [node name="ScaleLabel" type="Label" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=907050702]
@@ -675,6 +674,7 @@ theme = SubResource("Theme_2nbh0")
 
 [connection signal="pickup" from="Player" to="Inventory" method="_on_player_pickup"]
 [connection signal="toggle_inventory" from="Player" to="Inventory" method="_on_player_toggle_inventory"]
+[connection signal="item_selected" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/AccessorySelector" to="CustomizeCam/CustomizeUI" method="_on_accessory_selector_item_selected"]
 [connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/Add" to="CustomizeCam/CustomizeUI" method="_on_add_pressed"]
 [connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/Remove" to="CustomizeCam/CustomizeUI" method="_on_remove_pressed"]
 [connection signal="focus_entered" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_focus_entered"]
