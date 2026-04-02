@@ -117,6 +117,7 @@ func ability_drop():
 	if dropping == true and touched == true:
 		$"../BallTracker/SFXDrop".play()
 		next_stroke_setup()
+		state.turn = state.Turns.ENEMY_TURN
 
 func ability_jump():
 	var jump_height: float = 50.0
@@ -149,10 +150,12 @@ func decelerate_ball_and_end_stroke():
 				linear_damp += 0.1
 			if linear_damp >= 20.0:
 				next_stroke_setup()
+				state.turn = state.Turns.ENEMY_TURN
 		if club == "Putter":
 			linear_damp += 0.005
 			if linear_damp >= 4.0:
 				next_stroke_setup()
+				state.turn = state.Turns.ENEMY_TURN
 	if raycast.is_colliding() == false:
 		touched = 0
 		linear_damp = 0.0

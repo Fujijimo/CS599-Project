@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://ciyjgjevfu0om"]
+
+[sub_resource type="GDScript" id="GDScript_1361w"]
+script/source = "extends CanvasLayer
+#
+#@onready var attack: Button = $VBoxContainer/Attack
+#@onready var special: Button = $VBoxContainer/Special
+#@onready var items: Button = $VBoxContainer/Items
+#
+#func _ready() -> void:
+	#attack.pressed.connect(attack_button_pressed)
+	#special.pressed.connect(special_button_pressed)
+	#items.pressed.connect(items_button_pressed)
+#
+#func _process(delta: float) -> void:
+	#pass
+#
+#
+#func attack_button_pressed():
+	#print(\"poop\")
+	#
+#func special_button_pressed():
+	#print(\"pee\")
+	#
+#func items_button_pressed():
+	#print(\"poop and pee\")
+"
+
+[node name="BattleHUD" type="CanvasLayer" unique_id=1707338050]
+script = SubResource("GDScript_1361w")
+
+[node name="CommandMenu" type="VBoxContainer" parent="." unique_id=1540637009]
+visible = false
+offset_left = 550.0
+offset_top = 300.0
+offset_right = 750.0
+offset_bottom = 401.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Attack" type="Button" parent="CommandMenu" unique_id=936512907]
+layout_mode = 2
+text = "Attack"
+
+[node name="Special" type="Button" parent="CommandMenu" unique_id=433001294]
+layout_mode = 2
+text = "Special"
+
+[node name="Items" type="Button" parent="CommandMenu" unique_id=1739444389]
+layout_mode = 2
+text = "Items"
+
+[node name="SpecialMenu" type="VBoxContainer" parent="." unique_id=2076493560]
+visible = false
+offset_left = 550.0
+offset_top = 300.0
+offset_right = 750.0
+offset_bottom = 401.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Ability1" type="Button" parent="SpecialMenu" unique_id=1568210524]
+layout_mode = 2
+text = "Ground Pound
+"
+
+[node name="Ability2" type="Button" parent="SpecialMenu" unique_id=692680105]
+layout_mode = 2
+text = "Backbreaker
+"
+
+[node name="Ability3" type="Button" parent="SpecialMenu" unique_id=1483933390]
+layout_mode = 2
+text = "Cyclone
+"

@@ -29,6 +29,13 @@ mesh = SubResource("SphereMesh_41u45")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1921804651]
 shape = SubResource("SphereShape3D_ktgx5")
 
+[node name="BallArea" type="Area3D" parent="." unique_id=1145938317]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BallArea" unique_id=1400573426]
+shape = SubResource("SphereShape3D_ktgx5")
+
 [node name="AirControlTimer" type="Timer" parent="." unique_id=2028711269]
 process_callback = 0
 one_shot = true

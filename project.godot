@@ -24,6 +24,7 @@ config/run_on_separate_thread=false
 
 saveload="*res://saveload.gd"
 inventory="*uid://m7hjwa1tbtpl"
+state="*uid://cob44kuu6drof"
 
 [dialogic]
 

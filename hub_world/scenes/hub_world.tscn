@@ -24,7 +24,7 @@
 [ext_resource type="Resource" uid="uid://dknep4r8udqm6" path="res://hub_world/appliance/resources/customize.tres" id="20_g4o6j"]
 [ext_resource type="Resource" uid="uid://i0jn6w4tn473" path="res://hub_world/npc/resources/robot_npc.tres" id="20_sphqa"]
 [ext_resource type="Script" uid="uid://b4eets3y821dr" path="res://hub_world/appliance/customize_ui.gd" id="23_omtcm"]
-[ext_resource type="PackedScene" uid="uid://dh0k7amttkswn" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
+[ext_resource type="PackedScene" uid="uid://cyhnooykcvby1" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
 [ext_resource type="PackedScene" uid="uid://cxrgmlmly7d25" path="res://golf/assets/accessories/accessories.tscn" id="25_sphqa"]
 [ext_resource type="PackedScene" uid="uid://kb5e6e8xm0qx" path="res://hub_world/inventory/inventory_display.tscn" id="26_2nbh0"]
 

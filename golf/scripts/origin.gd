@@ -5,7 +5,7 @@ var turn_speed: float = 5
 @onready var ball: RigidBody3D = $"../Ball"
 @onready var ball_model: MeshInstance3D = $"../BallTracker/BallModel"
 
-func _input(event):
+func _unhandled_input(event):
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event is InputEventMouseMotion:
 		ball_model.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF

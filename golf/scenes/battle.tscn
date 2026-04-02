@@ -1,68 +1,70 @@
-[gd_scene load_steps=13 format=3 uid="uid://dg42jq4ij6fx0"]
+[gd_scene format=3 uid="uid://dg42jq4ij6fx0"]
 
 [ext_resource type="Script" uid="uid://bpk4nb4pki23q" path="res://golf/scripts/battle.gd" id="1_55ee8"]
 [ext_resource type="PackedScene" uid="uid://dlpkv1yk2343g" path="res://golf/scenes/golf_hud.tscn" id="2_benae"]
 [ext_resource type="PackedScene" uid="uid://br1jvn40si4y1" path="res://golf/scenes/origin.tscn" id="3_li1fe"]
+[ext_resource type="PackedScene" uid="uid://ciyjgjevfu0om" path="res://golf/scenes/battle_hud.tscn" id="3_n5y4c"]
 [ext_resource type="PackedScene" uid="uid://bo6hs7jjqpamb" path="res://golf/scenes/ball.tscn" id="4_h6c4y"]
-[ext_resource type="PackedScene" uid="uid://baoif25v7iunw" path="res://golf/scenes/ball_tracker.tscn" id="5_p6gdi"]
+[ext_resource type="PackedScene" uid="uid://cyhnooykcvby1" path="res://golf/scenes/ball_tracker.tscn" id="5_p6gdi"]
+[ext_resource type="PackedScene" uid="uid://bbsbycp4selrt" path="res://golf/scenes/battle_enemy.tscn" id="7_55ee8"]
 [ext_resource type="Script" uid="uid://brgqcm1of1g1n" path="res://golf/scripts/battle_platform.gd" id="8_n5y4c"]
-[ext_resource type="PackedScene" uid="uid://c4d5f84bisx5e" path="res://golf/scenes/enemy.tscn" id="8_qk4a1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sdh55"]
 
-[sub_resource type="Sky" id="Sky_vhna1"]
+[sub_resource type="Sky" id="Sky_55ee8"]
 sky_material = SubResource("PanoramaSkyMaterial_sdh55")
 
 [sub_resource type="Environment" id="Environment_lquwl"]
 background_mode = 1
-sky = SubResource("Sky_vhna1")
+sky = SubResource("Sky_55ee8")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.01
 reflected_light_source = 2
 
-[sub_resource type="BoxMesh" id="BoxMesh_benae"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_li1fe"]
+size = Vector3(10, 1, 10)
 
-[node name="Battle" type="Node3D"]
+[node name="Battle" type="Node3D" unique_id=216226158]
 script = ExtResource("1_55ee8")
 
-[node name="HUD" parent="." instance=ExtResource("2_benae")]
+[node name="HUD" parent="." unique_id=2031130138 instance=ExtResource("2_benae")]
 
-[node name="Origin" parent="." instance=ExtResource("3_li1fe")]
+[node name="BattleHUD" parent="." unique_id=1707338050 instance=ExtResource("3_n5y4c")]
+script = null
+
+[node name="Origin" parent="." unique_id=1198077258 instance=ExtResource("3_li1fe")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.75, 0)
 
-[node name="Ball" parent="." instance=ExtResource("4_h6c4y")]
+[node name="Ball" parent="." unique_id=1377958834 instance=ExtResource("4_h6c4y")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.75, 0)
 visible = false
 sleeping = true
 
-[node name="BallTracker" parent="." instance=ExtResource("5_p6gdi")]
+[node name="BallTracker" parent="." unique_id=184270451 instance=ExtResource("5_p6gdi")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.75, 0)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1873451066]
 environment = SubResource("Environment_lquwl")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1059583563]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 26, 0)
 
-[node name="PlayerPlatform" type="StaticBody3D" parent="." node_paths=PackedStringArray("target")]
+[node name="PlayerPlatform" type="StaticBody3D" parent="." unique_id=164399892 node_paths=PackedStringArray("target")]
 visible = false
 script = ExtResource("8_n5y4c")
 target = NodePath("../Ball")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerPlatform"]
-mesh = SubResource("BoxMesh_benae")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPlatform"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPlatform" unique_id=1275447024]
 shape = SubResource("BoxShape3D_li1fe")
 
-[node name="BattleCam" type="Camera3D" parent="."]
+[node name="BattleCam" type="Camera3D" parent="." unique_id=445417443]
 transform = Transform3D(1, 0, 0, 0, 0.93785864, 0.3470175, 0, -0.3470175, 0.93785864, 0, 8.067806, 14.727771)
 cull_mask = 1048573
 
-[node name="Enemy" parent="." instance=ExtResource("8_qk4a1")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 20, 0, 0)
+[node name="Enemy" parent="." unique_id=1835598495 instance=ExtResource("7_55ee8")]
+transform = Transform3D(-8.742278e-08, 0, -2, 0, 2, 0, 2, 0, -8.742278e-08, 75.368744, 0, 0)
+
+[connection signal="player_turn_change" from="." to="." method="_on_player_turn_change"]
 
 [editable path="Ball"]

@@ -225,7 +225,6 @@ func _on_end_dialogue_timer_timeout():
 		self.set_process_unhandled_input(true)
 		self.set_physics_process(true)
 		timeout = false
-	
 
 func _on_inventory_inventory_open() -> void:
 	if mode == "hub":
