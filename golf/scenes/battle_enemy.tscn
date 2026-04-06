@@ -15,10 +15,6 @@ points = PackedVector3Array(2.0132759, 0.0051596886, 0.6808273, 0.8229907, 5.551
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wl3pw"]
 points = PackedVector3Array(-2.3080037, 0.27161747, 0.7045045, -1.2217798, -5.551115e-17, -2.0070205, -1.2200803, 0.086429186, -2.0147989, -0.15842116, -5.551115e-17, -0.72261274, -0.9802202, 0.95394397, -1.0986427, -2.9007173, 0.0012462665, 0.16086869, -2.1032324, 0.69145155, -0.7529796, -0.8246117, 0.6120103, -0.257282, -0.25886783, 0.48724997, -1.3797491, -1.4440923, 0.006327268, 0.41538593, -2.196239, 0.65346986, 0.15806903, -1.9570245, 0.31702402, -1.4412847, -1.1867036, 0.7028199, -1.7108859, -0.5127816, -5.551115e-17, -1.8741122, -2.914422, 0.08565686, 0.793131, -0.33242258, 0.572839, -0.80379057, -2.052958, 0.008834217, -1.4157399, -2.7177806, 0.31788832, -0.0816694, -0.6075373, 0.5751781, -1.7334855, -1.2021719, 0.85797256, -0.3840447, -1.4489506, 0.9414303, -0.96110874, -0.66633314, 0.1412099, -0.114209875, -1.6566035, 0.48724997, 0.32912883, -2.4613473, -5.551115e-17, 0.82761097, -0.10446817, 0.08602607, -1.3031391, -0.59886336, 0.8263699, -0.8863786, -1.4894431, 0.6981052, -1.5597867, -2.5356982, 0.5290716, 0.16327329, -2.423984, 0.23217282, -0.80222875, -0.6255577, 0.83228856, -1.3228503, -1.9417952, 0.8156953, -0.34378475, -0.8651695, 0.35407346, -1.9667015)
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_6dhqp"]
-height = 0.1
-radius = 0.25
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6dhqp"]
 albedo_color = Color(0, 1, 0, 1)
 
@@ -39,6 +35,10 @@ albedo_color = Color(1, 0, 0, 1)
 material = SubResource("StandardMaterial3D_wl3pw")
 inner_radius = 2.0
 outer_radius = 4.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_6dhqp"]
+height = 0.1
+radius = 0.25
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t036o"]
 height = 0.1
@@ -79,23 +79,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.134626, 0)
 visible = false
 collision_mask = 2
 
-[node name="GroundPoundCritical" type="CollisionShape3D" parent="GroundPoundTarget" unique_id=1243379402]
-transform = Transform3D(1, 4.3711385e-08, -1.9106853e-15, 0, -4.371139e-08, -1, -4.3711385e-08, 1, -4.371139e-08, 0, 0, 0)
-visible = false
-shape = SubResource("CylinderShape3D_6dhqp")
-
 [node name="GroundPoundCriticalMesh" type="MeshInstance3D" parent="GroundPoundTarget" unique_id=208669200]
 transform = Transform3D(1, 4.371139e-08, -4.371139e-08, -4.371139e-08, -4.371139e-08, -1, -4.371139e-08, 1, -4.3711385e-08, 0, 0, 0)
 mesh = SubResource("CylinderMesh_6dhqp")
 
-[node name="GroundPoundNormal" type="CollisionShape3D" parent="GroundPoundTarget" unique_id=308363454]
+[node name="GroundPoundCollision" type="CollisionShape3D" parent="GroundPoundTarget" unique_id=308363454]
 transform = Transform3D(1, 4.3711385e-08, -1.9106853e-15, 0, -4.371139e-08, -1, -4.3711385e-08, 1, -4.371139e-08, 0, 0, 0)
-visible = false
 shape = SubResource("CylinderShape3D_wl3pw")
 
 [node name="GroundPoundNormalMesh" type="MeshInstance3D" parent="GroundPoundTarget" unique_id=460166197]
 transform = Transform3D(1, 4.371138e-09, -1.9106853e-15, 0, -4.371139e-09, -1, -4.371138e-08, 0.1, -4.371139e-08, 0, 0, 0)
 mesh = SubResource("TorusMesh_6dhqp")
+
+[node name="GroundPoundCritical" type="CollisionShape3D" parent="GroundPoundTarget" unique_id=1243379402]
+transform = Transform3D(1, 4.3711385e-08, -1.9106853e-15, 0, -4.371139e-08, -1, -4.3711385e-08, 1, -4.371139e-08, 0, 0, 0)
+visible = false
+shape = SubResource("CylinderShape3D_6dhqp")
 
 [node name="GroundPoundMiss" type="CollisionShape3D" parent="GroundPoundTarget" unique_id=522354961]
 transform = Transform3D(1, 4.371139e-08, -4.371139e-08, -4.371139e-08, -4.371139e-08, -1, -4.371139e-08, 1, -4.3711385e-08, 0, 0, 0)
@@ -104,4 +103,4 @@ shape = SubResource("CylinderShape3D_t036o")
 
 [connection signal="body_entered" from="NormalTarget" to="." method="_on_normal_target_body_entered"]
 [connection signal="body_entered" from="LowTarget" to="." method="_on_low_target_body_entered"]
-[connection signal="area_entered" from="GroundPoundTarget" to="." method="_on_ground_pound_target_area_entered"]
+[connection signal="body_entered" from="GroundPoundTarget" to="." method="_on_ground_pound_target_body_entered"]

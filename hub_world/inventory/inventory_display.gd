@@ -19,10 +19,10 @@ func button_pressed(button_item: ItemSlot):
 func add_to_inventory():
 	for item in inventory.items:
 		var new_item: ItemSlot = ITEM_SLOT.instantiate()
-		new_item.item_name = item.item.name
-		new_item.item_description = item.item.description
-		new_item.basic_description = item.item.basic_description
-		new_item.texture = item.item.texture
+		new_item.item_name = item.data.name
+		new_item.item_description = item.data.description
+		new_item.basic_description = item.data.basic_description
+		new_item.texture = item.data.texture
 		
 		new_item.pressed.connect(button_pressed.bind(new_item))
 	

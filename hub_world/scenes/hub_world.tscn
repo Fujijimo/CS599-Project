@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://bdvqvrea20hi8" path="res://hub_world/item/resources/box.tres" id="12_psx4n"]
 [ext_resource type="PackedScene" uid="uid://cysusii05wlen" path="res://hub_world/npc/npc.tscn" id="14_p66a0"]
 [ext_resource type="Resource" uid="uid://d2a6i2d1v3r6t" path="res://hub_world/npc/resources/monkey_npc.tres" id="15_jsk6p"]
+[ext_resource type="Resource" uid="uid://bvh1ikxncnw7g" path="res://hub_world/item/resources/health_potion.tres" id="19_2a205"]
 [ext_resource type="Texture2D" uid="uid://svj1h5qwna4a" path="res://hub_world/assets/textures/sign-customize.png" id="20_fkdly"]
 [ext_resource type="Resource" uid="uid://dknep4r8udqm6" path="res://hub_world/appliance/resources/customize.tres" id="20_g4o6j"]
 [ext_resource type="Resource" uid="uid://i0jn6w4tn473" path="res://hub_world/npc/resources/robot_npc.tres" id="20_sphqa"]
@@ -211,15 +212,27 @@ bus = &"SFX"
 
 [node name="MonkeyBall" parent="." unique_id=126654515 instance=ExtResource("10_wke1o")]
 transform = Transform3D(0.5, 0.4999999, -0.7071068, -0.70710665, 0.7071067, 5.598901e-08, 0.5000002, 0.5, 0.7071067, 8.199122, 0.5, 18.078575)
-item = ExtResource("11_c31ob")
+data = ExtResource("11_c31ob")
 
 [node name="MonkeyBall2" parent="." unique_id=540427969 instance=ExtResource("10_wke1o")]
 transform = Transform3D(-0.5000002, -0.5, -0.7071067, -0.70710665, 0.7071067, 3.853122e-08, 0.49999994, 0.4999999, -0.7071069, 4.1991224, 0.5, 18.078575)
-item = ExtResource("11_c31ob")
+data = ExtResource("11_c31ob")
 
 [node name="RoboBox" parent="." unique_id=950086696 instance=ExtResource("10_wke1o")]
 transform = Transform3D(0.625, -0.21650635, 0.75, 0.75, 0.43301266, -0.5, -0.21650635, 0.87500006, 0.43301266, 6.1144037, 0.84881973, 20.495558)
-item = ExtResource("12_psx4n")
+data = ExtResource("12_psx4n")
+
+[node name="HealthPotion" parent="." unique_id=1878634433 instance=ExtResource("10_wke1o")]
+transform = Transform3D(-0.46231374, -0.0234805, 0.88640565, 0.011743993, 0.9993994, 0.032598723, -0.88663876, 0.025480632, -0.46176028, 11.878626, 1.1261272, 19.681475)
+data = ExtResource("19_2a205")
+
+[node name="HealthPotion2" parent="." unique_id=814554967 instance=ExtResource("10_wke1o")]
+transform = Transform3D(-0.53110415, -0.021388002, 0.84703666, 0.011743991, 0.99939936, 0.032598723, -0.8472252, 0.027260771, -0.53053397, 13.787971, 1.1261272, 18.947935)
+data = ExtResource("19_2a205")
+
+[node name="HealthPotion3" parent="." unique_id=1568745372 instance=ExtResource("10_wke1o")]
+transform = Transform3D(-0.61183786, -0.018603802, 0.7907646, 0.011743989, 0.9993994, 0.03259872, -0.7908962, 0.029231742, -0.6112519, 15.62866, 1.1261272, 18.228954)
+data = ExtResource("19_2a205")
 
 [node name="MonkeyNPC" parent="." unique_id=1088753126 instance=ExtResource("14_p66a0")]
 transform = Transform3D(-0.49999994, 0, 0.86602557, 0, 1, 0, -0.86602557, 0, -0.49999994, -5.521514, 1.0000005, 18.85918)

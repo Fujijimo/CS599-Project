@@ -5,6 +5,8 @@ class_name ItemData
 @export_multiline var basic_description: String = ""
 @export_multiline var description: String = ""
 @export var stackable: bool = false
+@export var usable: bool = false
+@export var amount: int = 0
 @export var texture: Texture2D
 @export var mesh: Mesh
 @export var collision: Shape3D

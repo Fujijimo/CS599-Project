@@ -12,6 +12,7 @@ var mode: String = "hub"
 var dialogue_data: Dictionary
 var end_dialogue_timer: Timer = Timer.new()
 var timeout: bool = false
+var already_in_inventory: bool = false
 
 const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
 var interact_marker_instance: MeshInstance3D = INTERACT_MARKER.instantiate()
@@ -177,7 +178,7 @@ func enable_interaction() -> void:
 			interact_marker_instance = INTERACT_MARKER.instantiate()
 			interactable.get_parent().add_child(interact_marker_instance)
 			if interactable.is_in_group("pickup"):
-				interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.item.marker_height, 0)
+				interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.data.marker_height, 0)
 			if interactable.is_in_group("dialogue"):
 				interact_marker_instance.global_position = interactable.global_position + Vector3(0, interactable.npc.marker_height, 0)
 			if interactable.is_in_group("appliance"):
@@ -199,7 +200,21 @@ func enable_interaction() -> void:
 
 func enable_pickup() -> void:
 	if $DetectInteractable.overlaps_body(interactable) and Input.is_action_just_pressed("interact"):
-		inventory.items.append(interactable.duplicate())
+		for item in inventory.items:
+			if interactable.data.name == item.data.name:
+				already_in_inventory = true
+				if interactable.data.stackable == true:
+					item.data.amount += 1
+					break
+				else:
+					inventory.items.append(interactable.duplicate())
+					break
+		if already_in_inventory == false:
+			inventory.items.append(interactable.duplicate())
+			inventory.items[inventory.items.size() - 1].data.amount += 1
+		else:
+			already_in_inventory = false
+		print(inventory.items)
 		if is_instance_valid(interact_marker_instance):
 			interact_marker_instance.queue_free()
 		interactable.queue_free()

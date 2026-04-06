@@ -273,7 +273,7 @@ quit={
 [physics]
 
 2d/run_on_separate_thread=true
-common/physics_ticks_per_second=80
+common/physics_ticks_per_second=170
 3d/physics_engine="Jolt Physics"
 common/physics_interpolation=true
 2d/max_physics_steps_per_frame=8

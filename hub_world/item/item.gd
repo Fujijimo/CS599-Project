@@ -1,8 +1,8 @@
-class_name Item
 extends StaticBody3D
+class_name Item
 
-@export var item: Resource
+@export var data: Resource
 
 func _ready() -> void:
-	$MeshInstance3D.mesh = item.mesh
-	$CollisionShape3D.shape = item.collision
+	$MeshInstance3D.mesh = data.mesh
+	$CollisionShape3D.shape = data.collision

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bvh1ikxncnw7g"]
+
+[ext_resource type="Script" uid="uid://82tjs34yoggp" path="res://hub_world/item/item_data.gd" id="1_1kj2i"]
+[ext_resource type="Texture2D" uid="uid://cltc3s2vkqcs3" path="res://hub_world/item/assets/poison.png" id="1_bxtv4"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kuuiw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxtv4"]
+transparency = 1
+albedo_texture = ExtResource("1_bxtv4")
+uv1_scale = Vector3(2.03, 2.03, 2.03)
+uv1_offset = Vector3(-0.005, -0.01, 0)
+texture_repeat = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kuuiw"]
+material = SubResource("StandardMaterial3D_bxtv4")
+
+[resource]
+script = ExtResource("1_1kj2i")
+name = "Health Potion"
+basic_description = "Heals the ball."
+description = "Gain 100 HP."
+stackable = true
+usable = true
+texture = ExtResource("1_bxtv4")
+mesh = SubResource("CylinderMesh_kuuiw")
+collision = SubResource("CylinderShape3D_kuuiw")
+metadata/_custom_type_script = "uid://82tjs34yoggp"

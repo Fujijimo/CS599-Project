@@ -17,6 +17,7 @@ name = "Monkey Ball"
 basic_description = "This is a monkey ball."
 description = "This guy LOVES bananas."
 stackable = true
+usable = true
 texture = ExtResource("1_6o4qe")
 mesh = SubResource("SphereMesh_ml2mi")
 collision = SubResource("SphereShape3D_6o4qe")
