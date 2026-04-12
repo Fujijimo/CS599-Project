@@ -17,12 +17,22 @@ var accessory: Accessory
 var ball_tracker_clone: Node3D
 
 func _ready() -> void:
-	if accessory == null:
+	
+	$ColorProperties/RedSlider.value = ball_model.mesh.material.albedo_color.r
+	$ColorProperties/GreenSlider.value = ball_model.mesh.material.albedo_color.g
+	$ColorProperties/BlueSlider.value = ball_model.mesh.material.albedo_color.b
+	
+	if ball_model.get_child_count() == 0:
 		accessory = Accessory.new()
-		ball_model.add_child(accessory)
-	$AccessoryProperties/AccessoryRotation/XSlider.value = accessory.data.rotation.x
-	$AccessoryProperties/AccessoryRotation/YSlider.value = accessory.data.rotation.y
-	$AccessoryProperties/AccessoryRotation/ZSlider.value = accessory.data.rotation.z
+		ball_model.add_child(accessory, true)
+		accessory_selector.add_item(str("Accessory ", accessory.data.id + 1), accessory.data.id)
+	else:
+		unique_id = ball_model.get_child(ball_model.get_child_count() - 1).data.id
+		accessory = ball_model.get_child(0)
+		load_meshes()
+		mesh_selector.select(accessory.data.mesh_id)
+		load_accessories()
+		restore_values()
 
 func customize() -> void:
 	set_values()
@@ -52,7 +62,7 @@ func customize() -> void:
 	$ColorProperties/GreenValueLabel.text = str("%0.2f" % new_color.g)
 	$ColorProperties/BlueValueLabel.text = str("%0.2f" % new_color.b)
 	
-	if $Categories.current_tab == 0:
+	if $Tabs/Categories.current_tab == 0:
 		$ColorProperties.show()
 		$AccessoryProperties.hide()
 	else:
@@ -62,9 +72,9 @@ func customize() -> void:
 func _on_add_pressed() -> void:
 	unique_id += 1
 	accessory = Accessory.new()
-	ball_model.add_child(accessory)
+	ball_model.add_child(accessory, true)
 	accessory.data.id = unique_id
-	accessory_selector.add_item(str("Accessory ", accessory.data.id), accessory.data.id)
+	accessory_selector.add_item(str("Accessory ", accessory.data.id + 1), accessory.data.id)
 	accessory_selector.select(accessory_selector.get_item_index(accessory.data.id))
 	mesh_selector.select(0)
 	restore_values()
@@ -79,6 +89,7 @@ func _on_remove_pressed() -> void:
 		accessory = temp
 		for i in range(1, accessory_selector.item_count):
 			accessory_selector.set_item_text(i, str("Accessory ", i))
+		mesh_selector.select(accessory.data.mesh_id)
 		restore_values()
 
 func _on_accessory_selector_item_selected(index: int) -> void:
@@ -93,11 +104,7 @@ func _on_accessory_selector_item_selected(index: int) -> void:
 	restore_values()
 
 func _on_mesh_selector_pressed() -> void:
-	var index: int = mesh_selector.get_item_index(mesh_selector.get_selected_id())
-	mesh_selector.clear()
-	for i in range(accessory_dict.keys().size()):
-		mesh_selector.add_item(accessory_dict[i].name, accessory_dict.keys()[i])
-	mesh_selector.select(index)
+	load_meshes()
 	
 func _on_mesh_selector_item_selected(index: int) -> void:
 	var id: int = mesh_selector.get_item_id(index)
@@ -119,7 +126,20 @@ func save_accessories() -> void:
 			j.set_owner(ball_tracker)
 		save.pack(ball_tracker);
 		ResourceSaver.save(save, "res://golf/scenes/ball_tracker.tscn");
-		
+
+func load_accessories() -> void:
+	for i in ball_model.get_children():
+		accessory = i
+		accessory_selector.add_item(str("Accessory ", accessory.data.id + 1), accessory.data.id)
+	accessory = ball_model.get_child(0)
+
+func load_meshes() -> void:
+	var index: int = mesh_selector.get_item_index(mesh_selector.get_selected_id())
+	mesh_selector.clear()
+	for i in range(accessory_dict.keys().size()):
+		mesh_selector.add_item(accessory_dict[i].name, accessory_dict.keys()[i])
+	mesh_selector.select(index)
+
 func set_values() -> void:
 	accessory.data.position.x = -$AccessoryProperties/AccessoryPosition/XSlider.value
 	accessory.data.position.y = $AccessoryProperties/AccessoryPosition/YSlider.value
@@ -141,3 +161,21 @@ func restore_values() -> void:
 	$AccessoryProperties/AccessoryScale/XSlider.value = accessory.data.scale.x
 	$AccessoryProperties/AccessoryScale/YSlider.value = accessory.data.scale.y
 	$AccessoryProperties/AccessoryScale/ZSlider.value = accessory.data.scale.z
+
+
+func _on_reset_button_pressed() -> void:
+	$ColorProperties/RedSlider.value = 1
+	$ColorProperties/GreenSlider.value = 1
+	$ColorProperties/BlueSlider.value = 1
+	
+	for i in ball_model.get_children():
+		ball_model.remove_child(i)
+		i.queue_free()
+	
+	if ball_model.get_child_count() == 0:
+		accessory = Accessory.new()
+		ball_model.add_child(accessory, true)
+		accessory_selector.clear()
+		accessory_selector.add_item(str("Accessory ", accessory.data.id + 1), accessory.data.id)
+		mesh_selector.select(0)
+		restore_values()

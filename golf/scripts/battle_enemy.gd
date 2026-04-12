@@ -9,7 +9,6 @@ extends CharacterBody3D
 
 func _on_normal_target_body_entered(body: Node3D) -> void:
 	if body.name == "Ball":
-		body.gravity_scale = 5
 		health = health - randi_range(25, 30)
 		body.apply_impulse(Vector3(-body.linear_velocity.x * 5, -body.linear_velocity.y, -body.linear_velocity.z * 5))
 		normal_target_collision.set_deferred("disabled", true)

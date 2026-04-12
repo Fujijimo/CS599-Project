@@ -93,7 +93,6 @@ func mode_hub(delta) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
 	
-	
 	if Input.is_joy_known(0) == true:
 		var cam_input_dir = Input.get_vector("cam_left", "cam_right", "cam_up", "cam_down")
 		var camera_sensitivity = 0.065
@@ -105,15 +104,19 @@ func mode_hub(delta) -> void:
 	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
 	
 	if velocity.x != 0 and velocity.z != 0:
-		$MeshInstance3D.rotation.y = lerp_angle($MeshInstance3D.rotation.y,atan2(velocity.x,velocity.z),0.25)
+		$Skeleton3D.rotation.y = lerp_angle($Skeleton3D.rotation.y,atan2(velocity.x,velocity.z),0.25)
+	else:
+		$AnimationPlayer.play("animations/idle")
 		
 	if direction:
 		if Input.is_action_pressed("sprint") and is_on_floor():
 			velocity.x = direction.x * SPRINT_SPEED
 			velocity.z = direction.z * SPRINT_SPEED
+			$AnimationPlayer.play("animations/run")
 		else:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			$AnimationPlayer.play("animations/walk")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
@@ -134,7 +137,7 @@ func mode_level_select(delta) -> void:
 
 func mode_customize() -> void:
 	if customize_focused == false:
-		%CustomizeCam/CustomizeUI/Categories.grab_focus()
+		%CustomizeCam/CustomizeUI/Tabs/Categories.grab_focus()
 		customize_focused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	%CustomizeCam.current = true

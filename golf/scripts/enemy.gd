@@ -60,22 +60,22 @@ func pick_direction():
 		if distance_to_start > max_distance:
 			direction = Vector3(start_position.x - position.x, 0, start_position.z - position.z).normalized()
 		else:
-			direction = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0 ,1.0)).normalized()
+			direction = Vector3(randf_range(-1.0, 1.0), 0, randf_range(-1.0, 1.0)).normalized()
 		direction_picked = true
 	
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	#if body.name == "Ball":
-		#visible = false
-		#body.animation.play("Attack")
-	#
-		#Engine.time_scale = 0.1
-		#await get_tree().create_timer(0.1).timeout
-		#Engine.time_scale = 1.0
-		#
-		#body.ability_used.jump += 2
-		#body.ability_used.air_control += 2.0
-		#
-		#saveload.add_xp_money(50,5)
-		#queue_free()
 	if body.name == "Ball":
+		visible = false
+		body.animation.play("Attack")
+	
+		Engine.time_scale = 0.1
+		await get_tree().create_timer(0.1).timeout
+		Engine.time_scale = 1.0
+		
+		body.ability_used.jump += 2
+		body.ability_used.air_control += 2.0
+		
+		saveload.add_xp_money(50,5)
+		queue_free()
+		
 		get_tree().change_scene_to_file("res://golf/scenes/battle.tscn")

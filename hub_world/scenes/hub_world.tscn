@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://drtwgqntcuwdl"]
 
 [ext_resource type="Script" uid="uid://cj2rjtbp8t5d7" path="res://hub_world/scripts/hub_world.gd" id="1_gwv1m"]
-[ext_resource type="PackedScene" uid="uid://brhyiqsjujpa3" path="res://hub_world/scenes/player.tscn" id="2_861hj"]
+[ext_resource type="PackedScene" uid="uid://c5y2p8thqgh25" path="res://hub_world/scenes/player.tscn" id="2_861hj"]
 [ext_resource type="Texture2D" uid="uid://dbg6gihi1mp70" path="res://hub_world/assets/textures/checker-bw.png" id="3_dl1n6"]
 [ext_resource type="Script" uid="uid://83xukgf2tvgx" path="res://hub_world/appliance/level_select.gd" id="4_erkkd"]
 [ext_resource type="Script" uid="uid://b431rxgefdq7l" path="res://hub_world/scripts/scroller.gd" id="4_g28ha"]
@@ -25,7 +25,7 @@
 [ext_resource type="Resource" uid="uid://dknep4r8udqm6" path="res://hub_world/appliance/resources/customize.tres" id="20_g4o6j"]
 [ext_resource type="Resource" uid="uid://i0jn6w4tn473" path="res://hub_world/npc/resources/robot_npc.tres" id="20_sphqa"]
 [ext_resource type="Script" uid="uid://b4eets3y821dr" path="res://hub_world/appliance/customize_ui.gd" id="23_omtcm"]
-[ext_resource type="PackedScene" uid="uid://cyhnooykcvby1" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
 [ext_resource type="PackedScene" uid="uid://cxrgmlmly7d25" path="res://golf/assets/accessories/accessories.tscn" id="25_sphqa"]
 [ext_resource type="PackedScene" uid="uid://kb5e6e8xm0qx" path="res://hub_world/inventory/inventory_display.tscn" id="26_2nbh0"]
 
@@ -97,7 +97,7 @@ Button/styles/focus = SubResource("StyleBoxFlat_2nbh0")
 [node name="HubWorld" type="Node3D" unique_id=824557295]
 script = ExtResource("1_gwv1m")
 
-[node name="Player" parent="." unique_id=1418242600 instance=ExtResource("2_861hj")]
+[node name="Player" parent="." unique_id=941874062 instance=ExtResource("2_861hj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0236101, 0)
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=970435706]
@@ -272,20 +272,31 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("23_omtcm")
 
-[node name="Categories" type="TabBar" parent="CustomizeCam/CustomizeUI" unique_id=383459902]
+[node name="Tabs" type="HBoxContainer" parent="CustomizeCam/CustomizeUI" unique_id=159803624]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -86.0
-offset_right = 86.0
+offset_left = -110.0
+offset_right = 110.0
 offset_bottom = 40.0
 grow_horizontal = 2
+
+[node name="Categories" type="TabBar" parent="CustomizeCam/CustomizeUI/Tabs" unique_id=383459902]
+layout_mode = 2
 current_tab = 0
 clip_tabs = false
 tab_count = 2
 tab_0/title = "Color"
 tab_1/title = "Accessories"
+
+[node name="SaveButton" type="Button" parent="CustomizeCam/CustomizeUI/Tabs" unique_id=1127749382]
+layout_mode = 2
+text = "Save"
+
+[node name="ResetButton" type="Button" parent="CustomizeCam/CustomizeUI/Tabs" unique_id=1594360117]
+layout_mode = 2
+text = "Reset"
 
 [node name="ColorProperties" type="GridContainer" parent="CustomizeCam/CustomizeUI" unique_id=1714676517]
 visible = false
@@ -388,11 +399,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
-selected = 0
 allow_reselect = true
-item_count = 1
-popup/item_0/text = "Accessory 0"
-popup/item_0/id = 0
 
 [node name="Add" type="Button" parent="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer" unique_id=454804262]
 layout_mode = 2
@@ -671,10 +678,6 @@ size_flags_horizontal = 5
 text = "1.00"
 autowrap_mode = 2
 
-[node name="SaveButton" type="Button" parent="CustomizeCam/CustomizeUI/AccessoryProperties" unique_id=1127749382]
-layout_mode = 2
-text = "Save"
-
 [node name="BallTracker" parent="CustomizeCam" unique_id=777180075 instance=ExtResource("24_2nbh0")]
 visible = false
 
@@ -687,12 +690,13 @@ theme = SubResource("Theme_2nbh0")
 
 [connection signal="pickup" from="Player" to="Inventory" method="_on_player_pickup"]
 [connection signal="toggle_inventory" from="Player" to="Inventory" method="_on_player_toggle_inventory"]
+[connection signal="pressed" from="CustomizeCam/CustomizeUI/Tabs/SaveButton" to="CustomizeCam/CustomizeUI" method="_on_save_button_pressed"]
+[connection signal="pressed" from="CustomizeCam/CustomizeUI/Tabs/ResetButton" to="CustomizeCam/CustomizeUI" method="_on_reset_button_pressed"]
 [connection signal="item_selected" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/AccessorySelector" to="CustomizeCam/CustomizeUI" method="_on_accessory_selector_item_selected"]
 [connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/Add" to="CustomizeCam/CustomizeUI" method="_on_add_pressed"]
 [connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/HBoxContainer/Remove" to="CustomizeCam/CustomizeUI" method="_on_remove_pressed"]
 [connection signal="focus_entered" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_focus_entered"]
 [connection signal="item_selected" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_item_selected"]
 [connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/MeshSelector" to="CustomizeCam/CustomizeUI" method="_on_mesh_selector_pressed"]
-[connection signal="pressed" from="CustomizeCam/CustomizeUI/AccessoryProperties/SaveButton" to="CustomizeCam/CustomizeUI" method="_on_save_button_pressed"]
 [connection signal="inventory_closed" from="Inventory" to="Player" method="_on_inventory_inventory_closed"]
 [connection signal="inventory_open" from="Inventory" to="Player" method="_on_inventory_inventory_open"]

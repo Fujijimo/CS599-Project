@@ -6,6 +6,7 @@ extends Node3D
 @onready var attack: Button = $BattleHUD/CommandMenu/Attack
 @onready var special: Button = $BattleHUD/CommandMenu/Special
 @onready var items: Button = $BattleHUD/CommandMenu/Items
+@onready var no_items: Label = $BattleHUD/NoItems
 @onready var ability1: Button = $BattleHUD/SpecialMenu/Ability1
 @onready var ability2: Button = $BattleHUD/SpecialMenu/Ability2
 @onready var ability3: Button = $BattleHUD/SpecialMenu/Ability3
@@ -13,6 +14,10 @@ extends Node3D
 @onready var ball: RigidBody3D = $Ball
 @onready var ground_pound_target: Area3D = $Enemy/GroundPoundTarget
 @onready var player_cam: Camera3D = $Origin/SpringArm3D/PlayerCam
+const MAX_HEALTH: int = 100
+var health: int = MAX_HEALTH
+var amount: int
+
 
 signal player_turn_change
 
@@ -38,6 +43,10 @@ func _process(_delta):
 		#ground_pound_target.hide()
 	if state.turn == state.Turns.ENEMY_TURN:
 		enemy_turn()
+	if item_menu.get_child_count() == 0 and item_menu.visible == true:
+		no_items.show()
+	else:
+		no_items.hide()
 
 func battle_setup():
 	if state.turn == state.Turns.PLAYER_TURN:
@@ -77,7 +86,16 @@ func ability3_button_pressed():
 	print("ability3")
 
 func item_button_pressed(button: Button):
-	pass
+	if button.text.begins_with("Health Potion"):
+		health += 100
+		remove_item("Health Potion")
+		button.text = "Health Potion x" + str(amount)
+	if button.text.begins_with("Monkey Ball"):
+		health -= 100
+		remove_item("Monkey Ball")
+		button.text = "Monkey Ball x" + str(amount)
+	if amount == 0:
+		button.queue_free()
 
 func prepare_item_menu():
 	for item in inventory.items:
@@ -89,7 +107,7 @@ func prepare_item_menu():
 				
 			usable_item.pressed.connect(item_button_pressed.bind(usable_item))
 			item_menu.add_child(usable_item)
-			
+
 func disable_collisions():
 	for collision in ground_pound_target.get_children():
 		if collision is CollisionShape3D:
@@ -99,6 +117,14 @@ func enable_collisions(target: Area3D):
 	for collision in target.get_children():
 		if collision is CollisionShape3D:
 			collision.set_deferred("disabled", false)
+
+func remove_item(item_name: String):
+	for item in inventory.items:
+		if item.data.name == item_name:
+			item.data.amount -= 1
+			amount = item.data.amount
+			if item.data.amount == 0:
+				inventory.items.erase(item)
 
 func set_input(input: bool):
 	origin.set_process_unhandled_input(input)

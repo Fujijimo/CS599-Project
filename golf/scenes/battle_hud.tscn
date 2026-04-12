@@ -55,3 +55,12 @@ offset_right = 750.0
 offset_bottom = 401.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="NoItems" type="Label" parent="." unique_id=2009239209]
+visible = false
+offset_left = 550.0
+offset_top = 300.0
+offset_right = 750.0
+offset_bottom = 323.0
+text = "No Items"
+horizontal_alignment = 1
