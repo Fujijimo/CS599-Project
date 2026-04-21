@@ -1,7 +1,7 @@
 extends StaticBody3D
 
+@export var exit_teleport: Node3D
 var teleport_entered: bool = false
-@export var exit_teleport: MeshInstance3D
 @onready var ball: RigidBody3D = $"../Ball"
 
 func _on_area_3d_body_entered(body: Node3D) -> void:

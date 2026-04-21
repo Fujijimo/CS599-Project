@@ -1,11 +1,7 @@
 extends RigidBody3D
 
-@onready var strength_meter: CanvasLayer = $"../HUD"
-@onready var progress_bar: ProgressBar = $"../HUD/ProgressBar"
-@onready var origin: Node3D = $"../Origin"
-@onready var raycast: RayCast3D = $"../BallTracker/RayCast3D"
-@onready var animation: AnimationPlayer = $"../BallTracker/AnimationPlayer"
-@onready var hit_buffer: Timer = $HitBuffer
+signal next_stroke
+
 var stroke: int = 0
 var swing_phase: int = 0
 var swung_already: bool = false
@@ -16,7 +12,7 @@ var club: String = "Driver"
 var strength: float = 0.0
 var curve: float = 0.0
 var apply_wind: bool = false
-var wind_modifier: float = randf_range(0.0, 12.0)
+var wind_modifier: float = randf_range(0.0, 8.0)
 var wind_direction: Vector3
 var wind_speed: float
 var last_basis: Basis
@@ -25,11 +21,18 @@ var state_copy: PhysicsDirectBodyState3D
 var dropping: bool = false
 var hit_buffer_timeout: bool = true
 var ability_limit: Dictionary = {
-	"drop": 1,
+	"drop": 2,
 	"jump": 3,
 	"air_control": 4.0,
 }
 var ability_used: Dictionary
+
+@onready var strength_meter: CanvasLayer = $"../HUD"
+@onready var progress_bar: ProgressBar = $"../HUD/ProgressBar"
+@onready var origin: Node3D = $"../Origin"
+@onready var raycast: RayCast3D = $"../BallTracker/RayCast3D"
+@onready var animation: AnimationPlayer = $"../BallTracker/AnimationPlayer"
+@onready var hit_buffer: Timer = $HitBuffer
 
 func _ready() -> void:
 	set_wind_direction()
@@ -64,7 +67,10 @@ func swing(delta):
 		strength_meter.hit_timer_stop()
 		progress_bar.value = 0
 		
-	if Input.is_action_just_pressed("hit") and swung_already == false:
+	if (
+		Input.is_action_just_pressed("hit") and swung_already == false 
+		and state.turn == state.Turns.PLAYER_TURN
+	):
 		match swing_phase:
 			0:
 				get_last_position()
@@ -111,18 +117,20 @@ func ability_drop():
 			apply_wind = false
 			linear_velocity *= Vector3.ZERO
 			gravity_scale = 50.0
-			physics_material_override.bounce = 0
+			physics_material_override.bounce = 0.1
 			dropping = true
 			ability_used.drop -= 1
 	if dropping == true and touched == true:
-		$"../BallTracker/SFXDrop".play()
-		next_stroke_setup()
-		state.turn = state.Turns.ENEMY_TURN
+		gravity_scale = 5.0
+		physics_material_override.bounce = 0.4
+		if Input.is_action_pressed("ability1"):
+			apply_impulse(Vector3(-origin.basis.z.x * 100, 3, -origin.basis.z.z * 100))
+		dropping = false
 
 func ability_jump():
 	var jump_height: float = 50.0
 	if ability_used.jump != 0:
-		if Input.is_action_just_pressed("ability2") and hit_buffer_timeout == false and dropping == false:
+		if Input.is_action_just_pressed("ability2") and hit_buffer_timeout == false:
 			apply_central_impulse(Vector3(0,-linear_velocity.y + jump_height,0))
 			animation.stop()
 			animation.play("Jump")
@@ -135,7 +143,7 @@ func ability_air_control(delta):
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
 	direction = direction.rotated(Vector3.UP, $"../Origin".global_rotation.y)
 	
-	if touched == false and ability_used.air_control >= 0.01 and dropping == false:
+	if touched == false and ability_used.air_control >= 0.01:
 		apply_central_impulse(direction * air_drag)
 		controllable = true
 			
@@ -146,16 +154,19 @@ func decelerate_ball_and_end_stroke():
 	if touched == true and swung_already == true and hit_buffer_timeout == false:
 		if club == "Driver":
 			linear_damp += 0.01
-			if (linear_velocity <= Vector3(0.4, 0.0, 0.0) and linear_velocity.z >= -1.0) or (linear_velocity <= Vector3(0.0, 0.0, 0.4) and linear_velocity.x >= -1.0):
+			if (
+					(linear_velocity <= Vector3(0.4, 0.0, 0.0) and linear_velocity.z >= -1.0) 
+					or (linear_velocity <= Vector3(0.0, 0.0, 0.4) and linear_velocity.x >= -1.0)
+			):
 				linear_damp += 0.1
 			if linear_damp >= 20.0:
 				next_stroke_setup()
-				state.turn = state.Turns.ENEMY_TURN
+				next_stroke.emit()
 		if club == "Putter":
 			linear_damp += 0.005
 			if linear_damp >= 4.0:
 				next_stroke_setup()
-				state.turn = state.Turns.ENEMY_TURN
+				next_stroke.emit()
 	if raycast.is_colliding() == false:
 		touched = 0
 		linear_damp = 0.0
@@ -163,7 +174,10 @@ func decelerate_ball_and_end_stroke():
 		constant_force = Vector3.ZERO
 	else:
 		constant_force = wind_direction * wind_modifier
-	#if swung_already == true and (linear_velocity <= Vector3(0.05, 0.0, 0.05) or linear_velocity >= Vector3(-0.05, -0.05, -0.05)):
+	#if ( 
+		#swung_already == true and (linear_velocity <= Vector3(0.05, 0.0, 0.05) 
+		#or linear_velocity >= Vector3(-0.05, -0.05, -0.05)
+	#):
 
 func next_stroke_setup():
 	freeze = true

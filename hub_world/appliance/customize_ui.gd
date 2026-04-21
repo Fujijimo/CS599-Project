@@ -1,23 +1,21 @@
 class_name customization
 extends Control
 
+var accessory: Accessory
+var ball_tracker_clone: Node3D
+var unique_id: int = 0
+
 @onready var accessory_selector: OptionButton = $AccessoryProperties/HBoxContainer/AccessorySelector
 @onready var mesh_selector: OptionButton = $AccessoryProperties/MeshSelector
 @onready var ball_tracker: Node3D = $"../BallTracker"
 @onready var ball_model: MeshInstance3D = $"../BallTracker/BallModel"
-var unique_id: int = 0
-var accessory: Accessory
-
 @onready var accessory_dict: Dictionary = {
-	0:{"name":"None","mesh":%Accessories/None},
-	1:{"name":"Monkey","mesh":%Accessories/Monkey},
-	2:{"name":"GorfCube","mesh":%Accessories/GorfCube},
+	0: { "name": "None", "mesh": %Accessories/None },
+	1: { "name": "Monkey", "mesh": %Accessories/Monkey },
+	2: { "name": "GorfCube", "mesh": %Accessories/GorfCube },
 }
 
-var ball_tracker_clone: Node3D
-
 func _ready() -> void:
-	
 	$ColorProperties/RedSlider.value = ball_model.mesh.material.albedo_color.r
 	$ColorProperties/GreenSlider.value = ball_model.mesh.material.albedo_color.g
 	$ColorProperties/BlueSlider.value = ball_model.mesh.material.albedo_color.b
@@ -161,7 +159,6 @@ func restore_values() -> void:
 	$AccessoryProperties/AccessoryScale/XSlider.value = accessory.data.scale.x
 	$AccessoryProperties/AccessoryScale/YSlider.value = accessory.data.scale.y
 	$AccessoryProperties/AccessoryScale/ZSlider.value = accessory.data.scale.z
-
 
 func _on_reset_button_pressed() -> void:
 	$ColorProperties/RedSlider.value = 1

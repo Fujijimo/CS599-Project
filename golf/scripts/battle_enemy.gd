@@ -1,22 +1,38 @@
 extends CharacterBody3D
 
+@export_enum("Idle", "Move", "Attack") var mode: String = "Idle"
+
+@export var move: Array = ["Blink", "Shoot"]
+@export var health: int
+@export var target_position: Vector3
+
 @onready var normal_target_collision: CollisionShape3D = $NormalTarget/NormalTargetCollision
+@onready var left_foot_collision: CollisionShape3D = $LowTarget/LeftFootCollision
+@onready var right_foot_collision: CollisionShape3D = $LowTarget/RightFootCollision
 @onready var ground_pound_target: Area3D = $GroundPoundTarget
 @onready var ground_pound_normal_mesh: MeshInstance3D = $GroundPoundTarget/GroundPoundNormalMesh
 @onready var ground_pound_collision: CollisionShape3D = $GroundPoundTarget/GroundPoundCollision
-@onready var ground_pound_cam: Camera3D = $"../GroundPoundCam"
-@export var health: int
+@onready var animation_import: AnimationPlayer = $dh_orange/AnimationPlayer
+@onready var animation = $dh_orange/AnimationPlayer2
+
+func _process(_delta: float) -> void:
+	$HealthBar/SubViewport/ProgressBar.value = health
+	if health <= 0:
+		animation.play("Death")
+		await animation.animation_finished
+		queue_free()
 
 func _on_normal_target_body_entered(body: Node3D) -> void:
-	if body.name == "Ball":
-		health = health - randi_range(25, 30)
+	if body.name == "Ball" and state.turn == state.Turns.PLAYER_TURN:
+		health = health - randi_range(35, 40)
 		body.apply_impulse(Vector3(-body.linear_velocity.x * 5, -body.linear_velocity.y, -body.linear_velocity.z * 5))
-		normal_target_collision.set_deferred("disabled", true)
+		disable_collisions()
 		print(health)
 
 func _on_low_target_body_entered(body: Node3D) -> void:
-	if body.name == "Ball":
+	if body.name == "Ball" and state.turn == state.Turns.PLAYER_TURN:
 		health = health - randi_range(10, 20)
+		disable_collisions()
 		print(health)
 
 func _on_ground_pound_target_body_entered(body: Node3D) -> void:
@@ -24,11 +40,20 @@ func _on_ground_pound_target_body_entered(body: Node3D) -> void:
 	#print(Vector2(body.global_position.y, body.global_position.z).length())
 	#print(Vector2(ground_pound_collision.global_position.y, ground_pound_collision.global_position.z).length())
 	if body.name == "Ball":
-		if body.global_position.distance_to(ground_pound_collision.global_position) <= 1.0:
-			ground_pound_cam.current = true
-		elif body.global_position.distance_to(ground_pound_collision.global_position) >= 4.0 and body.global_position.distance_to(ground_pound_collision.global_position) <= 8.0:
-			ground_pound_cam.current = true
+		if body.global_position.distance_to(ground_pound_collision.global_position) <= 0.5:
+			print("poop")
+		elif body.global_position.distance_to(ground_pound_collision.global_position) >= 2.1 and body.global_position.distance_to(ground_pound_collision.global_position) <= 4.25:
+			print("pee")
 
+func attack(picked_move) -> void:
+	animation.play(picked_move)
+	await animation.animation_finished
+
+func disable_collisions() -> void:
+	normal_target_collision.set_deferred("disabled", true)
+	left_foot_collision.set_deferred("disabled", true)
+	right_foot_collision.set_deferred("disabled", true)
+	
 #func _physics_process(delta: float) -> void:
-	#if $"../Ball".global_position.distance_to(ground_pound_collision.global_position) <= 1.0:
+	#if $"../Ball".global_position.distance_to(ground_pound_collision.global_position) >= 2.0 and $"../Ball".global_position.distance_to(ground_pound_collision.global_position) <= 2.1:
 		#$"../Ball".freeze = true

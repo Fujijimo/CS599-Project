@@ -25,7 +25,7 @@
 [ext_resource type="Resource" uid="uid://dknep4r8udqm6" path="res://hub_world/appliance/resources/customize.tres" id="20_g4o6j"]
 [ext_resource type="Resource" uid="uid://i0jn6w4tn473" path="res://hub_world/npc/resources/robot_npc.tres" id="20_sphqa"]
 [ext_resource type="Script" uid="uid://b4eets3y821dr" path="res://hub_world/appliance/customize_ui.gd" id="23_omtcm"]
-[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
+[ext_resource type="PackedScene" uid="uid://byy80q5sa2vno" path="res://golf/scenes/ball_tracker.tscn" id="24_2nbh0"]
 [ext_resource type="PackedScene" uid="uid://cxrgmlmly7d25" path="res://golf/assets/accessories/accessories.tscn" id="25_sphqa"]
 [ext_resource type="PackedScene" uid="uid://kb5e6e8xm0qx" path="res://hub_world/inventory/inventory_display.tscn" id="26_2nbh0"]
 
@@ -172,22 +172,22 @@ transform = Transform3D(1, -8.2904514e-16, 7.1054274e-15, 0, 0.9659258, -0.25881
 visible = false
 script = ExtResource("4_g28ha")
 
-[node name="Course1" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=1571440382]
+[node name="Course1" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=2094795323]
 
-[node name="course_deformed" parent="LevelSelectCam/Scroller/Course1" unique_id=691276522 instance=ExtResource("5_xpjs0")]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -3.0000002, 0, 2)
+[node name="course_watchman" parent="LevelSelectCam/Scroller/Course1" unique_id=1953256170 instance=ExtResource("7_g28ha")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 
-[node name="Course2" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=2073377596]
+[node name="Course2" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=1571440382]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 
-[node name="course_cube" parent="LevelSelectCam/Scroller/Course2" unique_id=286241665 instance=ExtResource("6_aetr0")]
-transform = Transform3D(-0.005, 9.473119e-18, -7.5497897e-10, -1.30270086e-17, 0.005, 1.4901161e-10, 7.5497897e-10, 1.4901161e-10, -0.005, -1.9736538, 0, 1.0758057)
+[node name="course_deformed" parent="LevelSelectCam/Scroller/Course2" unique_id=691276522 instance=ExtResource("5_xpjs0")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, -3.0000002, 0, 2)
 
-[node name="Course3" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=2094795323]
+[node name="Course3" type="Node3D" parent="LevelSelectCam/Scroller" unique_id=2073377596]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
-[node name="course_watchman" parent="LevelSelectCam/Scroller/Course3" unique_id=1953256170 instance=ExtResource("7_g28ha")]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+[node name="course_cube" parent="LevelSelectCam/Scroller/Course3" unique_id=286241665 instance=ExtResource("6_aetr0")]
+transform = Transform3D(-0.005, 9.473119e-18, -7.5497897e-10, -1.30270086e-17, 0.005, 1.4901161e-10, 7.5497897e-10, 1.4901161e-10, -0.005, -1.9736538, 0, 1.0758057)
 
 [node name="Label" type="Label" parent="LevelSelectCam/Scroller" unique_id=1446220964]
 visible = false
@@ -199,7 +199,7 @@ offset_top = 70.0
 offset_right = 96.5
 offset_bottom = 104.0
 grow_horizontal = 2
-text = "Standard Course"
+text = "Retro Course"
 label_settings = SubResource("LabelSettings_twbvx")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="LevelSelectCam/Scroller" unique_id=1613295475]

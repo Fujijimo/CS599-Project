@@ -1,11 +1,97 @@
 [gd_scene format=3 uid="uid://dkn1wf8fcmvrd"]
 
 [ext_resource type="PackedScene" uid="uid://cwn2174eoq8l5" path="res://glb/dh_orange.glb" id="1_jf4wk"]
+[ext_resource type="AudioStream" uid="uid://baxhsfsxte6vk" path="res://golf/sounds/fart.wav" id="2_g64up"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8wfhp"]
 albedo_color = Color(1.5720325, 0.95514816, 0, 1)
 metallic = 0.1
 roughness = 0.0
+
+[sub_resource type="Animation" id="Animation_7ep7d"]
+resource_name = "Blink"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_8wfhp"]
+resource_name = "Death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_g64up"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7npdx"]
+resource_name = "Fart"
+length = 2.0
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("AudioStreamPlayer3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_g64up")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8wfhp"]
+_data = {
+&"Blink": SubResource("Animation_7ep7d"),
+&"Death": SubResource("Animation_8wfhp"),
+&"RESET": SubResource("Animation_g64up"),
+&"Shoot": SubResource("Animation_7npdx")
+}
 
 [node name="dh_orange" unique_id=1118239961 instance=ExtResource("1_jf4wk")]
 
@@ -18,3 +104,8 @@ bones/4/rotation = Quaternion(0.10757854, 0.04507134, 0.65012085, 0.7508251)
 
 [node name="Body" parent="Armature/Skeleton3D" index="0" unique_id=1755173284]
 surface_material_override/0 = SubResource("StandardMaterial3D_8wfhp")
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." index="2" unique_id=2067500471]
+libraries/ = SubResource("AnimationLibrary_8wfhp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="3" unique_id=724710336]

@@ -1,9 +1,9 @@
 extends StaticBody3D
 
-@onready var ball: RigidBody3D = $"../Ball"
-
 @export var jump_height: float = 100.0
 @export var jump_boost: float = 3.0
+
+@onready var ball: RigidBody3D = $"../Ball"
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void:

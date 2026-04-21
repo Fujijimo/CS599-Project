@@ -3,15 +3,15 @@ extends CanvasLayer
 signal dialogue_finished
 signal dialogue_advance
 
-@onready var speaker_label: Label = $PanelContainer/VBoxContainer/SpeakerLabel
-@onready var text_label: Label = $PanelContainer/VBoxContainer/TextLabel
-
 var typing_timer: Timer = Timer.new()
 var current_text: String = ""
 var typing_speed: float = 0.05
 var wait_for_input: bool = false
 var dialogue_data: Dictionary = {}
 var current_dialogue_id: String
+
+@onready var speaker_label: Label = $PanelContainer/VBoxContainer/SpeakerLabel
+@onready var text_label: Label = $PanelContainer/VBoxContainer/TextLabel
 
 func _ready():
 	typing_timer.timeout.connect(_on_typing_timer_timeout)

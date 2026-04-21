@@ -1,12 +1,14 @@
 extends CharacterBody3D
 
 const SPEED: float = 5.0
+
 var distance_to_start: float
 var start_position: Vector3
 var direction: Vector3
 var direction_picked: bool = false
 var field_state: String = "wander"
 var field_state_list: Array = ["idle", "wander"]
+
 @export var max_distance: float = 10.0
 @export var idle_time: float = 5.0
 @export var wander_time: float = 5.0
@@ -75,7 +77,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		body.ability_used.jump += 2
 		body.ability_used.air_control += 2.0
 		
-		saveload.add_xp_money(50,5)
 		queue_free()
 		
 		get_tree().change_scene_to_file("res://golf/scenes/battle.tscn")

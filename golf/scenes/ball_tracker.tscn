@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://golf/assets/accessories/accessory_data.gd" id="3_f37ug"]
 [ext_resource type="AudioStream" path="res://golf/sounds/boing.ogg" id="3_ooayy"]
 [ext_resource type="AudioStream" path="res://golf/sounds/jump.ogg" id="4_f37ug"]
-[ext_resource type="ArrayMesh" path="res://golf/assets/accessories/monkey.obj" id="4_l5wpw"]
 [ext_resource type="Texture2D" path="res://golf/assets/angry.png" id="5_l5wpw"]
 [ext_resource type="Texture2D" path="res://golf/assets/oo.png" id="6_mjaof"]
 
@@ -35,9 +34,6 @@ height = 0.5
 
 [sub_resource type="Resource" id="Resource_ooayy"]
 script = ExtResource("3_f37ug")
-mesh_id = 1
-position = Vector3(-0.01, -0.32, 0)
-rotation = Vector3(-0.08, 0, 0)
 scale = Vector3(1, 1, 1)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hvv2x"]
@@ -145,13 +141,9 @@ transform = Transform3D(-1, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -1, -8.7
 transform = Transform3D(0.9999993, 0, 0, 0, 1, 0, 0, 0, 0.9999993, 0, 0, 0)
 mesh = SubResource("SphereMesh_w48qg")
 
-[node name="Node3D" type="Node3D" parent="BallModel" unique_id=265887070]
-transform = Transform3D(1, 0, 0, 0, 0.99680173, 0.07991469, 0, -0.07991469, 0.99680173, -0.01, -0.32, 0)
+[node name="Node3D" type="Node3D" parent="BallModel" unique_id=1165381670]
 script = ExtResource("2_ooayy")
 data = SubResource("Resource_ooayy")
-
-[node name="Monkey" type="MeshInstance3D" parent="BallModel/Node3D" unique_id=1936941347]
-mesh = ExtResource("4_l5wpw")
 
 [node name="SFXHit" type="AudioStreamPlayer3D" parent="." unique_id=2000659810]
 stream = SubResource("AudioStreamRandomizer_hvv2x")

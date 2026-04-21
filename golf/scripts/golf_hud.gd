@@ -39,5 +39,5 @@ func update_labels():
 	$Drop.text = "Drop: " + str(ball.ability_used.drop)
 
 func rotate_wind_arrow():
-	$SubViewportContainer/SubViewport/UICam.global_rotation = $"../Origin/SpringArm3D/PlayerCam".global_rotation
+	$SubViewportContainer/SubViewport/UICam.global_rotation.y = $"../Origin/SpringArm3D/PlayerCam".global_rotation.y
 	$SubViewportContainer/SubViewport/UICam/Arrow.global_rotation.y = atan2(-ball.wind_direction.x, -ball.wind_direction.z)

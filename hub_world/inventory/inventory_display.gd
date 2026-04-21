@@ -1,13 +1,13 @@
 extends Control
 
-const ITEM_SLOT = preload("res://hub_world/inventory/item_slot.tscn")
-@onready var inventory_v_box: VBoxContainer = $HBoxContainer/ScrollContainer/InventoryVBox
-
-@onready var details_name: Label = $HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer/DetailsName
-@onready var details_description: Label = $HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer/DetailsDescription
-
 signal inventory_open
 signal inventory_closed
+
+const ITEM_SLOT = preload("res://hub_world/inventory/item_slot.tscn")
+
+@onready var inventory_v_box: VBoxContainer = $HBoxContainer/ScrollContainer/InventoryVBox
+@onready var details_name: Label = $HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer/DetailsName
+@onready var details_description: Label = $HBoxContainer/DetailsScreen/MarginContainer/VBoxContainer/DetailsDescription
 
 func _ready() -> void:
 	refresh_inventory()

@@ -1,4 +1,5 @@
 extends Node3D
+
 @onready var result_display: Label = $"../HUD/Result"
 @onready var level: Node3D = get_parent()
 

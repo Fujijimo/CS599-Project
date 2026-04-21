@@ -1,29 +1,30 @@
 extends CharacterBody3D
 
-@export_range(0.0, 1.0) var mouse_sensitivity: float = 0.01
-@onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
-@onready var dialogue_ui: CanvasLayer = $"../DialogueUI"
-@onready var scroller = $"../LevelSelectCam/Scroller"
-@onready var scroller_label = $"../LevelSelectCam/Scroller/Label"
+signal toggle_inventory()
+signal pickup()
+
 const SPEED: float = 5.0
 const SPRINT_SPEED: float = 15.0
 const JUMP_VELOCITY: float = 4.5*2
+const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
+
+@export_range(0.0, 1.0) var mouse_sensitivity: float = 0.01
+
 var mode: String = "hub"
 var dialogue_data: Dictionary
 var end_dialogue_timer: Timer = Timer.new()
 var timeout: bool = false
 var already_in_inventory: bool = false
-
-const INTERACT_MARKER: Resource = preload("res://interact_marker.tscn")
 var interact_marker_instance: MeshInstance3D = INTERACT_MARKER.instantiate()
 var interactable: Node3D
 var last_interactable: Node3D
-
 var customize_focused: bool = false
 var inventory_open = true
 
-signal toggle_inventory()
-signal pickup()
+@onready var camera: Camera3D = $CameraPivot/SpringArm3D/Camera3D
+@onready var dialogue_ui: CanvasLayer = $"../DialogueUI"
+@onready var scroller = $"../LevelSelectCam/Scroller"
+@onready var scroller_label = $"../LevelSelectCam/Scroller/Label"
 
 func _ready() -> void:
 	var file = FileAccess.open("res://hub_world/dialogue.json", FileAccess.READ)

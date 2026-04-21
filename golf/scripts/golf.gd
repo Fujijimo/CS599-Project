@@ -1,7 +1,5 @@
 extends Node3D
 
-@onready var result_display: Label = $HUD/Result
-
 var par: int = 0
 var condor: int
 var albatross: int
@@ -12,6 +10,8 @@ var double_bogey: int
 var triple_bogey: int
 var quadruple_bogey: int
 var finish: bool = false
+
+@onready var result_display: Label = $HUD/Result
 
 func _ready() -> void:
 	Engine.time_scale = 1.0
