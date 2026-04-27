@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dtvlivr4xdtem" path="res://golf/scripts/golf.gd" id="1_l17pu"]
 [ext_resource type="PackedScene" uid="uid://dlpkv1yk2343g" path="res://golf/scenes/golf_hud.tscn" id="2_h7ixm"]
 [ext_resource type="PackedScene" uid="uid://br1jvn40si4y1" path="res://golf/scenes/origin.tscn" id="3_582w2"]
-[ext_resource type="PackedScene" uid="uid://byy80q5sa2vno" path="res://golf/scenes/ball_tracker.tscn" id="4_sdh55"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="4_sdh55"]
 [ext_resource type="PackedScene" uid="uid://bo6hs7jjqpamb" path="res://golf/scenes/ball.tscn" id="5_vhna1"]
 [ext_resource type="Texture2D" uid="uid://be2shhya2rwm5" path="res://golf/assets/watchman-hdri.png" id="6_582w2"]
 [ext_resource type="PackedScene" uid="uid://3isnb61mvmh6" path="res://glb/course_watchman.glb" id="6_cbsk1"]
@@ -53,33 +53,33 @@ transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70
 
 [node name="Enemies" type="Node3D" parent="." unique_id=408179738]
 
-[node name="Enemy" parent="Enemies" unique_id=958678602 instance=ExtResource("8_vhna1")]
+[node name="Enemy" parent="Enemies" unique_id=958678602 groups=["enemies"] instance=ExtResource("8_vhna1")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -253.9407, -1.0030136, 40.499104)
 max_distance = 8.0
 idle_time = 4.0
 wander_time = 4.0
 
-[node name="Enemy2" parent="Enemies" unique_id=1758847073 instance=ExtResource("8_vhna1")]
+[node name="Enemy2" parent="Enemies" unique_id=1758847073 groups=["enemies"] instance=ExtResource("8_vhna1")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -14.306984, 95.025, 26.742569)
 max_distance = 5.0
 idle_time = 4.0
 wander_time = 2.5
 
-[node name="Enemy3" parent="Enemies" unique_id=1997764168 instance=ExtResource("8_vhna1")]
+[node name="Enemy3" parent="Enemies" unique_id=1997764168 groups=["enemies"] instance=ExtResource("8_vhna1")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -122.086754, 35.20521, 135.99377)
 idle_time = 3.0
 wander_time = 7.0
 
-[node name="Enemy4" parent="Enemies" unique_id=895389302 instance=ExtResource("8_vhna1")]
+[node name="Enemy4" parent="Enemies" unique_id=895389302 groups=["enemies"] instance=ExtResource("8_vhna1")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 208.77614, 11.5750675, 211.59848)
 idle_time = 3.0
 wander_time = 7.0
 
-[node name="Enemy5" parent="Enemies" unique_id=1629752820 instance=ExtResource("8_vhna1")]
+[node name="Enemy5" parent="Enemies" unique_id=1629752820 groups=["enemies"] instance=ExtResource("8_vhna1")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 240.63356, 20.089706, -44.249977)
 idle_time = 3.0
 
-[node name="Enemy6" parent="Enemies" unique_id=1778400507 instance=ExtResource("8_vhna1")]
+[node name="Enemy6" parent="Enemies" unique_id=1778400507 groups=["enemies"] instance=ExtResource("8_vhna1")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 120.62639, 20.421795, -244.24449)
 max_distance = 5.0
 idle_time = 4.0

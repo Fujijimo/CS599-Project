@@ -13,6 +13,7 @@ var finish: bool = false
 
 @onready var result_display: Label = $HUD/Result
 
+
 func _ready() -> void:
 	Engine.time_scale = 1.0
 	match self.get_name():
@@ -30,6 +31,7 @@ func _process(_delta: float) -> void:
 		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("return_to_hub"):
 		get_tree().change_scene_to_file("res://hub_world/scenes/hub_world.tscn")
+		
 
 	if has_node("Enemies"):
 		if $Enemies.get_child_count() == 0:
@@ -89,3 +91,8 @@ func set_par(num):
 	double_bogey = par + 2
 	triple_bogey = par + 3
 	quadruple_bogey = par + 4
+
+func save_state():
+	var scene: PackedScene = PackedScene.new()
+	scene.pack(self)
+	ResourceSaver.save(scene, "res://golf/scenes/in_progress.tscn");

@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://ciyjgjevfu0om"]
 
+[ext_resource type="Script" uid="uid://dek16s8a2tllb" path="res://golf/scenes/battle_hud.gd" id="1_68cts"]
+
 [node name="BattleHUD" type="CanvasLayer" unique_id=1707338050]
+script = ExtResource("1_68cts")
 
 [node name="CommandMenu" type="VBoxContainer" parent="." unique_id=1540637009]
 visible = false
@@ -126,3 +129,5 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Return to course
 "
+
+[connection signal="pressed" from="WinMenu/Button" to="." method="_on_button_pressed"]

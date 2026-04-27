@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal battle_initiated
+
 const SPEED: float = 5.0
 
 var distance_to_start: float
@@ -69,7 +71,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.name == "Ball":
 		visible = false
 		body.animation.play("Attack")
-	
+		
 		Engine.time_scale = 0.1
 		await get_tree().create_timer(0.1).timeout
 		Engine.time_scale = 1.0

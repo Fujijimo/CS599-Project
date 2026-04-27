@@ -17,7 +17,8 @@ var data: Dictionary = {
 			"character_name": character.character_name,
 			"level": character.level,
 			"xp": character.xp,
-			"money": character.money
+			"money": character.money,
+			"health": character.health,
 		}
 	}
 

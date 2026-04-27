@@ -5,3 +5,4 @@ extends Node
 @export var level := 1
 @export var xp := 0
 @export var money := 0
+@export var health := 100

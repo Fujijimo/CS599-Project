@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://baxhsfsxte6vk"
-path="res://.godot/imported/fart.wav-a83f4792306f534a8a3c3bf93398eebc.sample"
+uid="uid://bc1wdyo5jx3a"
+path="res://.godot/imported/explosion.wav-78afc29a371aceae3cc806fc84582ab5.sample"
 
 [deps]
 
-source_file="res://golf/sounds/fart.wav"
-dest_files=["res://.godot/imported/fart.wav-a83f4792306f534a8a3c3bf93398eebc.sample"]
+source_file="res://golf/sounds/explosion.wav"
+dest_files=["res://.godot/imported/explosion.wav-78afc29a371aceae3cc806fc84582ab5.sample"]
 
 [params]
 

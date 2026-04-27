@@ -36,13 +36,15 @@ func _on_low_target_body_entered(body: Node3D) -> void:
 		print(health)
 
 func _on_ground_pound_target_body_entered(body: Node3D) -> void:
-	#print(ground_pound_collision.global_position.distance_to(ground_pound_normal_mesh.get_aabb().size))
-	#print(Vector2(body.global_position.y, body.global_position.z).length())
-	#print(Vector2(ground_pound_collision.global_position.y, ground_pound_collision.global_position.z).length())
 	if body.name == "Ball":
-		if body.global_position.distance_to(ground_pound_collision.global_position) <= 0.5:
+		disable_collisions()
+		if body.global_position.distance_to(ground_pound_collision.global_position) <= 0.8:
+			body.specials.play("ground_pound")
+			health -= 100
 			print("poop")
 		elif body.global_position.distance_to(ground_pound_collision.global_position) >= 2.1 and body.global_position.distance_to(ground_pound_collision.global_position) <= 4.25:
+			body.specials.play("ground_pound")
+			health -= randi_range(65, 70)
 			print("pee")
 
 func attack(picked_move) -> void:

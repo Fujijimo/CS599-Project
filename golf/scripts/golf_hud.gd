@@ -29,14 +29,15 @@ func hit_timer_reset():
 	#hit_timer.get_animation("curve_meter").track_set_key_time(1, 1, hit_timer.get_animation("curve_meter").track_get_key_time(1, 0) + 0.1)
 
 func update_labels():
-	$Stroke.text = "Stroke: " + str(ball.stroke)
-	$Club.text = "Club: " + ball.club
-	$XP.text = "XP: " + str(saveload.data.player.xp)
-	$Money.text = "Money: " + str(saveload.data.player.money)
+	$PlayerStatus/HP.text = "HP: " + str(saveload.data.player.health)
+	$PlayerStatus/XP.text = "XP: " + str(saveload.data.player.xp)
+	$PlayerStatus/Money.text = "Money: " + str(saveload.data.player.money)
+	$PlayerStatus/Stroke.text = "Stroke: " + str(ball.stroke)
+	$PlayerStatus/Club.text = "Club: " + ball.club
 	$WindSpeed.text = "Wind Speed: " + str("%0.1f" % ball.wind_speed)
-	$AirControl.text = "Air Control: " + str(abs(ball.ability_used.air_control)).pad_decimals(2)
-	$Jump.text = "Jump: " + str(ball.ability_used.jump)
-	$Drop.text = "Drop: " + str(ball.ability_used.drop)
+	$AbilityStatus/AirControl.text = "Air Control: " + str(abs(ball.ability_used.air_control)).pad_decimals(2)
+	$AbilityStatus/Jump.text = "Jump: " + str(ball.ability_used.jump)
+	$AbilityStatus/Drop.text = "Drop: " + str(ball.ability_used.drop)
 
 func rotate_wind_arrow():
 	$SubViewportContainer/SubViewport/UICam.global_rotation.y = $"../Origin/SpringArm3D/PlayerCam".global_rotation.y

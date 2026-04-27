@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bo6hs7jjqpamb"]
 
 [ext_resource type="Script" uid="uid://ccf356a87sknp" path="res://golf/scripts/ball.gd" id="1_x8fbi"]
+[ext_resource type="AudioStream" uid="uid://bc1wdyo5jx3a" path="res://golf/sounds/explosion.wav" id="2_85iwc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x8fbi"]
 bounce = 0.4
@@ -11,6 +12,44 @@ height = 0.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ktgx5"]
 radius = 0.25
+
+[sub_resource type="Animation" id="Animation_tc0hy"]
+resource_name = "ground_pound"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"trigger_drop"
+}]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.2,
+"stream": ExtResource("2_85iwc")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_85iwc"]
+_data = {
+&"ground_pound": SubResource("Animation_tc0hy")
+}
 
 [node name="Ball" type="RigidBody3D" unique_id=813449701]
 collision_layer = 2
@@ -43,6 +82,12 @@ one_shot = true
 [node name="HitBuffer" type="Timer" parent="." unique_id=585135966]
 wait_time = 0.05
 one_shot = true
+
+[node name="Specials" type="AnimationPlayer" parent="." unique_id=222997357]
+libraries/ = SubResource("AnimationLibrary_85iwc")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=2122682521]
+volume_db = -22.19
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="AirControlTimer" to="." method="_on_air_control_timer_timeout"]

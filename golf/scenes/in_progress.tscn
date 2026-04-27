@@ -1,0 +1,202 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://golf/scripts/golf.gd" id="1_i8c3m"]
+[ext_resource type="PackedScene" path="res://golf/scenes/golf_hud.tscn" id="2_6dkxy"]
+[ext_resource type="Script" path="res://golf/scripts/golf_hud.gd" id="3_kwl7m"]
+[ext_resource type="PackedScene" path="res://golf/scenes/origin.tscn" id="4_nstg8"]
+[ext_resource type="Script" path="res://golf/scripts/origin.gd" id="5_sevma"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball.tscn" id="6_yo6c5"]
+[ext_resource type="Script" path="res://golf/scripts/ball.gd" id="7_noje4"]
+[ext_resource type="AudioStream" path="res://golf/sounds/explosion.wav" id="8_t2hs6"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="9_4ag0w"]
+[ext_resource type="Texture2D" path="res://golf/assets/watchman-hdri.png" id="10_oalmd"]
+[ext_resource type="PackedScene" path="res://glb/course_watchman.glb" id="11_x3m0q"]
+[ext_resource type="PackedScene" path="res://golf/scenes/enemy.tscn" id="12_6n4v5"]
+[ext_resource type="Script" path="res://golf/scripts/enemy.gd" id="13_lnp5n"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x8fbi"]
+bounce = 0.4
+
+[sub_resource type="SphereMesh" id="SphereMesh_41u45"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ktgx5"]
+radius = 0.25
+
+[sub_resource type="Animation" id="Animation_tc0hy"]
+resource_name = "ground_pound"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"trigger_drop"
+}]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer3D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.2,
+"stream": ExtResource("8_t2hs6")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_85iwc"]
+_data = {
+&"ground_pound": SubResource("Animation_tc0hy")
+}
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sdh55"]
+panorama = ExtResource("10_oalmd")
+
+[sub_resource type="Sky" id="Sky_vhna1"]
+sky_material = SubResource("PanoramaSkyMaterial_sdh55")
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 1
+background_color = Color(0.08627451, 0.22352941, 0.58431375, 1)
+sky = SubResource("Sky_vhna1")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.01
+reflected_light_source = 2
+
+[node name="CourseWatchmanPlay" type="Node3D" unique_id=1994607804]
+script = ExtResource("1_i8c3m")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1466473128 instance=ExtResource("2_6dkxy")]
+script = ExtResource("3_kwl7m")
+
+[node name="Origin" type="Node3D" parent="." unique_id=1337355697 instance=ExtResource("4_nstg8")]
+transform = Transform3D(-0.064954214, -0.019956438, -0.9976886, 0, 0.9997995, -0.019998679, 0.9978882, -0.001298998, -0.06494123, -288.21857, 1.5175506, 31.735222)
+script = ExtResource("5_sevma")
+
+[node name="Ball" parent="." unique_id=912020132 instance=ExtResource("6_yo6c5")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -287.8528, 1.839555, 31.762718)
+visible = false
+collision_layer = 2
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_x8fbi")
+gravity_scale = 5.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 20
+linear_velocity = Vector3(30.66823, 26.42183, 2.3435526)
+constant_force = Vector3(0.37555158, 0, 3.321476)
+script = ExtResource("7_noje4")
+
+[node name="MeshInstance3D" parent="Ball" index="0" unique_id=1517714288]
+visible = false
+mesh = SubResource("SphereMesh_41u45")
+
+[node name="CollisionShape3D" parent="Ball" index="1" unique_id=1921804651]
+shape = SubResource("SphereShape3D_ktgx5")
+
+[node name="BallArea" parent="Ball" index="2" unique_id=1145938317]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" parent="Ball/BallArea" index="0" unique_id=1400573426]
+shape = SubResource("SphereShape3D_ktgx5")
+
+[node name="AirControlTimer" parent="Ball" index="3" unique_id=2028711269]
+process_callback = 0
+one_shot = true
+
+[node name="HitBuffer" parent="Ball" index="4" unique_id=585135966]
+wait_time = 0.05
+one_shot = true
+
+[node name="Specials" parent="Ball" index="5" unique_id=222997357]
+libraries/ = SubResource("AnimationLibrary_85iwc")
+
+[node name="AudioStreamPlayer3D" parent="Ball" index="6" unique_id=2122682521]
+volume_db = -22.19
+
+[node name="BallTracker" type="Node3D" parent="." unique_id=1705355479 instance=ExtResource("9_4ag0w")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -287.8528, 1.839555, 31.762718)
+
+[node name="BallCam" type="Camera3D" parent="." unique_id=1132473582]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0, 7.930273, 4)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=621005133]
+environment = SubResource("Environment_lquwl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=693023483]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 119, 0)
+
+[node name="course_watchman" type="Node3D" parent="." unique_id=927066196 instance=ExtResource("11_x3m0q")]
+
+[node name="Enemies" type="Node3D" parent="." unique_id=408179738]
+
+[node name="Enemy" type="CharacterBody3D" parent="Enemies" unique_id=958678602 groups=["enemies"] instance=ExtResource("12_6n4v5")]
+transform = Transform3D(-0.7753019, 0, 0.63159025, 0, 1, 0, -0.63159025, 0, -0.7753019, -251.45233, -0.9977857, 37.443336)
+collision_layer = 2
+velocity = Vector3(3.1579545, 0, -3.8765094)
+script = ExtResource("13_lnp5n")
+max_distance = 8.0
+idle_time = 4.0
+wander_time = 4.0
+
+[node name="Enemy2" type="CharacterBody3D" parent="Enemies" unique_id=1758847073 groups=["enemies"] instance=ExtResource("12_6n4v5")]
+transform = Transform3D(-0.73678, 0, -0.67613244, 0, 1, 0, 0.67613244, 0, -0.73678, -16.97171, 95.00264, 23.83887)
+collision_layer = 2
+velocity = Vector3(-3.3806639, 0, -3.6838984)
+script = ExtResource("13_lnp5n")
+max_distance = 5.0
+idle_time = 4.0
+wander_time = 2.5
+
+[node name="Enemy3" type="CharacterBody3D" parent="Enemies" unique_id=1997764168 groups=["enemies"] instance=ExtResource("12_6n4v5")]
+transform = Transform3D(0.9314221, 0, -0.3639394, 0, 1, 0, 0.3639394, 0, 0.9314221, -123.521095, 35.002625, 139.66397)
+collision_layer = 2
+velocity = Vector3(-1.8196977, 0, 4.6571126)
+script = ExtResource("13_lnp5n")
+idle_time = 3.0
+wander_time = 7.0
+
+[node name="Enemy4" type="CharacterBody3D" parent="Enemies" unique_id=895389302 groups=["enemies"] instance=ExtResource("12_6n4v5")]
+transform = Transform3D(0.786753, 0, -0.61726767, 0, 1, 0, 0.61726767, 0, 0.786753, 206.34297, 11.002663, 214.69823)
+collision_layer = 2
+velocity = Vector3(-3.0863385, 0, 3.933766)
+script = ExtResource("13_lnp5n")
+idle_time = 3.0
+wander_time = 7.0
+
+[node name="Enemy5" type="CharacterBody3D" parent="Enemies" unique_id=1629752820 groups=["enemies"] instance=ExtResource("12_6n4v5")]
+transform = Transform3D(0.4199031, 0, 0.9075686, 0, 1, 0, -0.9075686, 0, 0.4199031, 244.2097, 20.002657, -42.594814)
+collision_layer = 2
+velocity = Vector3(4.537844, 0, 2.0995169)
+script = ExtResource("13_lnp5n")
+idle_time = 3.0
+
+[node name="Enemy6" type="CharacterBody3D" parent="Enemies" unique_id=1778400507 groups=["enemies"] instance=ExtResource("12_6n4v5")]
+transform = Transform3D(-0.22313997, 0, 0.9747852, 0, 1, 0, -0.9747852, 0, -0.22313997, 124.46833, 20.002657, -245.1237)
+collision_layer = 2
+velocity = Vector3(4.873932, 0, -1.1157005)
+script = ExtResource("13_lnp5n")
+max_distance = 5.0
+idle_time = 4.0
+wander_time = 2.5
+
+[connection signal="body_entered" from="Ball" to="Ball" method="_on_body_entered"]
+[connection signal="timeout" from="Ball/AirControlTimer" to="Ball" method="_on_air_control_timer_timeout"]
+[connection signal="timeout" from="Ball/HitBuffer" to="Ball" method="_on_hit_buffer_timeout"]
+
+[editable path="Ball"]

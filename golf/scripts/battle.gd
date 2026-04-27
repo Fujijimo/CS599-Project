@@ -91,7 +91,7 @@ func battle_setup() -> void:
 				node.get_node("NormalTarget/NormalTargetCollision").set_deferred("disabled", false)
 				node.get_node("LowTarget/LeftFootCollision").set_deferred("disabled", false)
 				node.get_node("LowTarget/RightFootCollision").set_deferred("disabled", false)
-				node.get_node("GroundPoundTarget").hide()
+				node.get_node("GroundPoundTarget/GroundPoundCollision").set_deferred("disabled", true)
 		player_cam.current = true
 		command_menu.show()
 		set_input(false)
@@ -99,7 +99,10 @@ func battle_setup() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func enemy_turn() -> void:
-	#ground_pound_target.hide()
+	for node in get_children():
+			if node is CharacterBody3D:
+				node.get_node("GroundPoundTarget").hide()
+
 	for enemy in enemies:
 		if is_instance_valid(enemy) == false or enemy.health < 0:
 			continue
@@ -155,8 +158,7 @@ func ability1_button_pressed():
 	for node in get_children():
 		if node is CharacterBody3D:
 			node.get_node("GroundPoundTarget").show()
-	#ground_pound_target.show()
-	#enable_collisions(ground_pound_target)
+			node.get_node("GroundPoundTarget/GroundPoundCollision").set_deferred("disabled", false)
 	set_input(true)
 
 func ability2_button_pressed():

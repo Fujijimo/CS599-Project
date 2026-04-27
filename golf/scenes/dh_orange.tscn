@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dkn1wf8fcmvrd"]
 
 [ext_resource type="PackedScene" uid="uid://cwn2174eoq8l5" path="res://glb/dh_orange.glb" id="1_jf4wk"]
-[ext_resource type="AudioStream" uid="uid://baxhsfsxte6vk" path="res://golf/sounds/fart.wav" id="2_g64up"]
+[ext_resource type="AudioStream" uid="uid://boju615twohge" path="res://golf/sounds/shoot.ogg" id="2_7ep7d"]
+[ext_resource type="Script" uid="uid://c4pr1ahgg22tu" path="res://golf/scenes/send_damage.gd" id="3_7ep7d"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8wfhp"]
 albedo_color = Color(1.5720325, 0.95514816, 0, 1)
@@ -71,7 +72,7 @@ resource_name = "Fart"
 length = 2.0
 tracks/0/type = "audio"
 tracks/0/imported = false
-tracks/0/enabled = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("AudioStreamPlayer3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
@@ -79,11 +80,25 @@ tracks/0/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("2_g64up")
+"stream": ExtResource("2_7ep7d")
 }],
 "times": PackedFloat32Array(0)
 }
 tracks/0/use_blend = true
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SendDamage")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8wfhp"]
 _data = {
@@ -109,3 +124,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_8wfhp")
 libraries/ = SubResource("AnimationLibrary_8wfhp")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="3" unique_id=724710336]
+
+[node name="SendDamage" type="Node" parent="." index="4" unique_id=704392470]
+script = ExtResource("3_7ep7d")

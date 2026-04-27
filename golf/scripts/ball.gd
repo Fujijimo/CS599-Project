@@ -33,6 +33,7 @@ var ability_used: Dictionary
 @onready var raycast: RayCast3D = $"../BallTracker/RayCast3D"
 @onready var animation: AnimationPlayer = $"../BallTracker/AnimationPlayer"
 @onready var hit_buffer: Timer = $HitBuffer
+@onready var specials: AnimationPlayer = $Specials
 
 func _ready() -> void:
 	set_wind_direction()
@@ -114,18 +115,21 @@ func club_hit(_club):
 func ability_drop():
 	if ability_used.drop != 0:
 		if Input.is_action_just_pressed("ability1") and touched == false and dropping == false:
-			apply_wind = false
-			linear_velocity *= Vector3.ZERO
-			gravity_scale = 50.0
-			physics_material_override.bounce = 0.1
-			dropping = true
-			ability_used.drop -= 1
+			trigger_drop()
 	if dropping == true and touched == true:
 		gravity_scale = 5.0
 		physics_material_override.bounce = 0.4
 		if Input.is_action_pressed("ability1"):
 			apply_impulse(Vector3(-origin.basis.z.x * 100, 3, -origin.basis.z.z * 100))
 		dropping = false
+
+func trigger_drop():
+	apply_wind = false
+	linear_velocity *= Vector3.ZERO
+	gravity_scale = 50.0
+	physics_material_override.bounce = 0.1
+	dropping = true
+	ability_used.drop -= 1
 
 func ability_jump():
 	var jump_height: float = 50.0

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://br1jvn40si4y1" path="res://golf/scenes/origin.tscn" id="3_li1fe"]
 [ext_resource type="PackedScene" uid="uid://ciyjgjevfu0om" path="res://golf/scenes/battle_hud.tscn" id="3_n5y4c"]
 [ext_resource type="PackedScene" uid="uid://bo6hs7jjqpamb" path="res://golf/scenes/ball.tscn" id="4_h6c4y"]
-[ext_resource type="PackedScene" uid="uid://byy80q5sa2vno" path="res://golf/scenes/ball_tracker.tscn" id="5_p6gdi"]
+[ext_resource type="PackedScene" path="res://golf/scenes/ball_tracker.tscn" id="5_p6gdi"]
 [ext_resource type="Script" uid="uid://brgqcm1of1g1n" path="res://golf/scripts/battle_platform.gd" id="8_n5y4c"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sdh55"]
